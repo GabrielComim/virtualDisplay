@@ -1,0 +1,26 @@
+{
+  "@@locale": "pt",
+  "@geral": {"description": "STRINGS DE USO GERAL"},
+
+  "appTitle": "Virtual Display",
+ 
+  "@appBarCustom": {"description": "STRINGS USADAS NO appBarCustom"},
+  "devicesKnown": "Dispositivos conhecidos",
+
+  "@cardDashboardNumeric": {"description": "STRINGS USADAS NO cardDashboardNumeric"},
+  "speed": "Velocidade",
+  "temperature": "Temperatura",
+  "humidity": "Umidade",
+  "voltage": "Voltagem",
+  "current": "Corrente",
+  "pressure": "Pressão",
+  "level": "Nível",
+  "detector": "Detector",
+  "magnetic": "Magnético",
+  "weight": "Peso",
+  "other": "Outro",
+  "gps": "GPS",
+  "led": "LED",
+  "buzzer": "Buzzer",
+  "alarm": "Alarme"
+}
