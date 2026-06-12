@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:virtual_display/screens/protocol_screen.dart';
 import 'package:virtual_display/utils/constants.dart';  
 import 'package:virtual_display/theme/app_theme.dart';
 
@@ -67,6 +68,8 @@ class MyApp extends StatelessWidget {
             },
             transitionDuration: Duration(milliseconds: 250),
           );
+        } else if(settings.name == Constants.screenProtocol) {
+          return MaterialPageRoute(builder: (context) => const ProtocolScreen());
         }
         return null; // Retorna null para rotas não definidas, o que resultará em uma tela de erro padrão.
       },

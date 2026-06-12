@@ -4,6 +4,7 @@ import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/utils/constants.dart';
+import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 import 'package:virtual_display/widgets/cards/cards_conection_device.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_bool.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_numeric.dart';
@@ -49,12 +50,13 @@ class _MainScreenState extends State<MainScreen> {
             textScreen: AppLocalizations.of(context)!.appTitle,
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                // TODO: Implementar ação do menu
-              },
-            ),
+            buttonMoreOptions(context),
+            // IconButton(
+            //   icon: Icon(Icons.menu),
+            //   onPressed: () {
+            //     // TODO: Implementar ação do menu
+            //   },
+            // ),
           ],
         ),
         body: SafeArea(

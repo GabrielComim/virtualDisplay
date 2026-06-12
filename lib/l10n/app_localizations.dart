@@ -196,6 +196,48 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Alarme'**
   String get alarm;
+
+  /// No description provided for @configAdvanced.
+  ///
+  /// In pt, this message translates to:
+  /// **'Configurações de conexão avançadas'**
+  String get configAdvanced;
+
+  /// No description provided for @comProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Protocolo de comunicação'**
+  String get comProtocol;
+
+  /// No description provided for @protocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Protocolo de comunicação'**
+  String get protocol;
+
+  /// No description provided for @versionProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Versão: '**
+  String get versionProtocol;
+
+  /// No description provided for @formatJson.
+  ///
+  /// In pt, this message translates to:
+  /// **'Usar formato JSON'**
+  String get formatJson;
+
+  /// No description provided for @titleHowToSendProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Como enviar uma mensagem para o app'**
+  String get titleHowToSendProtocol;
+
+  /// No description provided for @bodyPageOneHowToSendProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Deve-se utilizar 2 tópicos para envio de dados...'**
+  String get bodyPageOneHowToSendProtocol;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

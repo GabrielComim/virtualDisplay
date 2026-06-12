@@ -21,5 +21,16 @@
   "gps": "GPS",
   "led": "LED",
   "buzzer": "Buzzer",
-  "alarm": "Alarm"
+  "alarm": "Alarm",
+  
+  "@button_more_options": {"description": "STRINGS USADAS NO button_more_options"},
+  "configAdvanced": "Configuration of advanced connection",
+  "comProtocol": "Communication protocol",
+
+  "@protocol_screen": {"description": "STRINGS USADAS NO protocol_screen"},
+  "protocol": "Protocolo de comunicação",
+  "versionProtocol": "Versão: ",
+  "formatJson": "Usar formato JSON",
+  "titleHowToSendProtocol": "Como enviar uma mensagem para o app",
+  "bodyPageOneHowToSendProtocol": "Deve-se utilizar 2 tópicos para envio de dados..."
 }

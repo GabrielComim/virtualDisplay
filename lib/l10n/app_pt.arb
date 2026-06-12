@@ -1,7 +1,6 @@
 {
   "@@locale": "pt",
   "@geral": {"description": "STRINGS DE USO GERAL"},
-
   "appTitle": "Virtual Display",
  
   "@appBarCustom": {"description": "STRINGS USADAS NO appBarCustom"},
@@ -22,5 +21,16 @@
   "gps": "GPS",
   "led": "LED",
   "buzzer": "Buzzer",
-  "alarm": "Alarme"
+  "alarm": "Alarme",
+
+  "@button_more_options": {"description": "STRINGS USADAS NO button_more_options"},
+  "configAdvanced": "Configurações de conexão avançadas",
+  "comProtocol": "Protocolo de comunicação",
+
+  "@protocol_screen": {"description": "STRINGS USADAS NO protocol_screen"},
+  "protocol": "Protocolo de comunicação",
+  "versionProtocol": "Versão: ",
+  "formatJson": "Usar formato JSON",
+  "titleHowToSendProtocol": "Como enviar uma mensagem para o app",
+  "bodyPageOneHowToSendProtocol": "Deve-se utilizar 2 tópicos para envio de dados..."
 }

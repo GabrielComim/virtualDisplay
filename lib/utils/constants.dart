@@ -2,6 +2,7 @@ class Constants {
   // Nome das telas
   static const String screenDevices = '/devices';
   static const String screenMain = '/main';
+  static const String screenProtocol = '/protocol';
 
   // Tipos de cards 
   static const String cardTypeNumber = 'number';
@@ -44,4 +45,5 @@ class Constants {
   static const String iconLed = 'assets/icons/icon_led.png';
   static const String iconBuzzer = 'assets/icons/icon_buzzer.png';
   static const String iconAlarm = 'assets/icons/icon_alarm.png';
+
 }

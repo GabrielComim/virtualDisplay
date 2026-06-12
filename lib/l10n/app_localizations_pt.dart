@@ -58,4 +58,25 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get alarm => 'Alarme';
+
+  @override
+  String get configAdvanced => 'Configurações de conexão avançadas';
+
+  @override
+  String get comProtocol => 'Protocolo de comunicação';
+
+  @override
+  String get protocol => 'Protocolo de comunicação';
+
+  @override
+  String get versionProtocol => 'Versão: ';
+
+  @override
+  String get formatJson => 'Usar formato JSON';
+
+  @override
+  String get titleHowToSendProtocol => 'Como enviar uma mensagem para o app';
+
+  @override
+  String get bodyPageOneHowToSendProtocol => 'Deve-se utilizar 2 tópicos para envio de dados...';
 }
