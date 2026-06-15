@@ -46,4 +46,18 @@ class Constants {
   static const String iconBuzzer = 'assets/icons/icon_buzzer.png';
   static const String iconAlarm = 'assets/icons/icon_alarm.png';
 
+  // Tipos de textos
+  static const String titleText1 =    'text1';
+  static const String titleText2 =    'text2';
+  static const String titleText3 =    'text3';
+  static const String titleText4 =    'text4';
+  static const String subtitleText1 = 'text5';
+  static const String subtitleText2 = 'text6';
+  static const String subtitleText3 = 'text7';
+  static const String bodyText1 =     'text8';
+  static const String bodyText2 =     'text9';
+  static const String bodyText3 =     'text10';
+  static const String bodyText4 =     'text11';
+  static const String bodyText5 =     'text12';
+  static const String bodyText6 =     'text13';
 }

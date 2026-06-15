@@ -75,8 +75,50 @@ class AppLocalizationsPt extends AppLocalizations {
   String get formatJson => 'Usar formato JSON';
 
   @override
+  String get example => 'Exemplo:';
+
+  @override
+  String get configTopic => 'Tópico para configuração:';
+
+  @override
+  String get dataTopic => 'Tópico para dados:';
+
+  @override
   String get titleHowToSendProtocol => 'Como enviar uma mensagem para o app';
 
   @override
-  String get bodyPageOneHowToSendProtocol => 'Deve-se utilizar 2 tópicos para envio de dados...';
+  String get titleBodyPageHowToSendProtocol => 'Tópico para configuração';
+
+  @override
+  String get bodyPageOneHowToSendProtocol => 'Deve-se utilizar 2 tópicos para envio de dados. Um tópico serve para configuração da tela. O segundo tópico é para atualizar os dados. O segundo tópico é um conjunto de tópicos, cada um é responsável por um item a ser renderizado.\n\nConforme o ID informado na configuração para cada item, o app consegue identificar se precisa mais dados ou menos dados. Basicamente dados numéricos possuem mais configurações do que dados booleanos e strings. Os valores min e max informam os limites dos valor. E history indica se deve ser gerado gráfico ou não.';
+
+  @override
+  String get bodyPageTwoHowToSendProtocol => 'É através deste tópico que será informado quantos itens o usuário quer renderizar na tela, além dos detalhes do item. \n\n Tópico MQTT: virtualDisplay/config';
+
+  @override
+  String get bodyPageTwoHowToSendProtocolTwo => 'Siga acrescentando este modelo de chaves com cada item que se deseja configurar. Quantidade máxima de itens permitidos são 20 itens.';
+
+  @override
+  String get bodyPageThreeHowToSendProtocol => 'Os valores min e max não são obrigatórios.';
+
+  @override
+  String get bodyPageFourHowToSendProtocol => 'Escolha um ID existente para que a interface consiga classificar seu item de alguma forma. \n\n IDs existentes: \n Estes IDs são usados para tipos de dados numéricos:\n';
+
+  @override
+  String get bodyPageFourHowToSendProtocolTwo => 'Estes IDs são utilizados para tipos de dados Booleanos.';
+
+  @override
+  String get bodyPageFourHowToSendProtocolThree => 'Este ID é utilizado para tipo de dados String';
+
+  @override
+  String get bodyPageFiveHowToSendProtocol => 'É neste tópico que o valor do item será atualizado.\n Exemplo: Se for um sensor de temperatura, neste item será informado apenas o valor, algo como: 25,5.';
+
+  @override
+  String get bodyPageFiveHowToSendProtocolTwo => 'Seguir até item20\n';
+
+  @override
+  String get bodyPageSixHowToSendProtocol => 'Inscreva-se nos tópicos:\n   virtualDisplay/waiting_config\n\nNeste tópico se você receber true quer dizer que o app está aguardando o envio das configurações. False quer dizer que ele possui configurações válidas.';
+
+  @override
+  String get bodyPageSixHowToSendProtocolTwo => 'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"ON\" ou \"OFF\".\n\n Para mais informações, acesse o link: ';
 }

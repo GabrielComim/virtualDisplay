@@ -227,17 +227,101 @@ abstract class AppLocalizations {
   /// **'Usar formato JSON'**
   String get formatJson;
 
+  /// No description provided for @example.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exemplo:'**
+  String get example;
+
+  /// No description provided for @configTopic.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tópico para configuração:'**
+  String get configTopic;
+
+  /// No description provided for @dataTopic.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tópico para dados:'**
+  String get dataTopic;
+
   /// No description provided for @titleHowToSendProtocol.
   ///
   /// In pt, this message translates to:
   /// **'Como enviar uma mensagem para o app'**
   String get titleHowToSendProtocol;
 
+  /// No description provided for @titleBodyPageHowToSendProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tópico para configuração'**
+  String get titleBodyPageHowToSendProtocol;
+
   /// No description provided for @bodyPageOneHowToSendProtocol.
   ///
   /// In pt, this message translates to:
-  /// **'Deve-se utilizar 2 tópicos para envio de dados...'**
+  /// **'Deve-se utilizar 2 tópicos para envio de dados. Um tópico serve para configuração da tela. O segundo tópico é para atualizar os dados. O segundo tópico é um conjunto de tópicos, cada um é responsável por um item a ser renderizado.\n\nConforme o ID informado na configuração para cada item, o app consegue identificar se precisa mais dados ou menos dados. Basicamente dados numéricos possuem mais configurações do que dados booleanos e strings. Os valores min e max informam os limites dos valor. E history indica se deve ser gerado gráfico ou não.'**
   String get bodyPageOneHowToSendProtocol;
+
+  /// No description provided for @bodyPageTwoHowToSendProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'É através deste tópico que será informado quantos itens o usuário quer renderizar na tela, além dos detalhes do item. \n\n Tópico MQTT: virtualDisplay/config'**
+  String get bodyPageTwoHowToSendProtocol;
+
+  /// No description provided for @bodyPageTwoHowToSendProtocolTwo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Siga acrescentando este modelo de chaves com cada item que se deseja configurar. Quantidade máxima de itens permitidos são 20 itens.'**
+  String get bodyPageTwoHowToSendProtocolTwo;
+
+  /// No description provided for @bodyPageThreeHowToSendProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Os valores min e max não são obrigatórios.'**
+  String get bodyPageThreeHowToSendProtocol;
+
+  /// No description provided for @bodyPageFourHowToSendProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Escolha um ID existente para que a interface consiga classificar seu item de alguma forma. \n\n IDs existentes: \n Estes IDs são usados para tipos de dados numéricos:\n'**
+  String get bodyPageFourHowToSendProtocol;
+
+  /// No description provided for @bodyPageFourHowToSendProtocolTwo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Estes IDs são utilizados para tipos de dados Booleanos.'**
+  String get bodyPageFourHowToSendProtocolTwo;
+
+  /// No description provided for @bodyPageFourHowToSendProtocolThree.
+  ///
+  /// In pt, this message translates to:
+  /// **'Este ID é utilizado para tipo de dados String'**
+  String get bodyPageFourHowToSendProtocolThree;
+
+  /// No description provided for @bodyPageFiveHowToSendProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'É neste tópico que o valor do item será atualizado.\n Exemplo: Se for um sensor de temperatura, neste item será informado apenas o valor, algo como: 25,5.'**
+  String get bodyPageFiveHowToSendProtocol;
+
+  /// No description provided for @bodyPageFiveHowToSendProtocolTwo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Seguir até item20\n'**
+  String get bodyPageFiveHowToSendProtocolTwo;
+
+  /// No description provided for @bodyPageSixHowToSendProtocol.
+  ///
+  /// In pt, this message translates to:
+  /// **'Inscreva-se nos tópicos:\n   virtualDisplay/waiting_config\n\nNeste tópico se você receber true quer dizer que o app está aguardando o envio das configurações. False quer dizer que ele possui configurações válidas.'**
+  String get bodyPageSixHowToSendProtocol;
+
+  /// No description provided for @bodyPageSixHowToSendProtocolTwo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"ON\" ou \"OFF\".\n\n Para mais informações, acesse o link: '**
+  String get bodyPageSixHowToSendProtocolTwo;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
