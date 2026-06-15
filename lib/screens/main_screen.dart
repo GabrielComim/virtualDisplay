@@ -9,7 +9,7 @@ import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 import 'package:virtual_display/widgets/cards/cards_conection_device.dart';
-import 'package:virtual_display/widgets/cards/cards_dashboard.dart';
+import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_bool.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_numeric.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_string.dart.dart';
@@ -183,12 +183,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
             actions: [
               buttonMoreOptions(context),
-              // IconButton(
-              //   icon: Icon(Icons.menu),
-              //   onPressed: () {
-              //     // TODO: Implementar ação do menu
-              //   },
-              // ),
             ],
             // bottom: TabBar(
             //   labelColor: ColorScheme.of(context).secondary,

@@ -15,6 +15,10 @@ class _CardsConectionDeviceState extends State<CardsConectionDevice> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: AppColors.outline, width: 1),
+      ),
       color: AppColors.cardConnectionBackground,
       child: ListTile(
         title: Text(widget.deviceName),

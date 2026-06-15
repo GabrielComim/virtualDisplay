@@ -72,6 +72,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get comProtocol => 'Protocolo de comunicação';
 
   @override
+  String get mqttBroker => 'Broker: ';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get save => 'Salvar';
+
+  @override
   String get protocol => 'Protocolo de comunicação';
 
   @override

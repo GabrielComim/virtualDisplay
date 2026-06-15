@@ -221,6 +221,24 @@ abstract class AppLocalizations {
   /// **'Protocolo de comunicação'**
   String get comProtocol;
 
+  /// No description provided for @mqttBroker.
+  ///
+  /// In pt, this message translates to:
+  /// **'Broker: '**
+  String get mqttBroker;
+
+  /// No description provided for @ok.
+  ///
+  /// In pt, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @save.
+  ///
+  /// In pt, this message translates to:
+  /// **'Salvar'**
+  String get save;
+
   /// No description provided for @protocol.
   ///
   /// In pt, this message translates to:

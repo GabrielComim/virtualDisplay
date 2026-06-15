@@ -1,8 +1,9 @@
 class Constants {
-  // Nome das telas
+  // Nome das telas e modais
   static const String screenDevices = '/devices';
   static const String screenMain = '/main';
   static const String screenProtocol = '/protocol';
+  static const String screenModalConnection = '/modal_connection';
 
   // Tipos de cards 
   static const String cardTypeNumber = 'number';

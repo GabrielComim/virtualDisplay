@@ -24,7 +24,7 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
     switch (id) {
       // CARD DE GPS
       case Constants.cardIdGPS:
-          return Image.asset(Constants.iconLocalization, width: 50, height: 50);
+        return Image.asset(Constants.iconLocalization, width: 50, height: 50);
       // CARD DE LED
       case Constants.cardIdLed:
         return Image.asset(Constants.iconLed, width: 50, height: 50);
@@ -40,7 +40,13 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.outlineVariant,
+          width: 1,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
