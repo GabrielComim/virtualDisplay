@@ -15,5 +15,5 @@ class AppColors {
   static const outlineVariant = Color(0xAAFFFFFF);
   // Para usar: Precisa chamar AppColors.icons
   static const icons = Color(0xFF03355D);
-  static const cardConnectionBackground = Color(0x4DAFB0C3);  // Opacidade em 30%
+  static const cardConnectionBackground = Color(0xAAAFB0C3);  // Opacidade em 30%
 }

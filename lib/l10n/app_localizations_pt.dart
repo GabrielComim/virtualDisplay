@@ -60,6 +60,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get alarm => 'Alarme';
 
   @override
+  String get tabDashboard => 'Dashboard';
+
+  @override
+  String get tabGraphics => 'Gráficos';
+
+  @override
   String get configAdvanced => 'Configurações de conexão avançadas';
 
   @override

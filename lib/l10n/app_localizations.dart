@@ -197,6 +197,18 @@ abstract class AppLocalizations {
   /// **'Alarme'**
   String get alarm;
 
+  /// No description provided for @tabDashboard.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dashboard'**
+  String get tabDashboard;
+
+  /// No description provided for @tabGraphics.
+  ///
+  /// In pt, this message translates to:
+  /// **'Gráficos'**
+  String get tabGraphics;
+
   /// No description provided for @configAdvanced.
   ///
   /// In pt, this message translates to:

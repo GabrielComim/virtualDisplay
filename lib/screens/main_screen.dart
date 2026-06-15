@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
+import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/utils/constants.dart';
@@ -46,6 +47,26 @@ class _MainScreenState extends State<MainScreen> {
   List<CardsDashboard> cardsDashboard = [];
   CardsDashboard? draggedCard;
 
+  Widget _dashboardView() {
+    return SingleChildScrollView(
+      child: StaggeredGrid.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        children: _buildCards(),
+      ),
+    );
+  }
+
+  Widget _graphicsView() {
+    return Center(
+      child: Text(
+        AppLocalizations.of(context)!.appTitle,
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
+    );
+  }
+
   Widget _buildCardContent(CardsDashboard card) {
     if (card.typeCard == Constants.cardTypeNumber) {
       return CardsDashboardNumeric(
@@ -77,9 +98,7 @@ class _MainScreenState extends State<MainScreen> {
     return cardsDashboard.map((card) {
       return StaggeredGridTile.fit(
         key: ValueKey(card.id),
-
         crossAxisCellCount: card.typeCard == Constants.cardTypeString ? 2 : 1,
-
         child: _buildDragTarget(card),
       );
     }).toList();
@@ -106,7 +125,10 @@ class _MainScreenState extends State<MainScreen> {
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             border: isHovering
-                ? Border.all(color: ColorScheme.of(context).secondary, style: BorderStyle.solid)
+                ? Border.all(
+                    color: ColorScheme.of(context).secondary,
+                    style: BorderStyle.solid,
+                  )
                 : null,
           ),
 
@@ -152,23 +174,31 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: decorationInitScreen(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: AppBarTitleCustom(
-            textScreen: AppLocalizations.of(context)!.appTitle,
-          ),
-          actions: [
-            buttonMoreOptions(context),
-            // IconButton(
-            //   icon: Icon(Icons.menu),
-            //   onPressed: () {
-            //     // TODO: Implementar ação do menu
-            //   },
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: AppBarTitleCustom(
+              textScreen: AppLocalizations.of(context)!.appTitle,
+            ),
+            actions: [
+              buttonMoreOptions(context),
+              // IconButton(
+              //   icon: Icon(Icons.menu),
+              //   onPressed: () {
+              //     // TODO: Implementar ação do menu
+              //   },
+              // ),
+            ],
+            // bottom: TabBar(
+            //   labelColor: ColorScheme.of(context).secondary,
+            //   tabs: [
+            //     Tab(text: AppLocalizations.of(context)!.tabDashboard),
+            //     Tab(text: AppLocalizations.of(context)!.tabGraphics),
+            //   ],
             // ),
-          ],
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
+          ),
+          body: SafeArea(
             child: Column(
               children: [
                 // CARD DE CONEXÃO DO DISPOSITIVO
@@ -178,21 +208,35 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 SizedBox(height: 16),
                 // CARDS DE DASHBOARD
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
+                Expanded(
+                  child: TabBarView(
                     children: [
                       // Cria um grid que se auto ajusta conforme o tamanho de cada card, neste caso conforme o tipo do card.
-                      StaggeredGrid.count(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        children: _buildCards(),
-                      ),
-                    ],
+                      _dashboardView(), 
+                      _graphicsView()],
                   ),
                 ),
               ],
+            ),
+          ),
+          bottomNavigationBar: SafeArea(
+            top: false,
+            child: Material(
+              // color: Theme.of(context).colorScheme.surface,
+              color: AppColors.cardConnectionBackground,
+              child: TabBar(
+                labelColor: ColorScheme.of(context).secondary,
+                tabs: [
+                  Tab(
+                    icon: Icon(Icons.dashboard),
+                    text: AppLocalizations.of(context)!.tabDashboard,
+                  ),
+                  Tab(
+                    icon: Icon(Icons.show_chart),
+                    text: AppLocalizations.of(context)!.tabGraphics,
+                  ),
+                ]
+              )
             ),
           ),
         ),
@@ -200,56 +244,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-
-// [
-//                             for (
-//                               int index = 0;
-//                               index < widget.typeCard.length;
-//                               index++
-//                             )
-//                               if (widget.typeCard[index] ==
-//                                   Constants.cardTypeNumber)
-// List<Widget> _buildCards() {
-//   return cardsDashboard.map((card) {
-
-//     Widget child;
-
-//     if (card.typeCard == Constants.cardTypeNumber) {
-//       child = StaggeredGridTile.fit(
-//         crossAxisCellCount: 1,
-//         child: CardsDashboardNumeric(
-//           title: card.title,
-//           id: card.id,
-//           value: int.tryParse(card.value) ?? 0,
-//           unit: card.unit,
-//           min: card.minValue,
-//           max: card.maxValue,
-//         ),
-//       );
-//     } else if (card.typeCard == Constants.cardTypeBool) {
-//       child = StaggeredGridTile.fit(
-//         crossAxisCellCount: 1,
-//         child: CardsDashboardBool(
-//           title: card.title,
-//           id: card.id,
-//           value: card.value == 'true',
-//         ),
-//       );
-//     } else {
-//       child = StaggeredGridTile.fit(
-//         crossAxisCellCount: 2,
-//         child: CardsDashboardString(
-//           id: card.id,
-//           title: card.title,
-//           msg: card.value,
-//         ),
-//       );
-//     }
-
-//     return Container(
-//       key: ValueKey(card.id),
-//       child: child,
-//     );
-
-//   }).toList();
-// }

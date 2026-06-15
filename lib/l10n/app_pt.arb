@@ -23,6 +23,10 @@
   "buzzer": "Buzzer",
   "alarm": "Alarme",
 
+  "@main_screen": {"description": "STRINGS USADAS NO main_screen"},
+  "tabDashboard": "Dashboard",
+  "tabGraphics": "Gráficos",
+
   "@button_more_options": {"description": "STRINGS USADAS NO button_more_options"},
   "configAdvanced": "Configurações de conexão avançadas",
   "comProtocol": "Protocolo de comunicação",

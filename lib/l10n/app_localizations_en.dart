@@ -60,6 +60,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alarm => 'Alarm';
 
   @override
+  String get tabDashboard => 'Dashboard';
+
+  @override
+  String get tabGraphics => 'Gráficos';
+
+  @override
   String get configAdvanced => 'Configuration of advanced connection';
 
   @override
