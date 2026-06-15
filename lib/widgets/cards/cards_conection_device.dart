@@ -20,7 +20,6 @@ class _CardsConectionDeviceState extends State<CardsConectionDevice> {
         title: Text(widget.deviceName),
         subtitle: Text(widget.deviceStatus),
         leading: Icon(Icons.circle, color: widget.deviceStatus == 'Conectado' ? Colors.green : Colors.red), 
-        trailing: Icon(Icons.settings),
       ),
     );
   }
