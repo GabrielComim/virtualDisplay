@@ -5,10 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
-import 'package:virtual_display/services/mqtt/mqtt_message_processor.dart';
 import 'package:virtual_display/services/mqtt/mqtt_publish.dart';
 import 'package:virtual_display/services/mqtt/mqtt_services.dart';
-import 'package:virtual_display/services/mqtt/topic_manager.dart';
 import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
@@ -71,10 +69,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
 
-    // Faz o processamento da mensagem recebida
-    mqttService.onMessageReceived = MqttMessageProcessor().process;
-    // Increve-se nos tópicos necessários
-    topicsInitialization(mqttService);
     // Envia requisição das configurações iniciais
     MqttPublish(mqttService).requestConfig(); 
   }

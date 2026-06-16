@@ -67,6 +67,8 @@ class Constants {
   static const String mqttCredentialsPassword = "Virtual_display0@";
 
   // Tópicos MQTT
+  static const String mqttTopicRequestDevice = 'virtualDisplay/request_device';
+  static const String mqttTopicResponseDevice = 'virtualDisplay/response_device';
   static const String mqttTopicTest = 'virtualDisplay/test';
   static const String mqttTopicData = 'virtualDisplay/data';
   static const String mqttTopicConfig = 'virtualDisplay/config';
@@ -78,4 +80,6 @@ class Constants {
   static const String topicData = '/data';
   static const String topicRequestConfig = '/request_config';
   static const String topicConfigAck = '/config_ack';
+  static const String topicRequestDevice = '/request_device';
+  static const String topicResponseDevice = '/response_device';
 }

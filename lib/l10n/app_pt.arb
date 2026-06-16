@@ -10,6 +10,9 @@
   "failConnectionMqtt": "Falha ao conectar ao broker MQTT",
   "successConnection": "Conectado com sucesso",
 
+  "@devices_screen": {"description": "STRINGS USADAS NO devices_screen"},
+  "labelIconRefresh": "Atualizar conexões",
+
   "@cardDashboardNumeric": {"description": "STRINGS USADAS NO cardDashboardNumeric"},
   "speed": "Velocidade",
   "temperature": "Temperatura",

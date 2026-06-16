@@ -10,9 +10,13 @@ class MqttPublish {
   // construtor
   MqttPublish(this.mqttService);
 
+  // Solicita nome do dispositivo
+  void requestDeviceName() {
+    mqttService.publish(Constants.mqttTopicRequestDevice, jsonEncode({'command': 'getDeviceName'}));
+  }
   // Solicita a configuração inicial ao dispositivo
   void requestConfig() {
-    mqttService.publish(Constants.mqttTopicTest, jsonEncode({'command': 'getConfig'}));
+    mqttService.publish(Constants.mqttTopicConfig, jsonEncode({'command': 'getConfig'}));
   }
 
   // Confirma que recebeu a configuração inicial

@@ -119,6 +119,12 @@ abstract class AppLocalizations {
   /// **'Conectado com sucesso'**
   String get successConnection;
 
+  /// No description provided for @labelIconRefresh.
+  ///
+  /// In pt, this message translates to:
+  /// **'Atualizar conexões'**
+  String get labelIconRefresh;
+
   /// No description provided for @speed.
   ///
   /// In pt, this message translates to:

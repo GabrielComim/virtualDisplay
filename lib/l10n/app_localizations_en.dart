@@ -21,6 +21,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get successConnection => 'Conectado com sucesso';
 
   @override
+  String get labelIconRefresh => 'Atualizar conexões';
+
+  @override
   String get speed => 'Velocidade';
 
   @override

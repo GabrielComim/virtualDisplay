@@ -8,7 +8,7 @@ import 'package:virtual_display/widgets/show_material_banner.dart';
 
 class CardsDevices extends StatefulWidget {
   final String deviceName;
-  final String deviceStatus;
+  final bool deviceStatus;
 
   // Construtor
   const CardsDevices({
@@ -29,44 +29,70 @@ class _CardsDevicesState extends State<CardsDevices> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        // Tenta se conectar com o broker MQTT antes de trocar de tela
-        final connected = await mqttConnection(mqttServices);
-        if (connected) {
-          // Informa o usuário que se conectou
-          if (context.mounted) {
-            ShowBanner.messengerShow(context, AppLocalizations.of(context)!.successConnection, false);
-          }
-          
-          // Se a conexão for bem-sucedida, navega para a tela principal
-          if (context.mounted) {
-            Navigator.pushNamed(
-              context,
-              Constants.screenMain,
-              arguments: {
-                'typeCard': tests.typeCard,
-                'idCard': tests.idCard,
-                'minValue': tests.minValue,
-                'maxValue': tests.maxValue,
-                'title': tests.title,
-                'value': tests.value,
-                'unit': tests.unit,
-              },
-            );
+        // Só tente se conectar se já não estiver conectado
+        if (widget.deviceStatus == false) {
+          // Tenta se conectar com o broker MQTT antes de trocar de tela
+          final connected = await mqttConnection(mqttServices);
+          if (connected) {
+            // Informa o usuário que se conectou
+            if (context.mounted) {
+              ShowBanner.messengerShow(
+                context,
+                AppLocalizations.of(context)!.successConnection,
+                false,
+              );
+            }
+
+            // Se a conexão for bem-sucedida, navega para a tela principal
+            if (context.mounted) {
+              Navigator.pushNamed(
+                context,
+                Constants.screenMain,
+                arguments: {
+                  'typeCard': tests.typeCard,
+                  'idCard': tests.idCard,
+                  'minValue': tests.minValue,
+                  'maxValue': tests.maxValue,
+                  'title': tests.title,
+                  'value': tests.value,
+                  'unit': tests.unit,
+                },
+              );
+            }
+          } else {
+            // Se a conexão falhar, exibe uma mensagem de erro
+            if (context.mounted) {
+              ShowBanner.messengerShow(
+                context,
+                AppLocalizations.of(context)!.failConnectionMqtt,
+                true,
+              );
+            }
           }
         } else {
-          // Se a conexão falhar, exibe uma mensagem de erro
-          if (context.mounted) {
-            ShowBanner.messengerShow(context, AppLocalizations.of(context)!.failConnectionMqtt, true);
-          }
+          // Se já está conectado, vai direto para próxima tela
+          Navigator.pushNamed(
+            context,
+            Constants.screenMain,
+            arguments: {
+              'typeCard': tests.typeCard,
+              'idCard': tests.idCard,
+              'minValue': tests.minValue,
+              'maxValue': tests.maxValue,
+              'title': tests.title,
+              'value': tests.value,
+              'unit': tests.unit,
+            },
+          );
         }
       },
       child: Card(
         child: ListTile(
           title: Text(widget.deviceName),
-          subtitle: Text(widget.deviceStatus),
+          subtitle: Text(widget.deviceStatus.toString()),
           leading: Icon(
             Icons.circle,
-            color: widget.deviceStatus == 'Conectado'
+            color: widget.deviceStatus == true
                 ? Colors.green
                 : Colors.red,
           ),
