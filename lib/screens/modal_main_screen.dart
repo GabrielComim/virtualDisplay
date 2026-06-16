@@ -27,6 +27,7 @@ Future<void> modalMainScreen(BuildContext context) {
                           labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: ColorScheme.of(context).secondary,
                           ),
+                          hintText: '${AppLocalizations.of(context)!.example}: mqtt://broker.hivemq.com:1883',
                           border: OutlineInputBorder(),
                         ),
                       ),

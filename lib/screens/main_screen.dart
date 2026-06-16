@@ -1,8 +1,11 @@
 // import 'dart:developer';
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
+import 'package:virtual_display/services/mqtt_services.dart';
 import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
@@ -46,7 +49,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List<CardsDashboard> cardsDashboard = [];
   CardsDashboard? draggedCard;
-
+  final mqttService = MqttServices();
+  
   Widget _dashboardView() {
     return SingleChildScrollView(
       child: StaggeredGrid.count(
@@ -168,6 +172,13 @@ class _MainScreenState extends State<MainScreen> {
         maxValue: widget.maxValue[index],
       ),
     );
+
+    mqttService.onMessageReceived = (topic, payload) {
+    setState(() {
+      // atualizar seus cards aqui
+    });
+    };
+    mqttService.subscribe(Constants.mqttTopicTest);
   }
 
   @override
@@ -181,16 +192,7 @@ class _MainScreenState extends State<MainScreen> {
             title: AppBarTitleCustom(
               textScreen: AppLocalizations.of(context)!.appTitle,
             ),
-            actions: [
-              buttonMoreOptions(context),
-            ],
-            // bottom: TabBar(
-            //   labelColor: ColorScheme.of(context).secondary,
-            //   tabs: [
-            //     Tab(text: AppLocalizations.of(context)!.tabDashboard),
-            //     Tab(text: AppLocalizations.of(context)!.tabGraphics),
-            //   ],
-            // ),
+            actions: [buttonMoreOptions(context)],
           ),
           body: SafeArea(
             child: Column(
@@ -201,13 +203,15 @@ class _MainScreenState extends State<MainScreen> {
                   deviceStatus: widget.deviceStatus,
                 ),
                 SizedBox(height: 16),
-                // CARDS DE DASHBOARD
                 Expanded(
                   child: TabBarView(
                     children: [
+                      // CARDS DE DASHBOARD
                       // Cria um grid que se auto ajusta conforme o tamanho de cada card, neste caso conforme o tipo do card.
-                      _dashboardView(), 
-                      _graphicsView()],
+                      _dashboardView(),
+                      // Aba com os gráficos, que ainda não foi implementada, mas já está estruturada para receber os gráficos futuramente.
+                      _graphicsView(),
+                    ],
                   ),
                 ),
               ],
@@ -229,8 +233,8 @@ class _MainScreenState extends State<MainScreen> {
                     icon: Icon(Icons.show_chart),
                     text: AppLocalizations.of(context)!.tabGraphics,
                   ),
-                ]
-              )
+                ],
+              ),
             ),
           ),
         ),

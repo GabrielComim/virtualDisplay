@@ -23,7 +23,7 @@ class _DevicesScreenState extends State<DevicesScreen> {
         body: Column(
           children: [
             SizedBox(height: 20), // Espaçamento entre o AppBar e o primeiro card
-            CardsDevices(deviceName: 'Dispositivo 1', deviceStatus: 'Conectado'),
+            CardsDevices(deviceName: 'Dispositivo 1', deviceStatus: 'Desconectado'),
             SizedBox(height: 20), 
             CardsDevices(deviceName: 'Dispositivo 2', deviceStatus: 'Desconectado'),
             SizedBox(height: 20),
