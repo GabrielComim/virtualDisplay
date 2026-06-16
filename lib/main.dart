@@ -5,6 +5,7 @@ import 'package:virtual_display/theme/app_theme.dart';
 
 // Usado para suporte a múltiplos idiomas
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:virtual_display/utils/globals.dart';
 import 'l10n/app_localizations.dart';
 // Telas
 import 'package:virtual_display/screens/main_screen.dart';
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey:
+          scaffoldMessengerKey, // Key para mostrar banners globalmente
       // Configurações de localização para suporte a múltiplos idiomas
       localizationsDelegates: const [
         AppLocalizations.delegate,

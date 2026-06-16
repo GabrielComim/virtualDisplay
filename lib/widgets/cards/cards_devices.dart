@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:virtual_display/services/mqtt_services.dart';
+import 'package:virtual_display/l10n/app_localizations.dart';
+import 'package:virtual_display/services/mqtt/mqtt_connection.dart';
+import 'package:virtual_display/services/mqtt/mqtt_services.dart';
 import 'package:virtual_display/tests.dart';
 import 'package:virtual_display/utils/constants.dart';
+import 'package:virtual_display/widgets/show_material_banner.dart';
 
 class CardsDevices extends StatefulWidget {
   final String deviceName;
@@ -27,22 +30,13 @@ class _CardsDevicesState extends State<CardsDevices> {
     return InkWell(
       onTap: () async {
         // Tenta se conectar com o broker MQTT antes de trocar de tela
-        final connected = await mqttServices.connect(
-          broker: 'cebea07170a6456b831f1051f9f9ce47.s1.eu.hivemq.cloud',
-          clientId: 'client_app',
-          port: 8883,
-        );
+        final connected = await mqttConnection(mqttServices);
         if (connected) {
-          // Publicação de teste
-          mqttServices.publish(
-            Constants.mqttTopicTest, 
-            '''
-            {
-              "device":"Flutter",
-              "msg":"Conectado"
-            }
-            '''
-          );
+          // Informa o usuário que se conectou
+          if (context.mounted) {
+            ShowBanner.messengerShow(context, AppLocalizations.of(context)!.successConnection, false);
+          }
+          
           // Se a conexão for bem-sucedida, navega para a tela principal
           if (context.mounted) {
             Navigator.pushNamed(
@@ -62,9 +56,7 @@ class _CardsDevicesState extends State<CardsDevices> {
         } else {
           // Se a conexão falhar, exibe uma mensagem de erro
           if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Falha ao conectar ao broker MQTT')),
-            );
+            ShowBanner.messengerShow(context, AppLocalizations.of(context)!.failConnectionMqtt, true);
           }
         }
       },

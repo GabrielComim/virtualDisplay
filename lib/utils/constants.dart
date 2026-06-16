@@ -68,4 +68,14 @@ class Constants {
 
   // Tópicos MQTT
   static const String mqttTopicTest = 'virtualDisplay/test';
+  static const String mqttTopicData = 'virtualDisplay/data';
+  static const String mqttTopicConfig = 'virtualDisplay/config';
+  static const String mqttTopicRequestConfig = 'virtualDisplay/request_config';
+  static const String mqttTopicConfigAck = 'virtualDisplay/config_ack';
+
+  // Usado para lógica de comparação
+  static const String topicConfig = '/config';
+  static const String topicData = '/data';
+  static const String topicRequestConfig = '/request_config';
+  static const String topicConfigAck = '/config_ack';
 }

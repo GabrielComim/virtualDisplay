@@ -107,6 +107,18 @@ abstract class AppLocalizations {
   /// **'Dispositivos conhecidos'**
   String get devicesKnown;
 
+  /// No description provided for @failConnectionMqtt.
+  ///
+  /// In pt, this message translates to:
+  /// **'Falha ao conectar ao broker MQTT'**
+  String get failConnectionMqtt;
+
+  /// No description provided for @successConnection.
+  ///
+  /// In pt, this message translates to:
+  /// **'Conectado com sucesso'**
+  String get successConnection;
+
   /// No description provided for @speed.
   ///
   /// In pt, this message translates to:

@@ -6,6 +6,10 @@
   "@appBarCustom": {"description": "STRINGS USADAS NO appBarCustom"},
   "devicesKnown": "Dispositivos conhecidos",
 
+  "@ScaffoldMessenger": {"description": "STRINGS USADAS NO ScaffoldMessenger"},
+  "failConnectionMqtt": "Falha ao conectar ao broker MQTT",
+  "successConnection": "Conectado com sucesso",
+
   "@cardDashboardNumeric": {"description": "STRINGS USADAS NO cardDashboardNumeric"},
   "speed": "Velocidade",
   "temperature": "Temperatura",

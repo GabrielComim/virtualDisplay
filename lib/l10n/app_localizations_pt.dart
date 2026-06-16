@@ -15,6 +15,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get devicesKnown => 'Dispositivos conhecidos';
 
   @override
+  String get failConnectionMqtt => 'Falha ao conectar ao broker MQTT';
+
+  @override
+  String get successConnection => 'Conectado com sucesso';
+
+  @override
   String get speed => 'Velocidade';
 
   @override

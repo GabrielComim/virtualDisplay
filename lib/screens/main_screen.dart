@@ -1,11 +1,14 @@
 // import 'dart:developer';
 
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
-import 'package:virtual_display/services/mqtt_services.dart';
+import 'package:virtual_display/services/mqtt/mqtt_message_processor.dart';
+import 'package:virtual_display/services/mqtt/mqtt_publish.dart';
+import 'package:virtual_display/services/mqtt/mqtt_services.dart';
+import 'package:virtual_display/services/mqtt/topic_manager.dart';
 import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
@@ -51,6 +54,92 @@ class _MainScreenState extends State<MainScreen> {
   CardsDashboard? draggedCard;
   final mqttService = MqttServices();
   
+  @override
+  void initState() {
+    super.initState();
+    // Inicializa a lista de cards do dashboard com os dados recebidos
+    cardsDashboard = List.generate(
+      widget.idCard.length,
+      (index) => CardsDashboard(
+        id: widget.idCard[index],
+        typeCard: widget.typeCard[index],
+        title: widget.title[index],
+        value: widget.value[index],
+        unit: widget.unit[index],
+        minValue: widget.minValue[index],
+        maxValue: widget.maxValue[index],
+      ),
+    );
+
+    // Faz o processamento da mensagem recebida
+    mqttService.onMessageReceived = MqttMessageProcessor().process;
+    // Increve-se nos tópicos necessários
+    topicsInitialization(mqttService);
+    // Envia requisição das configurações iniciais
+    MqttPublish(mqttService).requestConfig(); 
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: decorationInitScreen(),
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: AppBarTitleCustom(
+              textScreen: AppLocalizations.of(context)!.appTitle,
+            ),
+            actions: [buttonMoreOptions(context)],
+          ),
+          body: SafeArea(
+            child: Column(
+              children: [
+                // CARD DE CONEXÃO DO DISPOSITIVO
+                CardsConectionDevice(
+                  deviceName: widget.deviceName,
+                  deviceStatus: widget.deviceStatus,
+                ),
+                SizedBox(height: 16),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      // CARDS DE DASHBOARD
+                      // Cria um grid que se auto ajusta conforme o tamanho de cada card, neste caso conforme o tipo do card.
+                      _dashboardView(),
+                      // Aba com os gráficos, que ainda não foi implementada, mas já está estruturada para receber os gráficos futuramente.
+                      _graphicsView(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          bottomNavigationBar: SafeArea(
+            top: false,
+            child: Material(
+              // color: Theme.of(context).colorScheme.surface,
+              color: AppColors.cardConnectionBackground,
+              child: TabBar(
+                labelColor: ColorScheme.of(context).secondary,
+                tabs: [
+                  Tab(
+                    icon: Icon(Icons.dashboard),
+                    text: AppLocalizations.of(context)!.tabDashboard,
+                  ),
+                  Tab(
+                    icon: Icon(Icons.show_chart),
+                    text: AppLocalizations.of(context)!.tabGraphics,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _dashboardView() {
     return SingleChildScrollView(
       child: StaggeredGrid.count(
@@ -153,92 +242,6 @@ class _MainScreenState extends State<MainScreen> {
           ),
         );
       },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // Inicializa a lista de cards do dashboard com os dados recebidos
-    cardsDashboard = List.generate(
-      widget.idCard.length,
-      (index) => CardsDashboard(
-        id: widget.idCard[index],
-        typeCard: widget.typeCard[index],
-        title: widget.title[index],
-        value: widget.value[index],
-        unit: widget.unit[index],
-        minValue: widget.minValue[index],
-        maxValue: widget.maxValue[index],
-      ),
-    );
-
-    mqttService.onMessageReceived = (topic, payload) {
-    setState(() {
-      // atualizar seus cards aqui
-    });
-    };
-    mqttService.subscribe(Constants.mqttTopicTest);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: decorationInitScreen(),
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: AppBarTitleCustom(
-              textScreen: AppLocalizations.of(context)!.appTitle,
-            ),
-            actions: [buttonMoreOptions(context)],
-          ),
-          body: SafeArea(
-            child: Column(
-              children: [
-                // CARD DE CONEXÃO DO DISPOSITIVO
-                CardsConectionDevice(
-                  deviceName: widget.deviceName,
-                  deviceStatus: widget.deviceStatus,
-                ),
-                SizedBox(height: 16),
-                Expanded(
-                  child: TabBarView(
-                    children: [
-                      // CARDS DE DASHBOARD
-                      // Cria um grid que se auto ajusta conforme o tamanho de cada card, neste caso conforme o tipo do card.
-                      _dashboardView(),
-                      // Aba com os gráficos, que ainda não foi implementada, mas já está estruturada para receber os gráficos futuramente.
-                      _graphicsView(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          bottomNavigationBar: SafeArea(
-            top: false,
-            child: Material(
-              // color: Theme.of(context).colorScheme.surface,
-              color: AppColors.cardConnectionBackground,
-              child: TabBar(
-                labelColor: ColorScheme.of(context).secondary,
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.dashboard),
-                    text: AppLocalizations.of(context)!.tabDashboard,
-                  ),
-                  Tab(
-                    icon: Icon(Icons.show_chart),
-                    text: AppLocalizations.of(context)!.tabGraphics,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
