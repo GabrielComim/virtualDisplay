@@ -4,8 +4,9 @@ import 'package:virtual_display/utils/constants.dart';
 class CardsDashboardNumeric extends StatefulWidget {
   final String title;
   final String id;
-  final int value;
+  final double value;
   final String? unit;
+  final String? decimal;
   final int? min;
   final int? max;
 
@@ -16,6 +17,7 @@ class CardsDashboardNumeric extends StatefulWidget {
     required this.id,
     required this.value,
     this.unit,
+    this.decimal,
     this.min,
     this.max,
   });
@@ -24,7 +26,7 @@ class CardsDashboardNumeric extends StatefulWidget {
   State<CardsDashboardNumeric> createState() => _CardsDashboardNumericState();
 }
 
-Widget _typeCardDashboardNumeric(BuildContext context, String id, int value) {
+Widget _typeCardDashboardNumeric(BuildContext context, String id, double value) {
   switch (id) {
     // CARD DE VELOCIDADE
     case Constants.cardIdSpeed:
@@ -89,7 +91,7 @@ class _CardsDashboardNumericState extends State<CardsDashboardNumeric> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Text(
-              '${widget.value} ${widget.unit}',
+              '${(widget.value).toStringAsFixed(int.parse(widget.decimal ?? '0'))} ${widget.unit ?? ''}',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
             ),
             SizedBox(height: 8),

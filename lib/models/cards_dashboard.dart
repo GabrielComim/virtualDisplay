@@ -7,7 +7,7 @@ class CardsDashboard {
   final int? min;     // Valor mínimo para cada card
   final int? max;     // Valor máximo para cada card
   final bool? history;    // Se deve guardar histórico para criar gráficos
-  final String value;     // Valor 
+  String value;     // Valor 
 
   CardsDashboard({
     required this.id,

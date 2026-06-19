@@ -14,4 +14,13 @@ class DashboardViewmodel extends ChangeNotifier {
     cards.insert(destino, item);
     notifyListeners();
   }
+
+  void updateValues(Map<String, dynamic> json) {
+    for(final card in cards) {
+      if(json.containsKey(card.title)) {
+        card.value = json[card.title].toString();
+      }
+    }
+    notifyListeners();
+  }
 }

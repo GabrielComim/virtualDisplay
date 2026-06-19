@@ -130,7 +130,8 @@ class _MainScreenState extends State<MainScreen> {
       return CardsDashboardNumeric(
         title: card.title,
         id: card.id,
-        value: int.tryParse(card.value) ?? 0,
+        value: double.tryParse(card.value) ?? 0,
+        decimal: card.decimal,
         unit: card.unit,
         min: card.min,
         max: card.max,

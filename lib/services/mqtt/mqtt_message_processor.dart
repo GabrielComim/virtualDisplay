@@ -24,19 +24,25 @@ class MqttMessageProcessor {
   void process(String topic, String payload) {
     try {
       final Map<String, dynamic> json = jsonDecode(payload);
+      
       // Recebe as configurações
       if (topic.endsWith(Constants.topicResponseConfig)) {
         _processConfig(json);
         // Confirma recebimento das configurações iniciais
         mqttPublishViewModel.configAck();
       }
+      
       // recebe o valor de cada item
       else if (topic.endsWith(Constants.topicData)) {
-        _processData(payload);
-      } else {
+        _processData(json);
+      } 
+      
+      else {
         log('MENSAGEM AINDA NÃO IMPLEMENTADA: $payload');
       }
-    } catch (e) {
+    } 
+    
+    catch (e) {
       log('Erro ao decodificar o JSON: $e');
     }
   }
@@ -56,5 +62,9 @@ class MqttMessageProcessor {
     dashboardViewmodel.updateCards(widgets);
   }
 
-  void _processData(String json) {}
+  void _processData(Map<String, dynamic> json) {
+    log('Process data');
+    final values = json['values'] as Map<String, dynamic>;
+    dashboardViewmodel.updateValues(values);
+  }
 }
