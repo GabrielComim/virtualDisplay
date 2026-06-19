@@ -31,8 +31,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<CardsDashboard> cardsDashboard = [];
-  CardsDashboard? draggedCard;
 
   @override
   void initState() {
@@ -167,15 +165,13 @@ class _MainScreenState extends State<MainScreen> {
   Widget _buildDragTarget(CardsDashboard card) {
     return DragTarget<CardsDashboard>(
       onAcceptWithDetails: (details) {
-        final origem = cardsDashboard.indexOf(details.data);
-        final destino = cardsDashboard.indexOf(card);
+        final viewModel = context.read<DashboardViewmodel>();
+        final origem = viewModel.cards.indexOf(details.data);
+        final destino = viewModel.cards.indexOf(card);
 
         if (origem == destino) return;
 
-        setState(() {
-          final item = cardsDashboard.removeAt(origem);
-          cardsDashboard.insert(destino, item);
-        });
+        viewModel.moveCard(origem, destino);
       },
 
       builder: (context, candidateData, rejectedData) {

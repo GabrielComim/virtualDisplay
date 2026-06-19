@@ -8,4 +8,10 @@ class DashboardViewmodel extends ChangeNotifier {
     cards = newCards;
     notifyListeners();
   }
+
+  void moveCard(int origem, int destino) {
+    final item = cards.removeAt(origem);
+    cards.insert(destino, item);
+    notifyListeners();
+  }
 }
