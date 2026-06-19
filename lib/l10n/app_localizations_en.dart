@@ -141,10 +141,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bodyPageFourHowToSendProtocolThree => 'Este ID é utilizado para tipo de dados String';
 
   @override
-  String get bodyPageFiveHowToSendProtocol => 'É neste tópico que o valor do item será atualizado.\n Exemplo: Se for um sensor de temperatura, neste item será informado apenas o valor, algo como: 25,5.';
+  String get bodyPageFiveHowToSendProtocol => 'É neste tópico que o valor do item será atualizado.\n';
 
   @override
-  String get bodyPageFiveHowToSendProtocolTwo => 'Seguir até item20\n';
+  String get bodyPageFiveHowToSendProtocolTwo => 'Se for um sensor de temperatura, deve-se colocar o título do item e o valor algo como:\n';
 
   @override
   String get bodyPageSixHowToSendProtocol => 'Inscreva-se nos tópicos:\n   virtualDisplay/waiting_config\n\nNeste tópico se você receber true quer dizer que o app está aguardando o envio das configurações. False quer dizer que ele possui configurações válidas.';

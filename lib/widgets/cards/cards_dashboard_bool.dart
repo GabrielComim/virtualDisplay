@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:virtual_display/utils/constants.dart';
+import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
 import 'package:virtual_display/widgets/circle_status.dart';
 
 class CardsDashboardBool extends StatefulWidget {
   final String title;
   final String id;
   final bool value;
+  final bool activeButton;
 
   // Construtor
   const CardsDashboardBool({
@@ -13,6 +16,7 @@ class CardsDashboardBool extends StatefulWidget {
     required this.title,
     required this.id,
     required this.value,
+    required this.activeButton,
   });
 
   @override
@@ -20,6 +24,14 @@ class CardsDashboardBool extends StatefulWidget {
 }
 
 class _CardsDashboardBoolState extends State<CardsDashboardBool> {
+  bool valueButton = false;
+  
+  void _onButtonBool() {  
+    valueButton = !valueButton;
+    final MqttPublishVm mqttPublish = context.read<MqttPublishVm>();
+    mqttPublish.sendButton(valueButton);
+  }
+
   Widget _typeCardDashboardBool(BuildContext context, String id) {
     switch (id) {
       // CARD DE GPS
@@ -65,6 +77,14 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
                 ),
               ],
             ),
+            if (widget.activeButton) ...[
+              ElevatedButton.icon(
+                iconAlignment: IconAlignment.end,
+                onPressed: _onButtonBool, 
+                label: Text(''),
+                icon: Image.asset(Constants.iconButton, width: 20, height: 20),
+              ),
+            ],
           ],
         ),
       ),

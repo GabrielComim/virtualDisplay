@@ -15,4 +15,9 @@ class MqttPublishVm extends ChangeNotifier{
   void configAck() {
     MqttServices().publish(Constants.mqttTopicConfigAck, jsonEncode({'received': 'true'}));
   }
+
+  // Envia valor do botão
+  void sendButton(bool value) {
+    MqttServices().publish(Constants.mqttTopicButton, jsonEncode({'button': value}));
+  }
 }

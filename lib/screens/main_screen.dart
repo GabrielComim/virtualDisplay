@@ -143,6 +143,7 @@ class _MainScreenState extends State<MainScreen> {
         title: card.title,
         id: card.id,
         value: card.value == 'true',
+        activeButton: true,
       );
     }
 

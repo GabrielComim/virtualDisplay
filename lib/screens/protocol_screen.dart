@@ -58,6 +58,7 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
                       "min":"VALOR_MINIMO_ACEITAVEL",
                       "max":"VALOR_MAXIMO_ACEITAVEL",
                       "history":"TRUE_OU_FALSE",
+                      "value":"1"
                     }
                     ]
                   }
@@ -79,18 +80,19 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
                   "device":"ESP32",
                   "widgets":[
                   {
-                    "id":"Temperatura",
-                    "type":"Numerico",
+                    "id":"temperature",
+                    "type":"number",
                     "title":"Sensor temp",
                     "decimal":"1",
                     "unit":"celsius",
                     "min":"-55.0",
                     "max":"200",
-                    "history":"true"
+                    "history":"true",
+                    "value:"10"
                   },
                   { 
-                    "id":"GPS",
-                    "type":"Booleano",
+                    "id":"gps",
+                    "type":"bool",
                     "title":"Modulo GPS"
                   }
                   ]
@@ -150,22 +152,16 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
               context: context,
               text: 
               '''${AppLocalizations.of(context)!.bodyPageFiveHowToSendProtocol}
-              virtualDisplay/data/item1
-              virtualDisplay/data/item2
-              virtualDisplay/data/item3
+              virtualDisplay/data
              
               ${AppLocalizations.of(context)!.bodyPageFiveHowToSendProtocolTwo}
-              JSON:
-             
               ${AppLocalizations.of(context)!.example}
+              JSON:
               {
-                "device":"NOME_DO_DISPOSITIVO",
-                "widgets":[
-                  {
-                    "id":"ID_DO_ITEM",
-                    "value":"VALOR_DO_ITEM"
-                  }
-                ]
+                "device":"ESP32",
+                "values": {
+                  "Sensor temp.": "60.45"
+                }
               }
               ''',
               type: Constants.bodyText2,

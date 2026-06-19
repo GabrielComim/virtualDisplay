@@ -74,3 +74,105 @@ class Tests {
     ''
   ]; // Unidades para cada card
 }
+
+// JSON para teste
+/**
+ * {
+  "device":"ESP32",
+  "widgets": [
+    {
+      "id": "temperature",
+      "type": "number",
+      "title": "Sensor temp.",
+      "decimal": "2",
+      "unit": "celsius",
+      "min": "-55.0",
+      "max": "200",
+      "history": "true",
+      "value":"10"
+    },
+    {
+      "id": "speed",
+      "type": "number",
+      "title": "Veloc.",
+      "decimal": "1",
+      "unit": "RPM",
+      "min": "0",
+      "max": "200",
+      "history": "true",
+      "value":"95"
+    },
+    {
+      "id": "led",
+      "type": "bool",
+      "title": "Lamp. 1",
+      "value":"true"
+    },
+    {
+      "id": "gps",
+      "type": "bool",
+      "title": "Lamp. 2",
+      "value":"false"
+    },
+    {
+      "id": "message",
+      "type": "string",
+      "title": "Alertas",
+      "value":"Erro na comunicação"
+    }
+  ],
+ "device":"STM32",
+  "widgets": [
+    {
+      "id": "temperature",
+      "type": "number",
+      "title": "Sensor temp.",
+      "decimal": "1",
+      "unit": "celsius",
+      "min": "-55.0",
+      "max": "200",
+      "history": "true",
+      "value":"10"
+    },
+    {
+      "id": "speed",
+      "type": "number",
+      "title": "Veloc.",
+      "decimal": "1",
+      "unit": "RPM",
+      "min": "0",
+      "max": "200",
+      "history": "true",
+      "value":"95"
+    },
+    {
+      "id": "led",
+      "type": "bool",
+      "title": "Lamp. 1",
+      "value":"true"
+    },
+    {
+      "id": "gps",
+      "type": "bool",
+      "title": "Lamp. 2",
+      "value":"false"
+    },
+    {
+      "id": "message",
+      "type": "string",
+      "title": "Alertas",
+      "value":"Erro na comunicação"
+    }
+  ]
+}
+
+
+{
+  "values": {
+    "Sensor temp.": "60.45",
+    "Lamp. 2": true,
+    "Veloc.":"91",
+   "Alertas":"Erro não identificado"
+  }
+}
+ */

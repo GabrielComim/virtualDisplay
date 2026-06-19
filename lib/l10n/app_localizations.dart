@@ -362,13 +362,13 @@ abstract class AppLocalizations {
   /// No description provided for @bodyPageFiveHowToSendProtocol.
   ///
   /// In pt, this message translates to:
-  /// **'É neste tópico que o valor do item será atualizado.\n Exemplo: Se for um sensor de temperatura, neste item será informado apenas o valor, algo como: 25,5.'**
+  /// **'É neste tópico que o valor do item será atualizado.\n'**
   String get bodyPageFiveHowToSendProtocol;
 
   /// No description provided for @bodyPageFiveHowToSendProtocolTwo.
   ///
   /// In pt, this message translates to:
-  /// **'Seguir até item20\n'**
+  /// **'Se for um sensor de temperatura, deve-se colocar o título do item e o valor algo como:\n'**
   String get bodyPageFiveHowToSendProtocolTwo;
 
   /// No description provided for @bodyPageSixHowToSendProtocol.

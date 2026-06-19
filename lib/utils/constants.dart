@@ -46,6 +46,7 @@ class Constants {
   static const String iconLed = 'assets/icons/icon_led.png';
   static const String iconBuzzer = 'assets/icons/icon_buzzer.png';
   static const String iconAlarm = 'assets/icons/icon_alarm.png';
+  static const String iconButton = 'assets/icons/icon_button.png';
 
   // Tipos de textos
   static const String titleText1 =    'text1';
@@ -75,6 +76,7 @@ class Constants {
   static const String mqttTopicResponseConfig = 'virtualDisplay/response_config';
   static const String mqttTopicRequestConfig = 'virtualDisplay/request_config';
   static const String mqttTopicConfigAck = 'virtualDisplay/config_ack';
+  static const String mqttTopicButton = 'virtualDisplay/button';
 
   // Usado para lógica de comparação
   static const String topicData = '/data';
