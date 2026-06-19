@@ -5,7 +5,7 @@ class CardsDashboardNumeric extends StatefulWidget {
   final String title;
   final String id;
   final int value;
-  final String unit;
+  final String? unit;
   final int? min;
   final int? max;
 
@@ -15,7 +15,7 @@ class CardsDashboardNumeric extends StatefulWidget {
     required this.title,
     required this.id,
     required this.value,
-    required this.unit,
+    this.unit,
     this.min,
     this.max,
   });

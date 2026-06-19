@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
-import 'package:virtual_display/services/mqtt/mqtt_connection.dart';
-import 'package:virtual_display/services/mqtt/mqtt_services.dart';
+import 'package:virtual_display/viewModel/mqtt_connection_vm.dart';
 import 'package:virtual_display/tests.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/widgets/show_material_banner.dart';
@@ -23,16 +23,21 @@ class CardsDevices extends StatefulWidget {
 
 class _CardsDevicesState extends State<CardsDevices> {
   final Tests tests = Tests();
-  final MqttServices mqttServices = MqttServices();
+
+  @override 
+  void initState () {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final MqttConnectionVm mqttConnectionViewModel = context.read<MqttConnectionVm>();
     return InkWell(
       onTap: () async {
         // Só tente se conectar se já não estiver conectado
         if (widget.deviceStatus == false) {
           // Tenta se conectar com o broker MQTT antes de trocar de tela
-          final connected = await mqttConnection(mqttServices);
+          final connected = await mqttConnectionViewModel.mqttConnection();
           if (connected) {
             // Informa o usuário que se conectou
             if (context.mounted) {

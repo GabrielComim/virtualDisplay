@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/screens/protocol_screen.dart';
+import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
+import 'package:virtual_display/viewModel/mqtt_connection_vm.dart';
+import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/theme/app_theme.dart';
 
 // Usado para suporte a múltiplos idiomas
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:virtual_display/utils/globals.dart';
+// ViewModels
 import 'package:virtual_display/viewModel/devices_viewmodel.dart';
 import 'l10n/app_localizations.dart';
 // Telas
@@ -19,7 +23,12 @@ import 'package:virtual_display/screens/devices_screen.dart';
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => DevicesViewModel())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => DevicesViewModel()),
+        ChangeNotifierProvider(create: (_) => MqttPublishVm()),
+        ChangeNotifierProvider(create: (_) => MqttConnectionVm()),
+        ChangeNotifierProvider(create: (_) => DashboardViewmodel()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -54,32 +63,11 @@ class MyApp extends StatelessWidget {
           
           final deviceName = (args?['deviceName'] as String? ?? 'Dis');
           final deviceStatus = (args?['deviceStatus'] as String? ?? 'Conectado');
-          final List<String> typeCard =
-              (args?['typeCard'] as List<dynamic>?)?.cast<String>() ?? [];
-          final List<int> minValue =
-              (args?['minValue'] as List<dynamic>?)?.cast<int>() ?? [];
-          final List<int> maxValue =
-              (args?['maxValue'] as List<dynamic>?)?.cast<int>() ?? [];
-          final List<String> idCard =
-              (args?['idCard'] as List<dynamic>?)?.cast<String>() ?? [];
-          final List<String> title =
-              (args?['title'] as List<dynamic>?)?.cast<String>() ?? [];
-          final List<String> value =
-              (args?['value'] as List<dynamic>?)?.cast<String>() ?? [];
-          final List<String> unit =
-              (args?['unit'] as List<dynamic>?)?.cast<String>() ?? [];
 
           return PageRouteBuilder(
             pageBuilder: (_, _, _) => MainScreen(
               deviceName: deviceName,
               deviceStatus: deviceStatus,
-              idCard: idCard,
-              title: title,
-              value: value,
-              unit: unit,
-              typeCard: typeCard,
-              minValue: minValue,
-              maxValue: maxValue,
             ),
             transitionsBuilder: (_, animation, _, child) {
               return FadeTransition(opacity: animation, child: child);

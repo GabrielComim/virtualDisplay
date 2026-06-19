@@ -1,12 +1,9 @@
-// import 'dart:developer';
-
-// import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
-import 'package:virtual_display/services/mqtt/mqtt_publish.dart';
-import 'package:virtual_display/services/mqtt/mqtt_services.dart';
+import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
+import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
 import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
@@ -21,26 +18,12 @@ import 'package:virtual_display/widgets/cards/cards_dashboard_string.dart.dart';
 class MainScreen extends StatefulWidget {
   final String deviceName; // Nome do dispositivo
   final String deviceStatus; // Indica se o dispositivo está conectado ou não
-  final List<String> idCard; // Id do card
-  final List<String> typeCard; // Tipo de card a ser exibido
-  final List<String> title; // Título do card.
-  final List<String> value; // Valor a ser exibido
-  final List<String> unit; // Unidade de medida para cada card
-  final List<int> minValue; // Valor mínimo para cada card
-  final List<int> maxValue; // Valor máximo para cada card
 
   // Construtor
   const MainScreen({
     super.key,
     required this.deviceName,
     required this.deviceStatus,
-    required this.idCard,
-    required this.typeCard,
-    required this.title,
-    required this.value,
-    required this.unit,
-    required this.minValue,
-    required this.maxValue,
   });
 
   @override
@@ -50,27 +33,13 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List<CardsDashboard> cardsDashboard = [];
   CardsDashboard? draggedCard;
-  final mqttService = MqttServices();
-  
+
   @override
   void initState() {
     super.initState();
-    // Inicializa a lista de cards do dashboard com os dados recebidos
-    cardsDashboard = List.generate(
-      widget.idCard.length,
-      (index) => CardsDashboard(
-        id: widget.idCard[index],
-        typeCard: widget.typeCard[index],
-        title: widget.title[index],
-        value: widget.value[index],
-        unit: widget.unit[index],
-        minValue: widget.minValue[index],
-        maxValue: widget.maxValue[index],
-      ),
-    );
-
+    final MqttPublishVm mqttPublish = context.read<MqttPublishVm>();
     // Envia requisição das configurações iniciais
-    MqttPublish(mqttService).requestConfig(); 
+    mqttPublish.requestConfig();
   }
 
   @override
@@ -136,11 +105,15 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _dashboardView() {
     return SingleChildScrollView(
-      child: StaggeredGrid.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        children: _buildCards(),
+      child: Consumer<DashboardViewmodel>(
+        builder: (context, vm, child) {
+          return StaggeredGrid.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            children: _buildCards(vm.cards),
+          );
+        },
       ),
     );
   }
@@ -155,18 +128,18 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _buildCardContent(CardsDashboard card) {
-    if (card.typeCard == Constants.cardTypeNumber) {
+    if (card.type == Constants.cardTypeNumber) {
       return CardsDashboardNumeric(
         title: card.title,
         id: card.id,
         value: int.tryParse(card.value) ?? 0,
         unit: card.unit,
-        min: card.minValue,
-        max: card.maxValue,
+        min: card.min,
+        max: card.max,
       );
     }
 
-    if (card.typeCard == Constants.cardTypeBool) {
+    if (card.type == Constants.cardTypeBool) {
       return CardsDashboardBool(
         title: card.title,
         id: card.id,
@@ -181,11 +154,11 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  List<Widget> _buildCards() {
-    return cardsDashboard.map((card) {
+  List<Widget> _buildCards(List<dynamic> cards) {
+    return cards.map((card) {
       return StaggeredGridTile.fit(
-        key: ValueKey(card.id),
-        crossAxisCellCount: card.typeCard == Constants.cardTypeString ? 2 : 1,
+        key: ValueKey(card.title),
+        crossAxisCellCount: card.type == Constants.cardTypeString ? 2 : 1,
         child: _buildDragTarget(card),
       );
     }).toList();

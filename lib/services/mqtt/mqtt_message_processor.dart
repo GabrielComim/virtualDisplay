@@ -1,54 +1,60 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/device_info.dart';
 import 'package:virtual_display/utils/constants.dart';
+import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/devices_viewmodel.dart';
+import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
 
 // Implementa-se aqui o recebimento de mensagens via MQTT
 class MqttMessageProcessor {
   final DevicesViewModel devicesViewModel;
+  final MqttPublishVm mqttPublishViewModel;
+  final DashboardViewmodel dashboardViewmodel;
 
   // Construtor
-  MqttMessageProcessor(this.devicesViewModel);
+  MqttMessageProcessor(
+    this.devicesViewModel,
+    this.mqttPublishViewModel,
+    this.dashboardViewmodel,
+  );
 
   void process(String topic, String payload) {
-    if(topic.endsWith(Constants.topicConfig)) {
-        _processConfig(payload);
-    } 
-    else if(topic.endsWith(Constants.topicData)) {
-      _processData(payload);
-    } 
-    else if(topic.endsWith(Constants.topicRequestConfig)) {
-    } 
-    else if(topic.endsWith(Constants.topicConfigAck)) {
-    } 
-    else if(topic.endsWith(Constants.topicResponseDevice)) {
-      _processRequestDevice(payload);
-    } 
-    else {
-      log('MENSAGEM AINDA NÃO IMPLEMENTADA: $payload');
-    }
-  }
-
-  void _processConfig(String payload) {
-    // Converte o payload recebido de JSON para cada variável desejada
-  }
-  
-  void _processData(String payload) {
-
-  }
-
-  void _processRequestDevice(String payload) {
     try {
-      final Map<String, dynamic> json =  jsonDecode(payload);
-      final deviceName = json['device'];
-      log('Request device: $deviceName');
-      devicesViewModel.addDevice(DeviceInfo(device: deviceName, online: true));
-      log('MQTT usando VM: ${identityHashCode(devicesViewModel)}');
+      final Map<String, dynamic> json = jsonDecode(payload);
+      // Recebe as configurações
+      if (topic.endsWith(Constants.topicResponseConfig)) {
+        _processConfig(json);
+        // Confirma recebimento das configurações iniciais
+        mqttPublishViewModel.configAck();
+      }
+      // recebe o valor de cada item
+      else if (topic.endsWith(Constants.topicData)) {
+        _processData(payload);
+      } else {
+        log('MENSAGEM AINDA NÃO IMPLEMENTADA: $payload');
+      }
     } catch (e) {
       log('Erro ao decodificar o JSON: $e');
     }
-    
   }
+
+  // Processa a mensagem com as configurações iniciais
+  void _processConfig(Map<String, dynamic> json) {
+    List<CardsDashboard> widgets = (json['widgets'] as List)
+        .map((item) => CardsDashboard.fromJson(item))
+        .toList();
+    final String deviceName = json['device'] ?? '';
+    devicesViewModel.addDevice(DeviceInfo(device: deviceName, online: true));
+
+    // for (final widget in widgets) {
+    //   log('Card: ${widget.title}');
+    // }
+    // Cria os cards conforme o que recebeu via MQTT
+    dashboardViewmodel.updateCards(widgets);
+  }
+
+  void _processData(String json) {}
 }
