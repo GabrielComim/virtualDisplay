@@ -125,6 +125,18 @@ abstract class AppLocalizations {
   /// **'Atualizar conexões'**
   String get labelIconRefresh;
 
+  /// No description provided for @connected.
+  ///
+  /// In pt, this message translates to:
+  /// **'Conectado'**
+  String get connected;
+
+  /// No description provided for @disconnected.
+  ///
+  /// In pt, this message translates to:
+  /// **'Desconectado'**
+  String get disconnected;
+
   /// No description provided for @speed.
   ///
   /// In pt, this message translates to:

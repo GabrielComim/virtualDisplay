@@ -1,9 +1,9 @@
 class DeviceInfo {
-  final String deviceName;
+  final String device;
   final bool online;
 
   DeviceInfo({
-    required this.deviceName,
+    required this.device,
     required this.online,
   });
 }

@@ -75,6 +75,8 @@ class _CardsDevicesState extends State<CardsDevices> {
             context,
             Constants.screenMain,
             arguments: {
+              'deviceName': widget.deviceName,
+              'deviceStatus': (widget.deviceStatus) ? AppLocalizations.of(context)!.connected : AppLocalizations.of(context)!.disconnected,
               'typeCard': tests.typeCard,
               'idCard': tests.idCard,
               'minValue': tests.minValue,
@@ -89,7 +91,7 @@ class _CardsDevicesState extends State<CardsDevices> {
       child: Card(
         child: ListTile(
           title: Text(widget.deviceName),
-          subtitle: Text(widget.deviceStatus.toString()),
+          subtitle: Text((widget.deviceStatus) ? AppLocalizations.of(context)!.connected : AppLocalizations.of(context)!.disconnected),
           leading: Icon(
             Icons.circle,
             color: widget.deviceStatus == true

@@ -13,6 +13,10 @@
   "@devices_screen": {"description": "STRINGS USADAS NO devices_screen"},
   "labelIconRefresh": "Atualizar conexões",
 
+  "@cardDevices": {"description": "STRINGS USADAS NO cardDevices"},
+  "connected": "Conectado",
+  "disconnected": "Desconectado",
+
   "@cardDashboardNumeric": {"description": "STRINGS USADAS NO cardDashboardNumeric"},
   "speed": "Velocidade",
   "temperature": "Temperatura",

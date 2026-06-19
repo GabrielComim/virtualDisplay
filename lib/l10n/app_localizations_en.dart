@@ -24,6 +24,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get labelIconRefresh => 'Atualizar conexões';
 
   @override
+  String get connected => 'Conectado';
+
+  @override
+  String get disconnected => 'Desconectado';
+
+  @override
   String get speed => 'Velocidade';
 
   @override
