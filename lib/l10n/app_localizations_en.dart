@@ -151,4 +151,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bodyPageSixHowToSendProtocolTwo => 'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"ON\" ou \"OFF\".\n\n Para mais informações, acesse o link: ';
+
+  @override
+  String get noData => 'Sem dados';
 }

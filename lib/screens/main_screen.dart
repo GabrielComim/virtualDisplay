@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
+import 'package:virtual_display/models/item_sample.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
 import 'package:virtual_display/theme/colors.dart';
@@ -14,6 +15,7 @@ import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_bool.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_numeric.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_string.dart.dart';
+import 'package:virtual_display/widgets/item_line_chart.dart';
 
 class MainScreen extends StatefulWidget {
   final String deviceName; // Nome do dispositivo
@@ -31,7 +33,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -117,10 +118,49 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _graphicsView() {
-    return Center(
-      child: Text(
-        AppLocalizations.of(context)!.appTitle,
-        style: Theme.of(context).textTheme.headlineMedium,
+    return SingleChildScrollView(
+      child: Consumer<DashboardViewmodel>(
+        builder: (context, vm, child) {
+          final entries = vm.history.entries.toList();
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: entries.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1,
+              childAspectRatio: 1.5,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            itemBuilder: (context, index) {
+              final entry = entries[index];
+              final key = entry.key;
+              final samples = entry.value.samples; 
+              final card = vm.cards.firstWhere(
+                (c) => c.title == key,
+                orElse: () => CardsDashboard(id: '', type: '', title: key, value: ''),
+              );
+              // Este tipo não tem gráfico
+              if(card.type == Constants.cardTypeString) {
+                return const SizedBox.shrink();
+              }
+
+              // Tipo booleano vira 0 e 1
+              final processedSamples = samples.map((s) {
+                if(card.type == Constants.cardTypeBool) {
+                  return ItemSample(timestamp: s.timestamp, value: s.value == 1? 1: 0,);
+                }
+                return s;
+              }).toList();
+
+              return ItemLineChart(
+                title: key,
+                unit: card.unit ?? '',
+                samples: processedSamples,
+              );
+            },
+          );
+        },
       ),
     );
   }

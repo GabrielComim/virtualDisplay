@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/device_info.dart';
 import 'package:virtual_display/utils/constants.dart';
@@ -13,6 +14,8 @@ class MqttMessageProcessor {
   final DevicesViewModel devicesViewModel;
   final MqttPublishVm mqttPublishViewModel;
   final DashboardViewmodel dashboardViewmodel;
+
+  String? _currentDevice;
 
   // Construtor
   MqttMessageProcessor(
@@ -34,6 +37,7 @@ class MqttMessageProcessor {
       
       // recebe o valor de cada item
       else if (topic.endsWith(Constants.topicData)) {
+        log('Data recebido');
         _processData(json);
       } 
       
@@ -52,7 +56,12 @@ class MqttMessageProcessor {
     List<CardsDashboard> widgets = (json['widgets'] as List)
         .map((item) => CardsDashboard.fromJson(item))
         .toList();
+    
     final String deviceName = json['device'] ?? '';
+    
+    // Atualiza a variável
+    _currentDevice = deviceName;
+
     devicesViewModel.addDevice(DeviceInfo(device: deviceName, online: true));
 
     // for (final widget in widgets) {
@@ -63,8 +72,17 @@ class MqttMessageProcessor {
   }
 
   void _processData(Map<String, dynamic> json) {
-    log('Process data');
     final values = json['values'] as Map<String, dynamic>;
+
+    final device = _currentDevice ?? '--';
+    
+    final mapped = values.map((key, value) {
+      return MapEntry(
+        '$device.$key',
+        value,
+      );
+    });
+
     dashboardViewmodel.updateValues(values);
   }
 }

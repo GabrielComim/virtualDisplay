@@ -382,6 +382,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"ON\" ou \"OFF\".\n\n Para mais informações, acesse o link: '**
   String get bodyPageSixHowToSendProtocolTwo;
+
+  /// No description provided for @noData.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem dados'**
+  String get noData;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
