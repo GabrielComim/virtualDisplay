@@ -16,8 +16,8 @@ class MqttPublishVm extends ChangeNotifier{
     MqttServices().publish(Constants.mqttTopicConfigAck, jsonEncode({'received': 'true'}));
   }
 
-  // Envia valor do botão
-  void sendButton(bool value) {
-    MqttServices().publish(Constants.mqttTopicButton, jsonEncode({'button': value}));
+  // Envia valor do botão no tópico terminado com o nome do título do item
+  void sendButton(String topic, bool value) {
+    MqttServices().publish(('${Constants.mqttTopicButton}$topic'), jsonEncode({'button': value}));
   }
 }

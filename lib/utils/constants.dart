@@ -76,7 +76,7 @@ class Constants {
   static const String mqttTopicResponseConfig = 'virtualDisplay/response_config';
   static const String mqttTopicRequestConfig = 'virtualDisplay/request_config';
   static const String mqttTopicConfigAck = 'virtualDisplay/config_ack';
-  static const String mqttTopicButton = 'virtualDisplay/button';
+  static const String mqttTopicButton = 'virtualDisplay/button/';
 
   // Usado para lógica de comparação
   static const String topicData = '/data';

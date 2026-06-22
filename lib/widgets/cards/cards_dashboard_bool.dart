@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
+import 'package:virtual_display/widgets/buttons/button_dashboard.dart';
 import 'package:virtual_display/widgets/circle_status.dart';
 
 class CardsDashboardBool extends StatefulWidget {
@@ -29,7 +30,7 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
   void _onButtonBool() {  
     valueButton = !valueButton;
     final MqttPublishVm mqttPublish = context.read<MqttPublishVm>();
-    mqttPublish.sendButton(valueButton);
+    mqttPublish.sendButton(widget.title, valueButton);
   }
 
   Widget _typeCardDashboardBool(BuildContext context, String id) {
@@ -78,12 +79,7 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
               ],
             ),
             if (widget.activeButton) ...[
-              ElevatedButton.icon(
-                iconAlignment: IconAlignment.end,
-                onPressed: _onButtonBool, 
-                label: Text(''),
-                icon: Image.asset(Constants.iconButton, width: 20, height: 20),
-              ),
+              buttonDashboard(context, onButton: _onButtonBool),
             ],
           ],
         ),
