@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/item_history.dart';
 import 'package:virtual_display/models/item_sample.dart';
+import 'package:virtual_display/utils/constants.dart';
 
 class DashboardViewmodel extends ChangeNotifier {
   List<CardsDashboard> cards = [];
@@ -23,16 +24,20 @@ class DashboardViewmodel extends ChangeNotifier {
   void updateValues(Map<String, dynamic> json) {
     // Pega a data e hora atual que recebi o dado
     final now = DateTime.now();
-    
+    double value; 
+
     for(final card in cards) {
       if(json.containsKey(card.title)) {
-        final valueStr = json[card.title].toString();
-        card.value = json[card.title].toString();
+        final key = card.title;
+        final rawValue = json[card.title];
+        card.value = rawValue.toString();
         log('${card.title}: ${card.value}');
 
-        final key = card.title;
-
-        final value = double.tryParse(valueStr) ?? 0;
+        if(card.type == Constants.cardTypeBool) {
+          value = rawValue == true ? 1.0 : 0.0;
+        } else {
+          value = double.tryParse(rawValue.toString()) ?? 0.0;
+        }
 
         history.putIfAbsent(key, () => ItemHistory());
 

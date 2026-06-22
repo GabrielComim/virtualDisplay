@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
@@ -148,7 +150,8 @@ class _MainScreenState extends State<MainScreen> {
               // Tipo booleano vira 0 e 1
               final processedSamples = samples.map((s) {
                 if(card.type == Constants.cardTypeBool) {
-                  return ItemSample(timestamp: s.timestamp, value: s.value == 1? 1: 0,);
+                  log('value: ${s.value}');
+                  return ItemSample(timestamp: s.timestamp, value: s.value == 1.0? 1.0: 0.0,);
                 }
                 return s;
               }).toList();

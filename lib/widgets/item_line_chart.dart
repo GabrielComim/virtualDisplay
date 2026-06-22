@@ -9,7 +9,12 @@ class ItemLineChart extends StatelessWidget {
   final List<ItemSample> samples;
 
   // Construtor
-  const ItemLineChart({super.key, required this.title, required this.unit, required this.samples});
+  const ItemLineChart({
+    super.key,
+    required this.title,
+    required this.unit,
+    required this.samples,
+  });
 
   List<FlSpot> _buildSpots(List<ItemSample> samples) {
     final baseTime = samples.first.timestamp;
@@ -53,13 +58,28 @@ class ItemLineChart extends StatelessWidget {
               child: LineChart(
                 LineChartData(
                   gridData: FlGridData(show: true),
+                  // VALORES E UNIDADES NO GRÁFICO
                   titlesData: FlTitlesData(
                     show: true,
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          return Text(
+                            '${value.toInt()} s',
+                            style: TextStyle(fontSize: 8),
+                          );
+                        },
+                      ),
+                    ),
                     leftTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
-                          return Text('${value.toStringAsFixed(0)} $unit', style: TextStyle(fontSize: 8),);
+                          return Text(
+                            '${value.toStringAsFixed(0)} $unit',
+                            style: TextStyle(fontSize: 8),
+                          );
                         },
                       ),
                     ),
@@ -68,7 +88,7 @@ class ItemLineChart extends StatelessWidget {
                   lineBarsData: [
                     LineChartBarData(
                       spots: spots,
-                      isCurved: true,
+                      isCurved: false,
                       dotData: FlDotData(show: false),
                       barWidth: 2,
                     ),
