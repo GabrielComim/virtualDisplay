@@ -30,9 +30,6 @@ class _CardsDashboardStringState extends State<CardsDashboardString> {
               child: Column(
                 children: [
                   Text(title, style: TextStyle(fontSize: 20)),
-                  // TODO: Definir se será necessário o timestamp
-                  // SizedBox(height: 4),
-                  // Text('Timestamp: $timestamp'),
                 ],
               ),
             ),

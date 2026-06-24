@@ -1,5 +1,6 @@
 class Constants {
   // Nome das telas e modais
+  static const String screenBroker = '/broker';
   static const String screenDevices = '/devices';
   static const String screenMain = '/main';
   static const String screenProtocol = '/protocol';

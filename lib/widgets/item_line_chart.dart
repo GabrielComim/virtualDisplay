@@ -20,7 +20,7 @@ class ItemLineChart extends StatelessWidget {
     final baseTime = samples.first.timestamp;
 
     return samples.asMap().entries.map((entry) {
-      final index = entry.key;
+      // final index = entry.key;
       final sample = entry.value;
 
       // Eixo x - Tempo relativo em segundos

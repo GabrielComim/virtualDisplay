@@ -21,18 +21,21 @@ class MqttServices {
     required String broker,
     required String clientId,
     required int port,
+    required bool tls,
+    String? credentialName,
+    String? credentialPassword,
   }) async {
     client = MqttServerClient(broker, clientId);
     client.port = port;
     // client.setProtocolV311();
-    client.secure = true;
+    client.secure = tls;
     client.keepAlivePeriod = 20;
     client.logging(on: true);
     try {
       client.connectionMessage = MqttConnectMessage()
           .authenticateAs(
-            Constants.mqttCredentialsName,
-            Constants.mqttCredentialsPassword,
+            credentialName ?? Constants.mqttCredentialsName,
+            credentialPassword ?? Constants.mqttCredentialsPassword,
           )
           .startClean();
       await client.connect();

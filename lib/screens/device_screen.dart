@@ -1,35 +1,31 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
-import 'package:virtual_display/viewModel/mqtt_connection_vm.dart';
+import 'package:virtual_display/models/credentials_broker.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/viewModel/devices_viewmodel.dart';
+import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 import 'package:virtual_display/widgets/cards/cards_devices.dart';
 
-class DevicesScreen extends StatefulWidget {
-  const DevicesScreen({super.key});
+class DeviceScreen extends StatefulWidget {
+  final CredentialsBroker credential;
+  const DeviceScreen({super.key, required this.credential});
 
   @override
-  State<DevicesScreen> createState() => _DevicesScreenState();
+  State<DeviceScreen> createState() => _DeviceScreenState();
 }
 
-class _DevicesScreenState extends State<DevicesScreen> {
-  bool deviceStatus = false;
-
-  Future<void> _connectMqtt() async {
-    await MqttConnectionVm().initConnectMqtt(context);
-    setState(() {
-        deviceStatus = true;
-      });
-  }
-
+class _DeviceScreenState extends State<DeviceScreen> {
+  
   @override
   void initState() {
     super.initState();
-    _connectMqtt();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -41,32 +37,24 @@ class _DevicesScreenState extends State<DevicesScreen> {
           title: AppBarTitleCustom(
             textScreen: AppLocalizations.of(context)!.devicesKnown,
           ),
+          actions: [buttonMoreOptions(context)],
         ),
         body: Column(
           children: [
-            // Botão para nova conexão
-            ElevatedButton.icon(
-              icon: Icon(Icons.refresh),
-              label: Text(AppLocalizations.of(context)!.labelIconRefresh),
-              onPressed: () {
-                _connectMqtt();
-              },
-            ),
             // Cria os cards conforme detecta dispositivos conectados
             Expanded(
               child: Consumer<DevicesViewModel>(
                 builder: (context, viewModel, child) {
-                  log('Consumer usando VM: ${identityHashCode(viewModel)}');
                   return ListView.builder(
                     itemCount: viewModel.devices.length,
                     itemBuilder: (context, index) {
                       final deviceInfo = viewModel.devices[index];
-
                       return Column(
                         children: [
                           CardsDevices(
                             deviceName: deviceInfo.device,
                             deviceStatus: deviceInfo.online,
+                            credential: widget.credential,
                           ),
                           SizedBox(height: 20),
                         ],

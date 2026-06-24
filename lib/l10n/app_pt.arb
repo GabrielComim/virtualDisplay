@@ -12,6 +12,7 @@
 
   "@devices_screen": {"description": "STRINGS USADAS NO devices_screen"},
   "labelIconRefresh": "Atualizar conexões",
+  "labelIconAdd": "Adicionar broker",
 
   "@cardDevices": {"description": "STRINGS USADAS NO cardDevices"},
   "connected": "Conectado",
@@ -42,6 +43,12 @@
   "configAdvanced": "Configurações de conexão avançadas",
   "comProtocol": "Protocolo de comunicação",
   "mqttBroker": "Broker: ",
+  "credentialName": "Nome: ",
+  "credentialPassword": "Senha: ",
+  "tls": "Com TLS: ",
+  "usernameBroker": "Nome do usuário no broker",
+  "passwordBroker": "Senha do usuário no broker",
+  "tlsSecure": "Com certificado de segurança (sim ou não)",
   "ok": "OK",
   "save": "Salvar",
 

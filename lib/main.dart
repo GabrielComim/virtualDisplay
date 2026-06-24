@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_display/models/credentials_broker.dart';
+import 'package:virtual_display/screens/device_screen.dart';
 import 'package:virtual_display/screens/protocol_screen.dart';
+import 'package:virtual_display/viewModel/credential_viewmodel.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_connection_vm.dart';
 import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
@@ -15,7 +18,7 @@ import 'package:virtual_display/viewModel/devices_viewmodel.dart';
 import 'l10n/app_localizations.dart';
 // Telas
 import 'package:virtual_display/screens/main_screen.dart';
-import 'package:virtual_display/screens/devices_screen.dart';
+import 'package:virtual_display/screens/broker_screen.dart';
 
 // ========================= Para atualizar os arquivos de strings: =========================================================
 // flutter gen-l10n --arb-dir=lib/l10n --template-arb-file=app_pt.arb --output-localization-file=app_localizations.dart
@@ -28,6 +31,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => MqttPublishVm()),
         ChangeNotifierProvider(create: (_) => MqttConnectionVm()),
         ChangeNotifierProvider(create: (_) => DashboardViewmodel()),
+        ChangeNotifierProvider(create: (_) => CredentialViewmodel()),
       ],
       child: const MyApp(),
     ),
@@ -52,13 +56,19 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       title: 'Virtual Display',
       theme: AppTheme.darkTheme,
-      initialRoute: Constants.screenDevices,
+      initialRoute: Constants.screenBroker,
       onGenerateRoute: (settings) {
         // TELA DOS DISPOSITIVOS CONECTADOS
-        if (settings.name == Constants.screenDevices) {
-          return MaterialPageRoute(builder: (context) => const DevicesScreen());
+        if (settings.name == Constants.screenBroker) {
+          return MaterialPageRoute(builder: (context) => const BrokerScreen());
         }
-        if (settings.name == Constants.screenMain) {
+        else if(settings.name == Constants.screenDevices) {
+          final args = settings.arguments as Map<String, dynamic>?;
+          final credential = (args?['credentialBroker'] as CredentialsBroker);
+          
+          return MaterialPageRoute(builder: (context) => DeviceScreen(credential: credential));
+        }
+        else if (settings.name == Constants.screenMain) {
           final args = settings.arguments as Map<String, dynamic>?;
           
           final deviceName = (args?['deviceName'] as String? ?? 'Dis');

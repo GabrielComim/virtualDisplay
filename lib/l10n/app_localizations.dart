@@ -125,6 +125,12 @@ abstract class AppLocalizations {
   /// **'Atualizar conexões'**
   String get labelIconRefresh;
 
+  /// No description provided for @labelIconAdd.
+  ///
+  /// In pt, this message translates to:
+  /// **'Adicionar broker'**
+  String get labelIconAdd;
+
   /// No description provided for @connected.
   ///
   /// In pt, this message translates to:
@@ -256,6 +262,42 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Broker: '**
   String get mqttBroker;
+
+  /// No description provided for @credentialName.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome: '**
+  String get credentialName;
+
+  /// No description provided for @credentialPassword.
+  ///
+  /// In pt, this message translates to:
+  /// **'Senha: '**
+  String get credentialPassword;
+
+  /// No description provided for @tls.
+  ///
+  /// In pt, this message translates to:
+  /// **'Com TLS: '**
+  String get tls;
+
+  /// No description provided for @usernameBroker.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome do usuário no broker'**
+  String get usernameBroker;
+
+  /// No description provided for @passwordBroker.
+  ///
+  /// In pt, this message translates to:
+  /// **'Senha do usuário no broker'**
+  String get passwordBroker;
+
+  /// No description provided for @tlsSecure.
+  ///
+  /// In pt, this message translates to:
+  /// **'Com certificado de segurança (sim ou não)'**
+  String get tlsSecure;
 
   /// No description provided for @ok.
   ///

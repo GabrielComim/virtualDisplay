@@ -24,6 +24,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get labelIconRefresh => 'Atualizar conexões';
 
   @override
+  String get labelIconAdd => 'Adicionar broker';
+
+  @override
   String get connected => 'Conectado';
 
   @override
@@ -88,6 +91,24 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get mqttBroker => 'Broker: ';
+
+  @override
+  String get credentialName => 'Nome: ';
+
+  @override
+  String get credentialPassword => 'Senha: ';
+
+  @override
+  String get tls => 'Com TLS: ';
+
+  @override
+  String get usernameBroker => 'Nome do usuário no broker';
+
+  @override
+  String get passwordBroker => 'Senha do usuário no broker';
+
+  @override
+  String get tlsSecure => 'Com certificado de segurança (sim ou não)';
 
   @override
   String get ok => 'OK';

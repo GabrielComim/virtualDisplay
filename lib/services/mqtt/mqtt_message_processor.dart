@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/device_info.dart';
 import 'package:virtual_display/utils/constants.dart';
@@ -74,14 +73,14 @@ class MqttMessageProcessor {
   void _processData(Map<String, dynamic> json) {
     final values = json['values'] as Map<String, dynamic>;
 
-    final device = _currentDevice ?? '--';
+    // final device = _currentDevice ?? '--';
     
-    final mapped = values.map((key, value) {
-      return MapEntry(
-        '$device.$key',
-        value,
-      );
-    });
+    // final mapped = values.map((key, value) {
+    //   return MapEntry(
+    //     '$device.$key',
+    //     value,
+    //   );
+    // });
 
     dashboardViewmodel.updateValues(values);
   }
