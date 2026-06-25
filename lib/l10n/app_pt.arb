@@ -17,6 +17,13 @@
   "@cardDevices": {"description": "STRINGS USADAS NO cardDevices"},
   "connected": "Conectado",
   "disconnected": "Desconectado",
+ 
+  "@broker_screen": {"description": "STRINGS USADAS NO broker_screen"},
+  "selected": "selecionado(s)",
+  "edit": "Editar",
+
+  "@cardsBroker": {"description": "STRINGS USADAS NO cardsBroker"},
+  "delete": "Excluir",
 
   "@cardDashboardNumeric": {"description": "STRINGS USADAS NO cardDashboardNumeric"},
   "speed": "Velocidade",

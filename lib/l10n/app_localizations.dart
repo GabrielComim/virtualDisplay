@@ -143,6 +143,24 @@ abstract class AppLocalizations {
   /// **'Desconectado'**
   String get disconnected;
 
+  /// No description provided for @selected.
+  ///
+  /// In pt, this message translates to:
+  /// **'selecionado(s)'**
+  String get selected;
+
+  /// No description provided for @edit.
+  ///
+  /// In pt, this message translates to:
+  /// **'Editar'**
+  String get edit;
+
+  /// No description provided for @delete.
+  ///
+  /// In pt, this message translates to:
+  /// **'Excluir'**
+  String get delete;
+
   /// No description provided for @speed.
   ///
   /// In pt, this message translates to:

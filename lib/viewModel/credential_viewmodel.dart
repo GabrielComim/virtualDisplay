@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:virtual_display/helpers/database_helper.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
@@ -18,14 +20,15 @@ class CredentialViewmodel extends ChangeNotifier {
     await loadCredentials();
   }
   // Exclui uma conexão broker
-  Future<void> removeCredentialsBroker(CredentialsBroker credential) async {
-    await DatabaseHelper.instance.deleteCredential(credential.id!);
+  Future<void> removeCredentialsBroker(int credentialId) async {
+    await DatabaseHelper.instance.deleteCredential(credentialId);
     await loadCredentials();
   }
   // Edita
   Future<void> updateCredential(CredentialsBroker credential) async {
+    log('SALVANDO CREDENTIAL: ${credential.id}');
     await DatabaseHelper.instance.updateCredential(credential);
-    notifyListeners();
+    await loadCredentials();
   }
 
 }

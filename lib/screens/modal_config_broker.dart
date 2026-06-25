@@ -1,17 +1,26 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_display/helpers/database_helper.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
 import 'package:virtual_display/viewModel/credential_viewmodel.dart';
 
-Future<void> modalConfigBroker(BuildContext context) async {
+Future<void> modalConfigBroker(
+  BuildContext context, {
+  CredentialsBroker? credential,
+}) async {
   final brokerController = TextEditingController();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   bool tls = false;
+  final isEdit = credential != null;
+  // final broker = credential ?? CredentialsBroker(id: null, broker: '', username: '', password: '', tls: false);
+
+  if (isEdit) {
+    brokerController.text = credential.broker;
+    usernameController.text = credential.username!;
+    passwordController.text = credential.password!;
+    tls = credential.tls;
+  }
 
   await showModalBottomSheet<bool>(
     context: context,
@@ -101,39 +110,23 @@ Future<void> modalConfigBroker(BuildContext context) async {
                   ElevatedButton(
                     child: Text(AppLocalizations.of(context)!.ok),
                     onPressed: () async {
-                      // Salvar o novo broker MQTT
-                      final credentials = CredentialsBroker(
+                      // Salvar o novo broker MQTT ou a edição
+                      final viewModel = context.read<CredentialViewmodel>();
+                      final newCredential = CredentialsBroker(
+                        id: credential!.id,
                         broker: brokerController.text.trim(),
                         username: usernameController.text.trim(),
                         password: passwordController.text.trim(),
                         tls: tls,
                       );
-                      await context.read<CredentialViewmodel>().addNewBroker(credentials);
-                      //Teste para ver se gravou as informações. Buscar no banco os valores e printar num log
-                      await DatabaseHelper.instance
-                          .getCredential()
-                          .then((savedCredentials) {
-                            final saved = savedCredentials.isNotEmpty
-                                ? savedCredentials.last
-                                : null;
-
-                            log('Credenciais salvas no banco:');
-                            if (saved != null) {
-                              if (context.mounted) {
-                                Navigator.pop(context, true);
-                              }
-                            } else {
-                              log(
-                                'Nenhuma credencial encontrada após o salvamento.',
-                              );
-                              if (context.mounted) {
-                                Navigator.pop(context, false);
-                              }
-                            }
-                          })
-                          .catchError((error) {
-                            log('Erro ao buscar credenciais no banco: $error');
-                          });
+                      if (isEdit) {
+                        await viewModel.updateCredential(newCredential);
+                      } else {
+                        await viewModel.addNewBroker(newCredential);
+                      }
+                      if(context.mounted) {
+                        Navigator.pop(context, true);
+                      }
                     },
                   ),
                 ],

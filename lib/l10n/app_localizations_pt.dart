@@ -33,6 +33,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get disconnected => 'Desconectado';
 
   @override
+  String get selected => 'selecionado(s)';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
+  String get delete => 'Excluir';
+
+  @override
   String get speed => 'Velocidade';
 
   @override
