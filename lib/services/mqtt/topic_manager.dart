@@ -5,5 +5,4 @@ void topicsInitialization(MqttServices mqttService) {
   mqttService.subscribe(Constants.mqttTopicResponseConfig);
   mqttService.subscribe(Constants.mqttTopicConfigAck);
   mqttService.subscribe(Constants.mqttTopicData);
-  mqttService.subscribe(Constants.mqttTopicResponseDevice);
 }

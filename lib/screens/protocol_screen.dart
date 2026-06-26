@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/theme/text_type.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
@@ -16,6 +17,13 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
   final versionProtocol = 1.0;
   int currentPage = 1; // Página atual do protocolo
   int totalPages = 6; // Total de páginas do protocolo
+
+  Future<void> openLink(String url) async {
+    final uri = Uri.parse(url);
+    if(!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Não foi possível abrir o link');
+    }
+  }
 
   Widget _pageViewProtocol(int page) {
     switch (page) {
@@ -119,21 +127,21 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
               text:
               ''' 
                 ${AppLocalizations.of(context)!.bodyPageFourHowToSendProtocol} 
-                ${AppLocalizations.of(context)!.temperature} 
-                ${AppLocalizations.of(context)!.humidity} 
-                ${AppLocalizations.of(context)!.pressure} 
-                ${AppLocalizations.of(context)!.voltage} 
-                ${AppLocalizations.of(context)!.current} 
-                ${AppLocalizations.of(context)!.detector} 
-                ${AppLocalizations.of(context)!.magnetic} 
-                ${AppLocalizations.of(context)!.weight} 
-                ${AppLocalizations.of(context)!.other} 
+                * ${AppLocalizations.of(context)!.temperature} 
+                * ${AppLocalizations.of(context)!.humidity} 
+                * ${AppLocalizations.of(context)!.pressure} 
+                * ${AppLocalizations.of(context)!.voltage} 
+                * ${AppLocalizations.of(context)!.current} 
+                * ${AppLocalizations.of(context)!.detector} 
+                * ${AppLocalizations.of(context)!.magnetic} 
+                * ${AppLocalizations.of(context)!.weight} 
+                * ${AppLocalizations.of(context)!.other} 
                 ${AppLocalizations.of(context)!.bodyPageFourHowToSendProtocolTwo} 
-                ${AppLocalizations.of(context)!.gps} 
-                ${AppLocalizations.of(context)!.led} 
-                ${AppLocalizations.of(context)!.buzzer} 
+                * ${AppLocalizations.of(context)!.gps} 
+                * ${AppLocalizations.of(context)!.led} 
+                * ${AppLocalizations.of(context)!.buzzer} 
                 ${AppLocalizations.of(context)!.bodyPageFourHowToSendProtocolThree} 
-                ${AppLocalizations.of(context)!.alarm} 
+                * ${AppLocalizations.of(context)!.alarm} 
               ''',
               type: Constants.bodyText2,
             ),
@@ -152,7 +160,7 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
               context: context,
               text: 
               '''${AppLocalizations.of(context)!.bodyPageFiveHowToSendProtocol}
-              virtualDisplay/data
+              * virtualDisplay/data
              
               ${AppLocalizations.of(context)!.bodyPageFiveHowToSendProtocolTwo}
               ${AppLocalizations.of(context)!.example}
@@ -160,7 +168,9 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
               {
                 "device":"ESP32",
                 "values": {
-                  "Sensor temp.": "60.45"
+                  "Sensor temp.": "60.45",
+                  "Motor": "157.2",
+                  "Lamp 1.": true,
                 }
               }
               ''',
@@ -178,15 +188,19 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
               text: 
               '''${AppLocalizations.of(context)!.bodyPageSixHowToSendProtocol}
               
-              virtualDisplay/data/button1
-              virtualDisplay/data/button2
-              virtualDisplay/data/button3
-              virtualDisplay/data/button4
-              virtualDisplay/data/button5
+              virtualDisplay/button1/TITLE_ITEM
+              virtualDisplay/button2/TITLE_ITEM
+              virtualDisplay/button3/TITLE_ITEM
               
               ${AppLocalizations.of(context)!.bodyPageSixHowToSendProtocolTwo}
               ''',
               type: Constants.bodyText2,
+            ),
+            ElevatedButton(
+              child: Text(AppLocalizations.of(context)!.linkGithubExample),
+              onPressed: () async {
+                await openLink(AppLocalizations.of(context)!.linkGithubExample);
+              }
             ),
           ],
         );

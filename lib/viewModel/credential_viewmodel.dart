@@ -30,5 +30,4 @@ class CredentialViewmodel extends ChangeNotifier {
     await DatabaseHelper.instance.updateCredential(credential);
     await loadCredentials();
   }
-
 }

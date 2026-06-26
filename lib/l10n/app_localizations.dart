@@ -380,19 +380,19 @@ abstract class AppLocalizations {
   /// No description provided for @bodyPageOneHowToSendProtocol.
   ///
   /// In pt, this message translates to:
-  /// **'Deve-se utilizar 2 tópicos para envio de dados. Um tópico serve para configuração da tela. O segundo tópico é para atualizar os dados. O segundo tópico é um conjunto de tópicos, cada um é responsável por um item a ser renderizado.\n\nConforme o ID informado na configuração para cada item, o app consegue identificar se precisa mais dados ou menos dados. Basicamente dados numéricos possuem mais configurações do que dados booleanos e strings. Os valores min e max informam os limites dos valor. E history indica se deve ser gerado gráfico ou não.'**
+  /// **'2 tópicos para envio de dados. \n * Um tópico para configuração da tela.\n * O segundo tópico é para atualizar os dados.\n\nExiste 3 tipos de dados: \n * number \n * bool \n * string. \nOs dados numéricos possuem mais configurações do que dados booleanos e strings. Os valores min e max informam os limites dos valor. E history indica se deve ser gerado gráfico ou não.'**
   String get bodyPageOneHowToSendProtocol;
 
   /// No description provided for @bodyPageTwoHowToSendProtocol.
   ///
   /// In pt, this message translates to:
-  /// **'É através deste tópico que será informado quantos itens o usuário quer renderizar na tela, além dos detalhes do item. \n\n Tópico MQTT: virtualDisplay/config'**
+  /// **'É através deste tópico que será informado quantos itens o usuário quer renderizar na tela, além dos detalhes do item. \n\n Tópico MQTT: virtualDisplay/response_config'**
   String get bodyPageTwoHowToSendProtocol;
 
   /// No description provided for @bodyPageTwoHowToSendProtocolTwo.
   ///
   /// In pt, this message translates to:
-  /// **'Siga acrescentando este modelo de chaves com cada item que se deseja configurar. Quantidade máxima de itens permitidos são 20 itens.'**
+  /// **'Siga acrescentando este modelo de chaves com cada item que se deseja configurar.'**
   String get bodyPageTwoHowToSendProtocolTwo;
 
   /// No description provided for @bodyPageThreeHowToSendProtocol.
@@ -428,20 +428,26 @@ abstract class AppLocalizations {
   /// No description provided for @bodyPageFiveHowToSendProtocolTwo.
   ///
   /// In pt, this message translates to:
-  /// **'Se for um sensor de temperatura, deve-se colocar o título do item e o valor algo como:\n'**
+  /// **'Se for um sensor de temperatura, deve-se colocar o título do item e o valor. Algo como:\n'**
   String get bodyPageFiveHowToSendProtocolTwo;
 
   /// No description provided for @bodyPageSixHowToSendProtocol.
   ///
   /// In pt, this message translates to:
-  /// **'Inscreva-se nos tópicos:\n   virtualDisplay/waiting_config\n\nNeste tópico se você receber true quer dizer que o app está aguardando o envio das configurações. False quer dizer que ele possui configurações válidas.'**
+  /// **'Inscreva-se nos tópicos:\n  * virtualDisplay/request_config\n * virtualDisplay/config_ack\n\nNo primeiro tópico se você receber getConfig quer dizer que o app não possui configurações válidas. No segundo tópico indica que recebeu as configurações.'**
   String get bodyPageSixHowToSendProtocol;
 
   /// No description provided for @bodyPageSixHowToSendProtocolTwo.
   ///
   /// In pt, this message translates to:
-  /// **'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"ON\" ou \"OFF\".\n\n Para mais informações, acesse o link: '**
+  /// **'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"true\" ou \"false\".\n\n Para mais informações e um exemplo completo de um firmware usando ESP32, acesse o link: '**
   String get bodyPageSixHowToSendProtocolTwo;
+
+  /// No description provided for @linkGithubExample.
+  ///
+  /// In pt, this message translates to:
+  /// **'https://github.com/GabrielComim/virtualDisplayDevice.git'**
+  String get linkGithubExample;
 
   /// No description provided for @noData.
   ///

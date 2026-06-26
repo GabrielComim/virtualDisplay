@@ -8,7 +8,7 @@ import 'package:virtual_display/utils/constants.dart';
 class MqttPublishVm extends ChangeNotifier{
   // Solicita a configuração inicial ao dispositivo
   void requestConfig() {
-    MqttServices().publish(Constants.mqttTopicConfig, jsonEncode({'command': 'getConfig'}));
+    MqttServices().publish(Constants.mqttTopicRequestConfig, jsonEncode({'command': 'getConfig'}));
   }
 
   // Confirma que recebeu a configuração inicial
