@@ -7,7 +7,7 @@ The idea behind the project is to transform a smartphone into a virtual display 
 
 ## 🚀 Features
 * MQTT communication support
-* Multiple broker management (CRUD)
+* Multiple broker management with persistence
 * Real-time data visualization
 * Dynamic dashboard configuration based on device data types
 * Interactive buttons for sending MQTT commands
@@ -16,13 +16,8 @@ The idea behind the project is to transform a smartphone into a virtual display 
 
 ## 📡 Communication
 The application uses MQTT protocol as the main communication layer. /
-All messages are exchanged in JSON format, enabling flexible integration with different devices and sensors.
-
-### Example payload:
-{
-  "temperature": 25.4,
-  "humidity": 60
-}
+All messages are exchanged in JSON format, enabling flexible integration with different devices and sensors. /
+For more informations, see ESP32 Example Project.
 
 ## 📱 Platform
 Android (currently supported)
@@ -34,15 +29,6 @@ A stable release will be published soon on the Play Store.
 ## 📦 ESP32 Example Project
 This repository: https://github.com/GabrielComim/virtualDisplayDevice.git includes an example firmware for ESP32-S3 using ESP-IDF, and HiveMQ cloud as a broker. /
 The purpose of the firmware is to demonstrate how to integrate IoT devices with Virtual Display using MQTT.
-
-## Hardware Example:
-* ESP32-S3
-* ESP-IDF framework
-
-  Purpose:
-* Publish sensor data via MQTT
-* Demonstrate real-time communication with the app
-* Serve as a reference implementation
 
 ## 🔍 SEO Keywords
 * MQTT dashboard
