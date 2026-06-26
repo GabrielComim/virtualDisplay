@@ -34,13 +34,18 @@ The purpose of the firmware is to demonstrate how to integrate IoT devices with 
 * MQTT dashboard
 * Flutter MQTT
 * ESP32 MQTT
+* STM32 MQTT
+* Raspberry MQTT
 * IOT dashboard
 * Sensor monitoring
 * Industrial monitoring
 * Real-time telemetry
+* IOT display
 
 ## 🎯 Vision
 The goal of Virtual Display is to eliminate the need for physical screens in IoT projects—particularly during initial development—by providing a flexible, mobile-based visualization layer for embedded systems.
+
+**Build the firmware. We'll handle the interface.**
 
 ## 📌 License
 This project is free and open for use in learning and development.
