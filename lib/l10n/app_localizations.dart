@@ -329,6 +329,12 @@ abstract class AppLocalizations {
   /// **'Salvar'**
   String get save;
 
+  /// No description provided for @exportCSV.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar gráficos como CSV'**
+  String get exportCSV;
+
   /// No description provided for @protocol.
   ///
   /// In pt, this message translates to:

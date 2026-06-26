@@ -126,6 +126,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get save => 'Salvar';
 
   @override
+  String get exportCSV => 'Exportar gráficos como CSV';
+
+  @override
   String get protocol => 'Protocolo de comunicação';
 
   @override

@@ -58,6 +58,7 @@
   "tlsSecure": "Com certificado de segurança (sim ou não)",
   "ok": "OK",
   "save": "Salvar",
+  "exportCSV": "Exportar gráficos como CSV",
 
   "@protocol_screen": {"description": "STRINGS USADAS NO protocol_screen"},
   "protocol": "Protocolo de comunicação",

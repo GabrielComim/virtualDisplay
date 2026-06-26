@@ -1,8 +1,8 @@
-class ItemSample {
+class ChartSample {
   final DateTime timestamp;
   final double value;
 
-  ItemSample({
+  ChartSample({
     required this.timestamp,
     required this.value,
   });

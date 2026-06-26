@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/item_history.dart';
-import 'package:virtual_display/models/item_sample.dart';
+import 'package:virtual_display/models/chart_sample.dart';
 import 'package:virtual_display/utils/constants.dart';
 
 class DashboardViewmodel extends ChangeNotifier {
@@ -42,7 +42,7 @@ class DashboardViewmodel extends ChangeNotifier {
         history.putIfAbsent(key, () => ItemHistory());
 
         history[key]!.add(
-          ItemSample(timestamp: now, value: value)
+          ChartSample(timestamp: now, value: value)
         );
       }
     }

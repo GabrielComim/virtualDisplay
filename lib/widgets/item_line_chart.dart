@@ -1,22 +1,17 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
-import 'package:virtual_display/models/item_sample.dart';
+import 'package:virtual_display/models/chart_data.dart';
+import 'package:virtual_display/models/chart_sample.dart';
+import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 
 class ItemLineChart extends StatelessWidget {
-  final String title;
-  final String unit;
-  final List<ItemSample> samples;
+  final ChartData chartData;
 
   // Construtor
-  const ItemLineChart({
-    super.key,
-    required this.title,
-    required this.unit,
-    required this.samples,
-  });
+  const ItemLineChart({super.key, required this.chartData});
 
-  List<FlSpot> _buildSpots(List<ItemSample> samples) {
+  List<FlSpot> _buildSpots(List<ChartSample> samples) {
     final baseTime = samples.first.timestamp;
 
     return samples.asMap().entries.map((entry) {
@@ -32,17 +27,37 @@ class ItemLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (samples.isEmpty) {
+    if (chartData.samples.isEmpty) {
       return Center(child: Text(AppLocalizations.of(context)!.noData));
     }
 
-    final spots = _buildSpots(samples);
+    final spots = _buildSpots(chartData.samples);
 
     return Column(
       children: [
         // Título do fráfico
-        Text(title),
-        SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(chartData.title),
+            SizedBox(width: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                minimumSize: Size(30,40),
+                shadowColor: ColorScheme.of(context).secondary,
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Icon(Icons.more_vert),
+              onPressed: () {
+                buttonMoreOptionsMainScreen(context);
+              },
+            ),
+          ],
+        ),
         Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -54,7 +69,7 @@ class ItemLineChart extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(4.0),
             child: SizedBox(
-              height: 200,
+              height: 190,
               child: LineChart(
                 LineChartData(
                   gridData: FlGridData(show: true),
@@ -77,7 +92,7 @@ class ItemLineChart extends StatelessWidget {
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
                           return Text(
-                            '${value.toStringAsFixed(0)} $unit',
+                            '${value.toStringAsFixed(0)} ${chartData.unit}',
                             style: TextStyle(fontSize: 8),
                           );
                         },

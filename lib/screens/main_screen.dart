@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
-import 'package:virtual_display/models/item_sample.dart';
+import 'package:virtual_display/models/chart_data.dart';
+import 'package:virtual_display/models/chart_sample.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
 import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/utils/constants.dart';
+import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 import 'package:virtual_display/widgets/cards/cards_conection_device.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_bool.dart';
@@ -34,6 +36,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -149,15 +152,17 @@ class _MainScreenState extends State<MainScreen> {
               final processedSamples = samples.map((s) {
                 if(card.type == Constants.cardTypeBool) {
                   log('value: ${s.value}');
-                  return ItemSample(timestamp: s.timestamp, value: s.value == 1.0? 1.0: 0.0,);
+                  return ChartSample(timestamp: s.timestamp, value: s.value == 1.0? 1.0: 0.0,);
                 }
                 return s;
               }).toList();
 
               return ItemLineChart(
-                title: key,
-                unit: card.unit ?? '',
-                samples: processedSamples,
+                chartData: ChartData(
+                  title: key,
+                  unit: card.unit ?? '',
+                  samples: processedSamples,
+                ),
               );
             },
           );

@@ -5,6 +5,7 @@ class Constants {
   static const String screenMain = '/main';
   static const String screenProtocol = '/protocol';
   static const String screenModalConnection = '/modal_connection';
+  static const String screenExportCSV = '/export_CSV';
 
   // Tipos de cards 
   static const String cardTypeNumber = 'number';
