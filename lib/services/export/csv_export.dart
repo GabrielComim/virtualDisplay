@@ -28,7 +28,6 @@ class CsvExport {
     final csvContent = buffer.toString();
 
     // Diretório temporário do App
-    log('LOCAL PARA SALVAR');
     final tempDir = await getTemporaryDirectory();
 
     final file = File(

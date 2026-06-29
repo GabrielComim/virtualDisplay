@@ -335,6 +335,12 @@ abstract class AppLocalizations {
   /// **'Exportar gráficos como CSV'**
   String get exportCSV;
 
+  /// No description provided for @automations.
+  ///
+  /// In pt, this message translates to:
+  /// **'Automações'**
+  String get automations;
+
   /// No description provided for @protocol.
   ///
   /// In pt, this message translates to:

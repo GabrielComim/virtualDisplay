@@ -129,6 +129,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportCSV => 'Exportar gráficos como CSV';
 
   @override
+  String get automations => 'Automações';
+
+  @override
   String get protocol => 'Protocolo de comunicação';
 
   @override

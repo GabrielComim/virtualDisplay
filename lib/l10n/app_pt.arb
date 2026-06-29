@@ -59,6 +59,7 @@
   "ok": "OK",
   "save": "Salvar",
   "exportCSV": "Exportar gráficos como CSV",
+  "automations": "Automações",
 
   "@protocol_screen": {"description": "STRINGS USADAS NO protocol_screen"},
   "protocol": "Protocolo de comunicação",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
+import 'package:virtual_display/screens/automations_screen.dart';
 import 'package:virtual_display/screens/device_screen.dart';
 import 'package:virtual_display/screens/protocol_screen.dart';
 import 'package:virtual_display/viewModel/credential_viewmodel.dart';
@@ -58,16 +59,18 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.darkTheme,
       initialRoute: Constants.screenBroker,
       onGenerateRoute: (settings) {
-        // TELA DOS DISPOSITIVOS CONECTADOS
+        // TELA DOS BROKERS
         if (settings.name == Constants.screenBroker) {
           return MaterialPageRoute(builder: (context) => const BrokerScreen());
         }
+        // TELA DISPOSITIVOS
         else if(settings.name == Constants.screenDevices) {
           final args = settings.arguments as Map<String, dynamic>?;
           final credential = (args?['credentialBroker'] as CredentialsBroker);
           
           return MaterialPageRoute(builder: (context) => DeviceScreen(credential: credential));
         }
+        // TELA PRINCIPAL
         else if (settings.name == Constants.screenMain) {
           final args = settings.arguments as Map<String, dynamic>?;
           
@@ -84,9 +87,14 @@ class MyApp extends StatelessWidget {
             },
             transitionDuration: Duration(milliseconds: 250),
           );
+          // TELA DO PROTOCOLO 
         } else if (settings.name == Constants.screenProtocol) {
           return MaterialPageRoute(
             builder: (context) => const ProtocolScreen(),
+          );
+        } else if(settings.name == Constants.screenAutomations) {
+          return MaterialPageRoute(
+            builder: (context) => const AutomationsScreen(),
           );
         }
         return null; // Retorna null para rotas não definidas, o que resultará em uma tela de erro padrão.
