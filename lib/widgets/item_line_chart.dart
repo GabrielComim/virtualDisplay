@@ -41,21 +41,21 @@ class ItemLineChart extends StatelessWidget {
           children: [
             Text(chartData.title),
             SizedBox(width: 10),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                minimumSize: Size(30,40),
-                shadowColor: ColorScheme.of(context).secondary,
-                backgroundColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: Icon(Icons.more_vert),
-              onPressed: () {
-                buttonMoreOptionsMainScreen(context);
-              },
-            ),
+            buttonMoreOptionsMainScreen(context, chartData),
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(
+            //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            //     minimumSize: Size(30,40),
+            //     shadowColor: ColorScheme.of(context).secondary,
+            //     backgroundColor: Colors.transparent,
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(12),
+            //     ),
+            //   ),
+            //   child: Icon(Icons.more_vert),
+            //   onPressed: () {
+            //   },
+            // ),
           ],
         ),
         Card(

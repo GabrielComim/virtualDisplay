@@ -12,7 +12,6 @@ import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/utils/constants.dart';
-import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 import 'package:virtual_display/widgets/cards/cards_conection_device.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_bool.dart';
