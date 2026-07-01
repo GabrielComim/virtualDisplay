@@ -42,6 +42,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get delete => 'Excluir';
 
   @override
+  String get type => 'Tipo';
+
+  @override
+  String get enable => 'Habilitado';
+
+  @override
+  String get action => 'Ação';
+
+  @override
+  String get triggerConfig => 'Configuração do gatilho';
+
+  @override
   String get speed => 'Velocidade';
 
   @override
@@ -190,6 +202,24 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get linkGithubExample => 'https://github.com/GabrielComim/virtualDisplayDevice.git';
+
+  @override
+  String get addAutomation => 'Adicionar automação';
+
+  @override
+  String get oneShot => 'Uma vez';
+
+  @override
+  String get periodic => 'Periódico';
+
+  @override
+  String get logical => 'Lógico';
+
+  @override
+  String get name => 'Nome';
+
+  @override
+  String get publish => 'Publicação';
 
   @override
   String get noData => 'Sem dados';

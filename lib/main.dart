@@ -4,6 +4,7 @@ import 'package:virtual_display/models/credentials_broker.dart';
 import 'package:virtual_display/screens/automations_screen.dart';
 import 'package:virtual_display/screens/device_screen.dart';
 import 'package:virtual_display/screens/protocol_screen.dart';
+import 'package:virtual_display/viewModel/automations_viewmodel.dart';
 import 'package:virtual_display/viewModel/credential_viewmodel.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_connection_vm.dart';
@@ -33,6 +34,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => MqttConnectionVm()),
         ChangeNotifierProvider(create: (_) => DashboardViewmodel()),
         ChangeNotifierProvider(create: (_) => CredentialViewmodel()),
+        ChangeNotifierProvider(create: (_) => AutomationsViewmodel()),
       ],
       child: const MyApp(),
     ),

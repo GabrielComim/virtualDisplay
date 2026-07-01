@@ -84,4 +84,17 @@ class Constants {
   static const String topicRequestDevice = '/request_device';
   static const String topicResponseDevice = '/response_device';
   static const String topicResponseConfig = '/response_config';
+
+  // Tipos de automações
+  static const List<String> typeAutomations = [
+    '',
+    'oneShot',
+    'periodic',
+    'logical',
+  ];
+   // Tipos de ação
+  static const List<String> actionAutomations = [
+    '',
+    'publish',
+  ];
 }

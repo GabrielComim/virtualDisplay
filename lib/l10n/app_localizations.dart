@@ -161,6 +161,30 @@ abstract class AppLocalizations {
   /// **'Excluir'**
   String get delete;
 
+  /// No description provided for @type.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tipo'**
+  String get type;
+
+  /// No description provided for @enable.
+  ///
+  /// In pt, this message translates to:
+  /// **'Habilitado'**
+  String get enable;
+
+  /// No description provided for @action.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ação'**
+  String get action;
+
+  /// No description provided for @triggerConfig.
+  ///
+  /// In pt, this message translates to:
+  /// **'Configuração do gatilho'**
+  String get triggerConfig;
+
   /// No description provided for @speed.
   ///
   /// In pt, this message translates to:
@@ -460,6 +484,42 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'https://github.com/GabrielComim/virtualDisplayDevice.git'**
   String get linkGithubExample;
+
+  /// No description provided for @addAutomation.
+  ///
+  /// In pt, this message translates to:
+  /// **'Adicionar automação'**
+  String get addAutomation;
+
+  /// No description provided for @oneShot.
+  ///
+  /// In pt, this message translates to:
+  /// **'Uma vez'**
+  String get oneShot;
+
+  /// No description provided for @periodic.
+  ///
+  /// In pt, this message translates to:
+  /// **'Periódico'**
+  String get periodic;
+
+  /// No description provided for @logical.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lógico'**
+  String get logical;
+
+  /// No description provided for @name.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nome'**
+  String get name;
+
+  /// No description provided for @publish.
+  ///
+  /// In pt, this message translates to:
+  /// **'Publicação'**
+  String get publish;
 
   /// No description provided for @noData.
   ///

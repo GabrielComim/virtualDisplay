@@ -1,10 +1,10 @@
 class Automation {
   final int? id;
   String name;
-  int type;
+  String type;
   bool enable;
-  int action;
-  int triggerConfig;
+  String action;
+  String triggerConfig;
 
   Automation({
     required this.id,
@@ -18,10 +18,10 @@ class Automation {
   Automation copyWith({
     int? id,
     String? name,
-    int? type,
+    String? type,
     bool? enable,
-    int? action,
-    int? triggerConfig,
+    String? action,
+    String? triggerConfig,
   }) {
     return Automation(
       id: id ?? this.id,
@@ -48,10 +48,10 @@ class Automation {
     return Automation(
       id: map['id'] as int?,
       name: map['name'] as String,
-      type: map['type'] as int,
+      type: map['type'] as String,
       enable: map['enable'] as bool,
-      action: map['action'] as int,
-      triggerConfig: map['triggerConfig'] as int,
+      action: map['action'] as String,
+      triggerConfig: map['triggerConfig'] as String,
     );
   }
 }

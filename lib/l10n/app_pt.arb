@@ -24,6 +24,12 @@
 
   "@cardsBroker": {"description": "STRINGS USADAS NO cardsBroker"},
   "delete": "Excluir",
+  
+  "@cardsAutomations": {"description": "STRINGS USADAS NO cardsAutomations"},
+  "type": "Tipo",
+  "enable": "Habilitado",
+  "action": "Ação",
+  "triggerConfig": "Configuração do gatilho",
 
   "@cardDashboardNumeric": {"description": "STRINGS USADAS NO cardDashboardNumeric"},
   "speed": "Velocidade",
@@ -83,6 +89,16 @@
   "bodyPageSixHowToSendProtocolTwo": "Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"true\" ou \"false\".\n\n Para mais informações e um exemplo completo de um firmware usando ESP32, acesse o link: ",
   "linkGithubExample": "https://github.com/GabrielComim/virtualDisplayDevice.git",
 
+  "@automations_screen": {"description": "STRINGS USADAS NO automations_screen"},
+  "addAutomation": "Adicionar automação",
+
+  "@modal_automation": {"description": "STRINGS USADAS NO modal_automation"},
+  "oneShot": "Uma vez",
+  "periodic": "Periódico",
+  "logical": "Lógico",
+  "name": "Nome",
+  "publish": "Publicação",
+  
   "@item_line_chart": {"description": "STRINGS USADAS NO item_line_chart"},
   "noData": "Sem dados"
 }
