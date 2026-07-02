@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
+import 'package:virtual_display/utils/constants.dart';
 
 String switchTypeMenuItem(BuildContext context, String key) {
   switch (key) {
-    case 'oneShot':
+    case Constants.automationOneShot:
       return AppLocalizations.of(context)!.oneShot;
-    case 'periodic':
+    case Constants.automationPeriodic:
       return AppLocalizations.of(context)!.periodic;
-    case 'logical':
+    case Constants.automationLogical:
       return AppLocalizations.of(context)!.logical;
     default: 
       return '';
@@ -22,3 +23,4 @@ String switchActionMenuItem(BuildContext context, String key) {
       return '';
   }
 }
+

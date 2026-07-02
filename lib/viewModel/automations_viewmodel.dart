@@ -15,7 +15,8 @@ class AutomationsViewmodel extends ChangeNotifier {
   }
   
   // Salva os novos dados da automação
-  Future<void> addNewAutomation(Automation automation) async {  
+  Future<void> addNewAutomation(Automation automation) async { 
+    log('ADICIONANDO AUTOMAÇÃO ${automation.id}'); 
     await DatabaseHelper.instance.insertAutomation(automation);
     await loadAutomations();
   }

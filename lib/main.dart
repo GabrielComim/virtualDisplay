@@ -94,6 +94,7 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) => const ProtocolScreen(),
           );
+          // TELA DAS AUTOMAÇÕES
         } else if(settings.name == Constants.screenAutomations) {
           return MaterialPageRoute(
             builder: (context) => const AutomationsScreen(),

@@ -47,13 +47,13 @@ class DatabaseHelper {
     ''');
     // AUTOMAÇÕES
     await db.execute('''
-      CREATE_TABLE automations(
+      CREATE TABLE automation(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         type TEXT NOT NULL,
         enable INTEGER NOT NULL DEFAULT 1,
         action TEXT NOT NULL,
-        triggerConfig TEXT NOT NULL
+        trigger TEXT NOT NULL
       )
     ''');
   }

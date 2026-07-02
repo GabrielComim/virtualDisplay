@@ -521,6 +521,36 @@ abstract class AppLocalizations {
   /// **'Publicação'**
   String get publish;
 
+  /// No description provided for @topic.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tópico:'**
+  String get topic;
+
+  /// No description provided for @payload.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dado:'**
+  String get payload;
+
+  /// No description provided for @date.
+  ///
+  /// In pt, this message translates to:
+  /// **'Data'**
+  String get date;
+
+  /// No description provided for @dateAndHour.
+  ///
+  /// In pt, this message translates to:
+  /// **'Data e hora:'**
+  String get dateAndHour;
+
+  /// No description provided for @select.
+  ///
+  /// In pt, this message translates to:
+  /// **'Selecionar'**
+  String get select;
+
   /// No description provided for @noData.
   ///
   /// In pt, this message translates to:

@@ -98,7 +98,14 @@
   "logical": "Lógico",
   "name": "Nome",
   "publish": "Publicação",
+  "topic": "Tópico:",
+  "payload": "Dado:",
   
+  "@trigger_automation": {"description": "STRINGS USADAS NO trigger_automation"},
+  "date": "Data",
+  "dateAndHour": "Data e hora:",
+  "select": "Selecionar",
+
   "@item_line_chart": {"description": "STRINGS USADAS NO item_line_chart"},
   "noData": "Sem dados"
 }

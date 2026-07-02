@@ -222,5 +222,20 @@ class AppLocalizationsPt extends AppLocalizations {
   String get publish => 'Publicação';
 
   @override
+  String get topic => 'Tópico:';
+
+  @override
+  String get payload => 'Dado:';
+
+  @override
+  String get date => 'Data';
+
+  @override
+  String get dateAndHour => 'Data e hora:';
+
+  @override
+  String get select => 'Selecionar';
+
+  @override
   String get noData => 'Sem dados';
 }
