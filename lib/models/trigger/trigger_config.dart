@@ -83,7 +83,7 @@ class PeriodicTrigger extends TriggerConfig {
 
   @override
   String toString() {
-    return DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
+    return '${DateFormat('dd/MM/yyyy HH:mm').format(dateTime)} | ${interval.inHours}h ${interval.inMinutes.remainder(60)}m';
   }
 }
 
@@ -127,6 +127,6 @@ class LogicalTrigger extends TriggerConfig{
 
   @override
   String toString() {
-    return DateFormat('dd/MM/yyyy HH:mm').format(dateTime!);
+    return '$expression | ${dateTime != null ? DateFormat('dd/MM/yyyy HH:mm').format(dateTime!) : 'No date'}';
   }
 }

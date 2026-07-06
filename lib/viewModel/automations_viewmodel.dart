@@ -22,6 +22,7 @@ class AutomationsViewmodel extends ChangeNotifier {
   }
   // Exclui uma automação
   Future<void> removeAutomation(int automationId) async {
+    log('EXCLUINDO AUTOMAÇÃO: $automationId');
     await DatabaseHelper.instance.deleteAutomation(automationId);
     await loadAutomations();
   }

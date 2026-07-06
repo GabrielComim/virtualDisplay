@@ -30,10 +30,10 @@ Future<void> modalAutomation(
     enable = automation.enable;
     type = automation.type;
     action = automation.action;
+    trigger = automation.trigger;
   }
 
   await showModalBottomSheet<bool>(
-    requestFocus: true,
     context: context,
     useSafeArea: true,
     isScrollControlled: true,
@@ -142,7 +142,7 @@ Future<void> modalAutomation(
                       setModalState(() {
                         switch (v) {
                           case Constants.actionPublish:
-                            action = PublishAction(topic: '', payload: '');
+                            action = PublishAction(topic: '', payload: '', qos: 0, retain: false);
                             break;
                         }
                       });
