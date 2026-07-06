@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
+import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/trigger/trigger_config.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/utils/switch_menu_item.dart';
+import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 
 Widget triggerConfigMode(
   BuildContext context,
   String type,
+  List<CardsDashboard>? cards,
   TriggerConfig? trigger, {
   required DateTime? selectedDateTime,
   required ValueChanged<TriggerConfig> onChanged,
@@ -29,7 +32,12 @@ Widget triggerConfigMode(
       );
     case Constants.automationLogical:
       // Lógica + (data e hora) não obrigatório
-      return logicalTriggerConfigWidget(context, trigger, onChanged: onChanged);
+      return logicalTriggerConfigWidget(
+        context,
+        trigger,
+        cards,
+        onChanged: onChanged,
+      );
     default:
       return SizedBox.shrink();
   }
@@ -128,14 +136,19 @@ Widget periodicTriggerConfigWidget(
 // Mostra os campos de lógica e data e hora para o usuário preencher, caso o tipo de trigger seja "logical"
 Widget logicalTriggerConfigWidget(
   BuildContext context,
-  TriggerConfig? trigger, {
+  TriggerConfig? trigger,
+  List<CardsDashboard>? cards, {
   required ValueChanged<TriggerConfig> onChanged,
 }) {
+  final filtered = cards == null
+      ? <CardsDashboard>[]
+      : filterCards(cards, (trigger as LogicalTrigger).operator);
+  final logicalTrigger = trigger as LogicalTrigger;
   return Column(
     children: [
-      // LÓGICA
+      // ESCOLHE O OPERADOR LÓGICO
       DropdownButtonFormField<String>(
-        // initialValue: trigger is PeriodicTrigger ? trigger.interval : null,
+        initialValue: logicalTrigger.operator,
         decoration: InputDecoration(
           labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: ColorScheme.of(context).outlineVariant,
@@ -144,17 +157,49 @@ Widget logicalTriggerConfigWidget(
           border: OutlineInputBorder(),
         ),
         items: Constants.logicalConditions.map((key) {
-          final String display = switchLogicalMenuItem(context, key,);
+          final String display = switchLogicalMenuItem(context, key);
           return DropdownMenuItem<String>(value: key, child: Text(display));
         }).toList(),
         onChanged: (value) {
+          onChanged(logicalTrigger.copyWith(operator: value ?? ''));
+        },
+      ),
+      SizedBox(height: 10),
+      // ESCOLHE O ITEM PARA A LÓGICA
+      DropdownButtonFormField<String>(
+        initialValue: logicalTrigger.leftExpression,
+        decoration: InputDecoration(
+          labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: ColorScheme.of(context).outlineVariant,
+          ),
+          labelText: 'X',
+          border: OutlineInputBorder(),
+        ),
+        items: filtered.map((card) {
+          return DropdownMenuItem<String>(
+            value: card.title,
+            child: Text(card.title),
+          );
+        }).toList(),
+        onChanged: (value) {
           final newCondition = value ?? '';
-          if (trigger is LogicalTrigger) {
-            onChanged(
-              // Altera só a condição
-              trigger.copyWith(expression: newCondition)
-            );
-          }
+          onChanged(
+            // Altera só a condição
+            logicalTrigger.copyWith(leftExpression: newCondition),
+          );
+        },
+      ),
+      SizedBox(height: 10),
+      // ESCOLHE O VALOR PARA A LÓGICA
+      TextFormField(
+        initialValue: logicalTrigger.rightExpression,
+        decoration: InputDecoration(
+          labelText: 'Y',
+          labelStyle: Theme.of(context).textTheme.bodyMedium,
+          border: OutlineInputBorder(),
+        ),
+        onChanged: (value) {
+          onChanged(logicalTrigger.copyWith(rightExpression: value));
         },
       ),
       SizedBox(height: 10),
@@ -164,18 +209,18 @@ Widget logicalTriggerConfigWidget(
           tileColor: ColorScheme.of(context).secondary.withAlpha(50),
           title: Text(AppLocalizations.of(context)!.dateAndHour),
           subtitle: Text(
-            trigger is LogicalTrigger
-                ? DateFormat('dd/MM/yyyy HH:mm').format(trigger.dateTime ?? DateTime.now())
+            logicalTrigger.dateTime != null
+                ? DateFormat(
+                    'dd/MM/yyyy HH:mm',
+                  ).format(logicalTrigger.dateTime!)
                 : '',
           ),
           trailing: Icon(Icons.calendar_today),
           onTap: () async {
             final newDateTime = await dateAndHour(context, trigger);
             if (newDateTime == null) return;
-            if (trigger is LogicalTrigger) {
-              // Altera só a data
-              onChanged(trigger.copyWith(dateTime: newDateTime));
-            }
+            // Altera só a data
+            onChanged(logicalTrigger.copyWith(dateTime: newDateTime));
           },
         ),
       ),

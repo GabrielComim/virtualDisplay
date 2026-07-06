@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/automation.dart';
 import 'package:virtual_display/screens/modal_automation.dart';
 import 'package:virtual_display/theme/colors.dart';
+import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/utils/switch_menu_item.dart';
+import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/widgets/icon_on_off.dart';
 
 class CardsAutomations extends StatefulWidget {
@@ -24,10 +27,13 @@ class _CardsAutomationsState extends State<CardsAutomations> {
 
   @override
   Widget build(BuildContext context) {
+    final providerDashboard = context.watch<DashboardViewmodel>();
+    final variables = providerDashboard.availableVariables;
+
     return InkWell(
       // Abre para EDIÇÃO
       onLongPress: () {
-        modalAutomation(context, automation: widget.automation);
+        modalAutomation(context, automation: widget.automation, cards: variables);
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -41,6 +47,30 @@ class _CardsAutomationsState extends State<CardsAutomations> {
           padding: EdgeInsets.all(16.0),
           child: Column(
             children: [
+              // INDICATIVO SE ESTÁ FUNCIONAL - QUANDO FOR DO TIPO LOGICAL
+              if(widget.automation.type == Constants.automationLogical) ...[
+                // Conforme o tipo do widget vinculado a automação, verificar se o trigger é funcional
+
+                // Conferir o trigger: expression
+              //   (widget.automation.trigger as LogicalTrigger).expression.contains()
+              //       ? Icon(
+              //           Icons.check_circle,
+              //           color: Colors.green,
+              //         )
+              //       : Icon(
+              //           Icons.error,
+              //           color: Colors.red,
+              //         ),
+
+              //   Icon(
+              //     widget.automation.isFunctional
+              //         ? Icons.check_circle
+              //         : Icons.error,
+              //     color: widget.automation.isFunctional
+              //         ? Colors.green
+              //         : Colors.red,
+              //   ),
+              ],
               // NOME
               Text(widget.automation.name, style: TextStyle(fontSize: 24)),
               SizedBox(height: 4),

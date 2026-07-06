@@ -587,6 +587,12 @@ abstract class AppLocalizations {
   /// **'Intervalo'**
   String get interval;
 
+  /// No description provided for @value.
+  ///
+  /// In pt, this message translates to:
+  /// **'Valor'**
+  String get value;
+
   /// No description provided for @oneMinute.
   ///
   /// In pt, this message translates to:

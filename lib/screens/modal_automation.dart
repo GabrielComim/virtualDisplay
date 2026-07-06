@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/action/action_publish.dart';
 import 'package:virtual_display/models/automation.dart';
+import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/trigger/trigger_config.dart';
 import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/utils/constants.dart';
@@ -15,6 +16,7 @@ import 'package:virtual_display/widgets/trigger_automation.dart';
 Future<void> modalAutomation(
   BuildContext context, {
   Automation? automation,
+  List<CardsDashboard>? cards,
 }) async {
   final nameController = TextEditingController();
   bool enable = false;
@@ -108,7 +110,9 @@ Future<void> modalAutomation(
 
                           case Constants.automationLogical:
                             trigger = LogicalTrigger(
-                              expression: '',
+                              operator: '',
+                              leftExpression: '',
+                              rightExpression: '',
                               dateTime: DateTime.now(),
                             );
                             break;
@@ -173,6 +177,7 @@ Future<void> modalAutomation(
                       triggerConfigMode(
                         context,
                         type,
+                        cards,
                         trigger,
                         selectedDateTime: selectedDateTime,
                         onChanged: (newTrigger) {

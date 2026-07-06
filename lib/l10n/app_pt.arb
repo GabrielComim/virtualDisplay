@@ -111,6 +111,7 @@
   "dateAndHour": "Data e hora:",
   "select": "Selecionar",
   "interval": "Intervalo",
+  "value": "Valor",
 
   "@switch_menu_item": {"description": "STRINGS USADAS NO switch_menu_item"},
   "oneMinute": "Um minuto",

@@ -4,6 +4,7 @@ import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/screens/modal_automation.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/viewModel/automations_viewmodel.dart';
+import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/widgets/cards/cards_automations.dart';
 import 'package:virtual_display/widgets/delete_slide_tip.dart';
 import 'package:virtual_display/widgets/delete_with_slide_widget.dart';
@@ -26,6 +27,9 @@ class _AutomationsScreenState extends State<AutomationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final providerDashboard = context.watch<DashboardViewmodel>();
+    final variables = providerDashboard.availableVariables;
+    
     return Container(
       decoration: decorationInitScreen(),
       child: Scaffold(
@@ -41,7 +45,7 @@ class _AutomationsScreenState extends State<AutomationsScreen> {
                 label: Text(AppLocalizations.of(context)!.addAutomation),
                 onPressed: () async {
                   // ADICIONAR NOVA AUTOMAÇÃO
-                  modalAutomation(context);
+                  modalAutomation(context, cards: variables);
                 },
               ),
               SizedBox(height: 10),

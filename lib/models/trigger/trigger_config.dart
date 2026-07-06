@@ -89,20 +89,28 @@ class PeriodicTrigger extends TriggerConfig {
 
 // ======================== LOGICAL ========================
 class LogicalTrigger extends TriggerConfig{
-  final String expression;
+  final String? leftExpression;
+  final String? rightExpression;
+  final String operator;
   final DateTime? dateTime;
 
   LogicalTrigger({
-    required this.expression,
+    this.leftExpression,
+    this.rightExpression,
+    required this.operator,
     this.dateTime,
   });
 
    LogicalTrigger copyWith({
-    String? expression,
+    String? leftExpression,
+    String? rightExpression,
+    String? operator,
     DateTime? dateTime,
   }) {
     return LogicalTrigger(
-      expression: expression ?? this.expression,
+      leftExpression: leftExpression ?? this.leftExpression,
+      rightExpression: rightExpression ?? this.rightExpression,
+      operator: operator ?? this.operator,
       dateTime: dateTime ?? this.dateTime,
     );
   }
@@ -111,7 +119,9 @@ class LogicalTrigger extends TriggerConfig{
   @override
   factory LogicalTrigger.fromJson(Map<String, dynamic> json) {
     return LogicalTrigger(
-      expression: json['expression'] as String,
+      leftExpression: json['leftExpression'] as String?,
+      rightExpression: json['rightExpression'] as String?,
+      operator: json['operator'] as String,
       dateTime: json['dateTime'] != null ? DateTime.parse(json['dateTime'] as String) : null,
     );
   }
@@ -120,13 +130,15 @@ class LogicalTrigger extends TriggerConfig{
   Map<String, dynamic> toJson() {
     return {
       'type': Constants.automationLogical,
-      'expression': expression,
+      'leftExpression': leftExpression,
+      'rightExpression': rightExpression,
+      'operator': operator,
       'dateTime': dateTime?.toIso8601String(),
     };
   }
 
   @override
   String toString() {
-    return '$expression | ${dateTime != null ? DateFormat('dd/MM/yyyy HH:mm').format(dateTime!) : 'No date'}';
+    return '$leftExpression $operator $rightExpression - ${dateTime != null ? DateFormat('dd/MM/yyyy HH:mm').format(dateTime!) : 'No date'}';
   }
 }

@@ -5,6 +5,16 @@ import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/item_history.dart';
 import 'package:virtual_display/models/chart_sample.dart';
 import 'package:virtual_display/utils/constants.dart';
+import 'package:virtual_display/widgets/list_accepted_types.dart';
+
+List<CardsDashboard> filterCards(List<CardsDashboard>? cards, String operator) {
+  if (cards == null) return [];
+
+  final validTypes = acceptedTypes(operator);
+  final filtered = cards.where((card) => validTypes.contains(card.type)).toList();
+  log('Filtered cards for operator "$operator": ${filtered.map((c) => c.title).join(', ')}');
+  return filtered;
+}
 
 class DashboardViewmodel extends ChangeNotifier {
   List<CardsDashboard> cards = [];
@@ -47,5 +57,15 @@ class DashboardViewmodel extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  List<CardsDashboard> get availableVariables => cards;
+
+  CardsDashboard? getCardByType(String type) {
+    try {
+      return cards.firstWhere((c) => c.type == type);
+    } catch(_) {
+      return null;
+    }
   }
 }

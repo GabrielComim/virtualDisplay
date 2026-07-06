@@ -255,6 +255,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get interval => 'Intervalo';
 
   @override
+  String get value => 'Valor';
+
+  @override
   String get oneMinute => 'Um minuto';
 
   @override
