@@ -228,6 +228,21 @@ class AppLocalizationsPt extends AppLocalizations {
   String get payload => 'Dado:';
 
   @override
+  String get successAutomation => 'Automação atualiza com sucesso';
+
+  @override
+  String get deleteSlide => 'Deslize para a esquerda para excluir.';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get confirmExclude => 'Confirma a exclusão?';
+
+  @override
+  String get confirmExcludeAgain => 'Deseja realmente excluir isto?';
+
+  @override
   String get date => 'Data';
 
   @override
@@ -235,6 +250,51 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get select => 'Selecionar';
+
+  @override
+  String get interval => 'Intervalo';
+
+  @override
+  String get oneMinute => 'Um minuto';
+
+  @override
+  String get fiveMinutes => 'Cinco minutos';
+
+  @override
+  String get tenMinutes => 'Dez minutos';
+
+  @override
+  String get fifteenMinutes => 'Quinze minutos';
+
+  @override
+  String get thirdMinutes => 'Trinta minutos';
+
+  @override
+  String get oneHour => 'Uma hora';
+
+  @override
+  String get twoHours => 'Duas horas';
+
+  @override
+  String get sixHours => 'Seis horas';
+
+  @override
+  String get elevenHours => 'Doze horas';
+
+  @override
+  String get oneDay => 'Um dia';
+
+  @override
+  String get twoDays => 'Dois dias';
+
+  @override
+  String get oneWeek => 'Uma semana';
+
+  @override
+  String get oneMonth => 'Um mês';
+
+  @override
+  String get retain => 'Retain';
 
   @override
   String get noData => 'Sem dados';

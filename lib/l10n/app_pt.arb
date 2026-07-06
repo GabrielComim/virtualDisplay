@@ -100,11 +100,36 @@
   "publish": "Publicação",
   "topic": "Tópico:",
   "payload": "Dado:",
+  "successAutomation": "Automação atualiza com sucesso",
+  "deleteSlide": "Deslize para a esquerda para excluir.",
+  "cancel": "Cancelar",
+  "confirmExclude": "Confirma a exclusão?",
+  "confirmExcludeAgain": "Deseja realmente excluir isto?",
   
   "@trigger_automation": {"description": "STRINGS USADAS NO trigger_automation"},
   "date": "Data",
   "dateAndHour": "Data e hora:",
   "select": "Selecionar",
+  "interval": "Intervalo",
+
+  "@switch_menu_item": {"description": "STRINGS USADAS NO switch_menu_item"},
+  "oneMinute": "Um minuto",
+  "fiveMinutes": "Cinco minutos",
+  "tenMinutes": "Dez minutos",
+  "fifteenMinutes": "Quinze minutos",
+  "thirdMinutes": "Trinta minutos",
+  "oneHour": "Uma hora",
+  "twoHours": "Duas horas",
+  "sixHours": "Seis horas",
+  "elevenHours": "Doze horas",
+  "oneDay": "Um dia",
+  "twoDays": "Dois dias",
+  "oneWeek": "Uma semana",
+  "oneMonth": "Um mês",
+
+  "@action_automation": {"description": "STRINGS USADAS NO action_automation"},
+  "retain": "Retain",
+
 
   "@item_line_chart": {"description": "STRINGS USADAS NO item_line_chart"},
   "noData": "Sem dados"

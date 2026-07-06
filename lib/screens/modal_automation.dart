@@ -9,6 +9,7 @@ import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/utils/switch_menu_item.dart';
 import 'package:virtual_display/viewModel/automations_viewmodel.dart';
 import 'package:virtual_display/widgets/action_automation.dart';
+import 'package:virtual_display/widgets/show_material_banner.dart';
 import 'package:virtual_display/widgets/trigger_automation.dart';
 
 Future<void> modalAutomation(
@@ -32,6 +33,7 @@ Future<void> modalAutomation(
   }
 
   await showModalBottomSheet<bool>(
+    requestFocus: true,
     context: context,
     useSafeArea: true,
     isScrollControlled: true,
@@ -65,7 +67,9 @@ Future<void> modalAutomation(
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.name,
                       labelStyle: Theme.of(context).textTheme.bodyMedium
-                          ?.copyWith(color: ColorScheme.of(context).outlineVariant),
+                          ?.copyWith(
+                            color: ColorScheme.of(context).outlineVariant,
+                          ),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -74,7 +78,9 @@ Future<void> modalAutomation(
                     initialValue: type,
                     decoration: InputDecoration(
                       labelStyle: Theme.of(context).textTheme.bodyMedium
-                          ?.copyWith(color: ColorScheme.of(context).outlineVariant),
+                          ?.copyWith(
+                            color: ColorScheme.of(context).outlineVariant,
+                          ),
                       labelText: AppLocalizations.of(context)!.type,
                       border: OutlineInputBorder(),
                     ),
@@ -88,6 +94,25 @@ Future<void> modalAutomation(
                     onChanged: (v) {
                       setModalState(() {
                         type = v!;
+                        switch (type) {
+                          case Constants.automationOneShot:
+                            trigger = OneshotTrigger(dateTime: DateTime.now());
+                            break;
+
+                          case Constants.automationPeriodic:
+                            trigger = PeriodicTrigger(
+                              dateTime: DateTime.now(),
+                              interval: const Duration(hours: 1),
+                            );
+                            break;
+
+                          case Constants.automationLogical:
+                            trigger = LogicalTrigger(
+                              expression: '',
+                              dateTime: DateTime.now(),
+                            );
+                            break;
+                        }
                       });
                     },
                   ),
@@ -97,7 +122,9 @@ Future<void> modalAutomation(
                     initialValue: action?.toJson()['type'],
                     decoration: InputDecoration(
                       labelStyle: Theme.of(context).textTheme.bodyMedium
-                          ?.copyWith(color: ColorScheme.of(context).outlineVariant),
+                          ?.copyWith(
+                            color: ColorScheme.of(context).outlineVariant,
+                          ),
                       labelText: AppLocalizations.of(context)!.action,
                       border: OutlineInputBorder(),
                     ),
@@ -122,7 +149,7 @@ Future<void> modalAutomation(
                     },
                   ),
                   SizedBox(height: 20),
-                  // ============================ TOPIC AND PAYLOAD ============================
+                  // ============================ TOPIC / PAYLOAD / QoS / RETAIN ============================
                   actionConfigMode(
                     context,
                     action,
@@ -148,35 +175,16 @@ Future<void> modalAutomation(
                         type,
                         trigger,
                         selectedDateTime: selectedDateTime,
-                        onChanged: (dateTime) {
+                        onChanged: (newTrigger) {
                           setModalState(() {
-                            selectedDateTime = dateTime;
-                            // Conforme o type define o trigger
-                            switch (type) {
-                              case Constants.automationOneShot:
-                                trigger = OneshotTrigger(
-                                  dateTime: selectedDateTime!,
-                                );
-                                break;
-                              case Constants.automationPeriodic:
-                                // trigger = PeriodicTrigger(startDate: selectedDateTime!, interval:  );
-                                break;
-                              case Constants.automationLogical:
-                                // trigger = LogicalTrigger(expression: , validAfter: );
-                                break;
-                              default:
-                                trigger = OneshotTrigger(
-                                  dateTime: selectedDateTime!,
-                                );
-                                break;
-                            }
+                            trigger = newTrigger;
                           });
                         },
                       ),
                     ],
                   ),
                   SizedBox(height: 10),
-                   // ============================ HABILITADA ============================
+                  // ============================ HABILITADA ============================
                   Row(
                     children: [
                       Text(
@@ -227,6 +235,12 @@ Future<void> modalAutomation(
                       }
                       if (context.mounted) {
                         Navigator.pop(context, true);
+                        // Mostra mensagem de sucesso
+                        ShowBanner.messengerShow(
+                          context,
+                          AppLocalizations.of(context)!.successAutomation,
+                          false,
+                        );
                       }
                     },
                   ),

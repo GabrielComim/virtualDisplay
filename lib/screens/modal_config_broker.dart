@@ -113,7 +113,7 @@ Future<void> modalConfigBroker(
                       // Salvar o novo broker MQTT ou a edição
                       final viewModel = context.read<CredentialViewmodel>();
                       final newCredential = CredentialsBroker(
-                        id: isEdit ?  credential.id : null,
+                        id: isEdit ? credential.id : null,
                         broker: brokerController.text.trim(),
                         username: usernameController.text.trim(),
                         password: passwordController.text.trim(),
@@ -124,7 +124,7 @@ Future<void> modalConfigBroker(
                       } else {
                         await viewModel.addNewBroker(newCredential);
                       }
-                      if(context.mounted) {
+                      if (context.mounted) {
                         Navigator.pop(context, true);
                       }
                     },

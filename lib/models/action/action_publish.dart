@@ -51,4 +51,9 @@ class PublishAction extends ActionConfig {
       'retain': retain,
     };
   }
+
+  @override
+  String toString() {
+    return 'Topic: $topic, \nPayload: $payload, \nQoS: $qos, \nRetain: $retain';
+  }
 }

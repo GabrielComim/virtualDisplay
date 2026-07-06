@@ -14,7 +14,7 @@ class MqttMessageProcessor {
   final MqttPublishVm mqttPublishViewModel;
   final DashboardViewmodel dashboardViewmodel;
 
-  String? _currentDevice;
+  // String? _currentDevice;
 
   // Construtor
   MqttMessageProcessor(
@@ -59,7 +59,7 @@ class MqttMessageProcessor {
     final String deviceName = json['device'] ?? '';
     
     // Atualiza a variável
-    _currentDevice = deviceName;
+    // _currentDevice = deviceName;
 
     devicesViewModel.addDevice(DeviceInfo(device: deviceName, online: true));
 

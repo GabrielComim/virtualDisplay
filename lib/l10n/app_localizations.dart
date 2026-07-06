@@ -533,6 +533,36 @@ abstract class AppLocalizations {
   /// **'Dado:'**
   String get payload;
 
+  /// No description provided for @successAutomation.
+  ///
+  /// In pt, this message translates to:
+  /// **'Automação atualiza com sucesso'**
+  String get successAutomation;
+
+  /// No description provided for @deleteSlide.
+  ///
+  /// In pt, this message translates to:
+  /// **'Deslize para a esquerda para excluir.'**
+  String get deleteSlide;
+
+  /// No description provided for @cancel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cancelar'**
+  String get cancel;
+
+  /// No description provided for @confirmExclude.
+  ///
+  /// In pt, this message translates to:
+  /// **'Confirma a exclusão?'**
+  String get confirmExclude;
+
+  /// No description provided for @confirmExcludeAgain.
+  ///
+  /// In pt, this message translates to:
+  /// **'Deseja realmente excluir isto?'**
+  String get confirmExcludeAgain;
+
   /// No description provided for @date.
   ///
   /// In pt, this message translates to:
@@ -550,6 +580,96 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Selecionar'**
   String get select;
+
+  /// No description provided for @interval.
+  ///
+  /// In pt, this message translates to:
+  /// **'Intervalo'**
+  String get interval;
+
+  /// No description provided for @oneMinute.
+  ///
+  /// In pt, this message translates to:
+  /// **'Um minuto'**
+  String get oneMinute;
+
+  /// No description provided for @fiveMinutes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cinco minutos'**
+  String get fiveMinutes;
+
+  /// No description provided for @tenMinutes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dez minutos'**
+  String get tenMinutes;
+
+  /// No description provided for @fifteenMinutes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Quinze minutos'**
+  String get fifteenMinutes;
+
+  /// No description provided for @thirdMinutes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Trinta minutos'**
+  String get thirdMinutes;
+
+  /// No description provided for @oneHour.
+  ///
+  /// In pt, this message translates to:
+  /// **'Uma hora'**
+  String get oneHour;
+
+  /// No description provided for @twoHours.
+  ///
+  /// In pt, this message translates to:
+  /// **'Duas horas'**
+  String get twoHours;
+
+  /// No description provided for @sixHours.
+  ///
+  /// In pt, this message translates to:
+  /// **'Seis horas'**
+  String get sixHours;
+
+  /// No description provided for @elevenHours.
+  ///
+  /// In pt, this message translates to:
+  /// **'Doze horas'**
+  String get elevenHours;
+
+  /// No description provided for @oneDay.
+  ///
+  /// In pt, this message translates to:
+  /// **'Um dia'**
+  String get oneDay;
+
+  /// No description provided for @twoDays.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dois dias'**
+  String get twoDays;
+
+  /// No description provided for @oneWeek.
+  ///
+  /// In pt, this message translates to:
+  /// **'Uma semana'**
+  String get oneWeek;
+
+  /// No description provided for @oneMonth.
+  ///
+  /// In pt, this message translates to:
+  /// **'Um mês'**
+  String get oneMonth;
+
+  /// No description provided for @retain.
+  ///
+  /// In pt, this message translates to:
+  /// **'Retain'**
+  String get retain;
 
   /// No description provided for @noData.
   ///

@@ -50,6 +50,8 @@ class Constants {
   static const String iconBuzzer = 'assets/icons/icon_buzzer.png';
   static const String iconAlarm = 'assets/icons/icon_alarm.png';
   static const String iconButton = 'assets/icons/icon_button.png';
+  static const String iconOn = 'assets/icons/icon_on.png';
+  static const String iconOff = 'assets/icons/icon_off.png';
 
   // Tipos de textos
   static const String titleText1 =    'text1';
@@ -102,5 +104,55 @@ class Constants {
   static const List<String> actionAutomations = [
     '',
     actionPublish,
+  ];
+
+  static const String automationInterval1Minute = '1 minute';
+  static const String automationInterval5Minutes = '5 minutes';
+  static const String automationInterval10Minutes = '10 minutes';
+  static const String automationInterval15Minutes = '15 minutes';
+  static const String automationInterval30Minutes = '30 minutes';
+  static const String automationInterval1Hour = '1 hour';
+  static const String automationInterval2Hours = '2 hours';
+  static const String automationInterval6Hours = '6 hours';
+  static const String automationInterval12Hours = '12 hours';
+  static const String automationInterval1Day = '1 day';
+  static const String automationInterval2Days = '2 days';
+  static const String automationInterval1Week = '1 week';
+  static const String automationInterval1Month = '1 month';
+
+  static const List<String> periodicIntervals = [
+    automationInterval1Minute,
+    automationInterval5Minutes,
+    automationInterval10Minutes,
+    automationInterval15Minutes,
+    automationInterval30Minutes,
+    automationInterval1Hour,
+    automationInterval2Hours,
+    automationInterval6Hours,
+    automationInterval12Hours,
+    automationInterval1Day,
+    automationInterval2Days,
+    automationInterval1Week,
+    automationInterval1Month,
+  ];
+
+  static const String logicalConditionAnd = '&';
+  static const String logicalConditionOr = '|';
+  static const String logicalConditionNot = '!';
+  static const String logicalConditionEqual = '=';
+  static const String logicalConditionMinor = '<';
+  static const String logicalConditionMinorEqual = '<=';
+  static const String logicalConditionMajor = '>';
+  static const String logicalConditionMajorEqual = '>=';
+  
+  static const List<String> logicalConditions = [
+    logicalConditionAnd,
+    logicalConditionOr,
+    logicalConditionNot,
+    logicalConditionEqual,
+    logicalConditionMinor,
+    logicalConditionMinorEqual,
+    logicalConditionMajor,
+    logicalConditionMajorEqual,
   ];
 }

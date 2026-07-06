@@ -5,6 +5,8 @@ import 'package:virtual_display/screens/modal_automation.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/viewModel/automations_viewmodel.dart';
 import 'package:virtual_display/widgets/cards/cards_automations.dart';
+import 'package:virtual_display/widgets/delete_slide_tip.dart';
+import 'package:virtual_display/widgets/delete_with_slide_widget.dart';
 // import 'package:virtual_display/utils/constants.dart';
 
 class AutomationsScreen extends StatefulWidget {
@@ -15,6 +17,13 @@ class AutomationsScreen extends StatefulWidget {
 }
 
 class _AutomationsScreenState extends State<AutomationsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final provider = Provider.of<AutomationsViewmodel>(context, listen: false);
+    provider.loadAutomations();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,6 +45,8 @@ class _AutomationsScreenState extends State<AutomationsScreen> {
                 },
               ),
               SizedBox(height: 10),
+              // Dica de como excluir
+              deleteWithSlideTip(context: context),
               // Cria os cards conforme detecta dispositivos conectados
               Expanded(
                 child: Consumer<AutomationsViewmodel>(
@@ -44,13 +55,20 @@ class _AutomationsScreenState extends State<AutomationsScreen> {
                       itemCount: viewModel.automations.length,
                       itemBuilder: (context, index) {
                         final automation = viewModel.automations[index];
-                        return Column(
-                          children: [
-                            CardsAutomations(
-                              automation: automation,
-                            ),
-                            SizedBox(height: 20),
-                          ],
+                        return deleteWithSlideWidget(
+                          context,
+                          id: automation.id!,
+                          onDismissed: () async {
+                            await context
+                                .read<AutomationsViewmodel>()
+                                .removeAutomation(automation.id!);
+                          },
+                          child: Column(
+                            children: [
+                              CardsAutomations(automation: automation),
+                              SizedBox(height: 20),
+                            ],
+                          ),
                         );
                       },
                     );

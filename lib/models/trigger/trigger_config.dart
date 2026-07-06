@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:virtual_display/utils/constants.dart';
 
 sealed class TriggerConfig {
@@ -11,6 +12,14 @@ class OneshotTrigger extends TriggerConfig {
   OneshotTrigger({
     required this.dateTime,
   });
+
+  OneshotTrigger copyWith({
+    DateTime? dateTime,
+  }) {
+    return OneshotTrigger(
+      dateTime: dateTime ?? this.dateTime,
+    );
+  }
 
   @override
   factory OneshotTrigger.fromJson(Map<String, dynamic> json) {
@@ -26,22 +35,39 @@ class OneshotTrigger extends TriggerConfig {
       'dateTime': dateTime.toIso8601String(),
     };
   }
+
+  @override
+  String toString() {
+    return DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
+  }
 }
 
 // ======================== PERIODIC ========================
 class PeriodicTrigger extends TriggerConfig {
-  final DateTime startDate;
+  final DateTime dateTime;
   final Duration interval;
 
   PeriodicTrigger({
-    required this.startDate,
+    required this.dateTime,
     required this.interval,
   });
 
+  PeriodicTrigger copyWith({
+    DateTime? dateTime,
+    Duration? interval
+  }) {
+    return PeriodicTrigger(
+      dateTime: dateTime ?? this.dateTime,
+      interval: interval ?? this.interval,
+    );
+  }
+
   @override
   factory PeriodicTrigger.fromJson(Map<String, dynamic> json) {
+    // log(json['dateTime'].toString());
+    // log(json['intervalSeconds'].toString());
     return PeriodicTrigger(
-      startDate: DateTime.parse(json['startDate'] as String),
+      dateTime: DateTime.parse(json['dateTime'] as String),
       interval: Duration(seconds: json['intervalSeconds'] as int),
     );
   }
@@ -50,27 +76,43 @@ class PeriodicTrigger extends TriggerConfig {
   Map<String, dynamic> toJson(){
     return {
       'type': Constants.automationPeriodic,
-      'startTime': startDate.toIso8601String(),
+      'dateTime': dateTime.toIso8601String(),
       'intervalSeconds': interval.inSeconds,
     };
+  }
+
+  @override
+  String toString() {
+    return DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
   }
 }
 
 // ======================== LOGICAL ========================
 class LogicalTrigger extends TriggerConfig{
   final String expression;
-  final DateTime? validAfter;
+  final DateTime? dateTime;
 
   LogicalTrigger({
     required this.expression,
-    this.validAfter,
+    this.dateTime,
   });
+
+   LogicalTrigger copyWith({
+    String? expression,
+    DateTime? dateTime,
+  }) {
+    return LogicalTrigger(
+      expression: expression ?? this.expression,
+      dateTime: dateTime ?? this.dateTime,
+    );
+  }
+
 
   @override
   factory LogicalTrigger.fromJson(Map<String, dynamic> json) {
     return LogicalTrigger(
       expression: json['expression'] as String,
-      validAfter: json['validAfter'] != null ? DateTime.parse(json['validAfter'] as String) : null,
+      dateTime: json['dateTime'] != null ? DateTime.parse(json['dateTime'] as String) : null,
     );
   }
 
@@ -79,7 +121,12 @@ class LogicalTrigger extends TriggerConfig{
     return {
       'type': Constants.automationLogical,
       'expression': expression,
-      'validAfter': validAfter?.toIso8601String(),
+      'dateTime': dateTime?.toIso8601String(),
     };
+  }
+
+  @override
+  String toString() {
+    return DateFormat('dd/MM/yyyy HH:mm').format(dateTime!);
   }
 }

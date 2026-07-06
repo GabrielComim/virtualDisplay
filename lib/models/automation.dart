@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:virtual_display/models/action/action_publish.dart';
 import 'package:virtual_display/models/trigger/trigger_config.dart';
@@ -62,6 +63,7 @@ class Automation {
         action = PublishAction.fromJson(actionMap);
         break;
       case Constants.automationPeriodic:
+        log('Periodic trigger map: $triggerMap');
         trigger = PeriodicTrigger.fromJson(triggerMap);
         action = PublishAction.fromJson(actionMap);
         break;
