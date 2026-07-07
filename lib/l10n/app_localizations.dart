@@ -563,6 +563,12 @@ abstract class AppLocalizations {
   /// **'Deseja realmente excluir isto?'**
   String get confirmExcludeAgain;
 
+  /// No description provided for @actionNotDefined.
+  ///
+  /// In pt, this message translates to:
+  /// **'Preencha o campo da ação'**
+  String get actionNotDefined;
+
   /// No description provided for @date.
   ///
   /// In pt, this message translates to:

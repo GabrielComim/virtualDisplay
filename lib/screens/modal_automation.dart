@@ -13,6 +13,11 @@ import 'package:virtual_display/widgets/action_automation.dart';
 import 'package:virtual_display/widgets/show_material_banner.dart';
 import 'package:virtual_display/widgets/trigger_automation.dart';
 
+ActionConfig _logError(BuildContext context) {
+  ShowBanner.messengerShow(context, AppLocalizations.of(context)!.actionNotDefined, true);
+  return throw Exception('Action não definido');
+}
+
 Future<void> modalAutomation(
   BuildContext context, {
   Automation? automation,
@@ -217,6 +222,7 @@ Future<void> modalAutomation(
                     onPressed: () async {
                       // ============================ Salvar o nova automação ou a edição ============================
                       final viewModel = context.read<AutomationsViewmodel>();
+                      // TODO: implementar o validator para os campos obrigatórios, sem permitir a criação sme preenchimento
                       final newAutomation = Automation(
                         id: isEdit ? automation.id : null,
                         name: nameController.text.trim(),
@@ -226,7 +232,8 @@ Future<void> modalAutomation(
                             action ??
                             (isEdit
                                 ? automation.action
-                                : throw Exception('Ação não definida')),
+                                // : ShowBanner.messengerShow(context, AppLocalizations.of(context)!.actionNotDefined, true);),
+                                : _logError(context)),
                         trigger:
                             trigger ??
                             (isEdit

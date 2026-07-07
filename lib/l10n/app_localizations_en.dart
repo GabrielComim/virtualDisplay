@@ -243,6 +243,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmExcludeAgain => 'Deseja realmente excluir isto?';
 
   @override
+  String get actionNotDefined => 'Preencha o campo da ação';
+
+  @override
   String get date => 'Data';
 
   @override

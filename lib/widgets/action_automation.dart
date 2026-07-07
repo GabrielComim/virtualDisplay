@@ -30,21 +30,34 @@ Widget actionConfigMode(
             labelText: 'Payload',
             labelStyle: Theme.of(context).textTheme.bodyMedium,
           ),
+          // inputFormatters: [
+          //   // Permite apenas números
+          //   FilteringTextInputFormatter.allow(RegExp(r'[012]')),      // Teclado com apenas 0, 1 e 2
+          //   LengthLimitingTextInputFormatter(1),                      // Limita a 1 dígito
+          // ],
           onChanged: (value) {
             onChanged(action.copyWith(payload: value));
           },
         ),
         SizedBox(height: 10),
         // QoS
-        TextFormField(
-          initialValue: action.qos.toString(),
+        DropdownButtonFormField<int>(
           decoration: InputDecoration(
             labelText: 'QoS',
-            labelStyle: Theme.of(context).textTheme.bodyMedium,
+            labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: ColorScheme.of(context).outlineVariant,
+            ),
+            border: OutlineInputBorder(),
           ),
-          keyboardType: TextInputType.number,
+          items: [
+            DropdownMenuItem(value: 0, child: Text('0')),
+            DropdownMenuItem(value: 1, child: Text('1')),
+            DropdownMenuItem(value: 2, child: Text('2')),
+          ],
           onChanged: (value) {
-            onChanged(action.copyWith(qos: int.parse(value)));
+            if (value != null) {
+              onChanged(action.copyWith(qos: value));
+            }
           },
         ),
         SizedBox(height: 10),

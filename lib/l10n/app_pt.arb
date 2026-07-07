@@ -105,6 +105,7 @@
   "cancel": "Cancelar",
   "confirmExclude": "Confirma a exclusão?",
   "confirmExcludeAgain": "Deseja realmente excluir isto?",
+  "actionNotDefined": "Preencha o campo da ação",
   
   "@trigger_automation": {"description": "STRINGS USADAS NO trigger_automation"},
   "date": "Data",

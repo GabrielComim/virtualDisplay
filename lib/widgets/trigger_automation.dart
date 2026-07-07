@@ -6,6 +6,7 @@ import 'package:virtual_display/models/trigger/trigger_config.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/utils/switch_menu_item.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
+import 'package:virtual_display/widgets/select_type_keyboard.dart';
 
 Widget triggerConfigMode(
   BuildContext context,
@@ -140,15 +141,15 @@ Widget logicalTriggerConfigWidget(
   List<CardsDashboard>? cards, {
   required ValueChanged<TriggerConfig> onChanged,
 }) {
-  final filtered = cards == null
-      ? <CardsDashboard>[]
-      : filterCards(cards, (trigger as LogicalTrigger).operator);
   final logicalTrigger = trigger as LogicalTrigger;
+  List<CardsDashboard> filtered = cards ?? <CardsDashboard>[];
+
   return Column(
     children: [
+      
       // ESCOLHE O OPERADOR LÓGICO
       DropdownButtonFormField<String>(
-        initialValue: logicalTrigger.operator,
+        // initialValue: logicalTrigger.operator,
         decoration: InputDecoration(
           labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: ColorScheme.of(context).outlineVariant,
@@ -162,12 +163,14 @@ Widget logicalTriggerConfigWidget(
         }).toList(),
         onChanged: (value) {
           onChanged(logicalTrigger.copyWith(operator: value ?? ''));
+          filterCards(cards, logicalTrigger.operator);
         },
       ),
       SizedBox(height: 10),
+      
       // ESCOLHE O ITEM PARA A LÓGICA
       DropdownButtonFormField<String>(
-        initialValue: logicalTrigger.leftExpression,
+        // initialValue: logicalTrigger.leftExpression,
         decoration: InputDecoration(
           labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: ColorScheme.of(context).outlineVariant,
@@ -190,19 +193,26 @@ Widget logicalTriggerConfigWidget(
         },
       ),
       SizedBox(height: 10),
+      
       // ESCOLHE O VALOR PARA A LÓGICA
       TextFormField(
-        initialValue: logicalTrigger.rightExpression,
+        // initialValue: logicalTrigger.rightExpression,
         decoration: InputDecoration(
           labelText: 'Y',
           labelStyle: Theme.of(context).textTheme.bodyMedium,
           border: OutlineInputBorder(),
         ),
+        keyboardType: TextInputType.number,
+        inputFormatters: [
+            // Configura o teclado conforme o tipo de dado de X e o operador 
+            selectTypeKeyboard(filtered, logicalTrigger.leftExpression ?? ''),
+          ],
         onChanged: (value) {
           onChanged(logicalTrigger.copyWith(rightExpression: value));
         },
       ),
       SizedBox(height: 10),
+      
       // BOTÃO PARA SELECIONAR DATA
       Card(
         child: ListTile(

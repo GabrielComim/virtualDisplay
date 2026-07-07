@@ -7,9 +7,9 @@ import 'package:virtual_display/models/chart_sample.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/widgets/list_accepted_types.dart';
 
+// Filtra apenas os cards do dashboard que podem ser utilizados com o operador que foi escolhido
 List<CardsDashboard> filterCards(List<CardsDashboard>? cards, String operator) {
   if (cards == null) return [];
-
   final validTypes = acceptedTypes(operator);
   final filtered = cards.where((card) => validTypes.contains(card.type)).toList();
   log('Filtered cards for operator "$operator": ${filtered.map((c) => c.title).join(', ')}');
