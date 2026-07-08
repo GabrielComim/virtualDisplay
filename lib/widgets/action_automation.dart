@@ -13,6 +13,7 @@ Widget actionConfigMode(
       children: [
         // TOPIC
         TextFormField(
+          cursorColor: ColorScheme.of(context).secondary,
           initialValue: action.topic,
           decoration: InputDecoration(
             labelText: 'Topic',
@@ -25,6 +26,7 @@ Widget actionConfigMode(
         SizedBox(height: 10),
         // PAYLOAD
         TextFormField(
+          cursorColor: ColorScheme.of(context).secondary,
           initialValue: action.payload,
           decoration: InputDecoration(
             labelText: 'Payload',

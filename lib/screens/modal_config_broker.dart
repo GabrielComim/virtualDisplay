@@ -50,6 +50,7 @@ Future<void> modalConfigBroker(
                   ),
                   SizedBox(height: 16),
                   TextFormField(
+                    cursorColor: ColorScheme.of(context).secondary,
                     controller: brokerController,
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.mqttBroker,
@@ -62,6 +63,7 @@ Future<void> modalConfigBroker(
                   ),
                   SizedBox(height: 6),
                   TextFormField(
+                    cursorColor: ColorScheme.of(context).secondary,
                     controller: usernameController,
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.credentialName,
@@ -73,6 +75,7 @@ Future<void> modalConfigBroker(
                   ),
                   SizedBox(height: 6),
                   TextFormField(
+                    cursorColor: ColorScheme.of(context).secondary,
                     controller: passwordController,
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/automation.dart';
+import 'package:virtual_display/models/trigger/trigger_config.dart';
 import 'package:virtual_display/screens/modal_automation.dart';
 import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/utils/constants.dart';
@@ -33,7 +34,11 @@ class _CardsAutomationsState extends State<CardsAutomations> {
     return InkWell(
       // Abre para EDIÇÃO
       onLongPress: () {
-        modalAutomation(context, automation: widget.automation, cards: variables);
+        modalAutomation(
+          context,
+          automation: widget.automation,
+          cards: variables,
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -48,28 +53,14 @@ class _CardsAutomationsState extends State<CardsAutomations> {
           child: Column(
             children: [
               // INDICATIVO SE ESTÁ FUNCIONAL - QUANDO FOR DO TIPO LOGICAL
-              if(widget.automation.type == Constants.automationLogical) ...[
+              if (widget.automation.type == Constants.automationLogical) ...[
                 // Conforme o tipo do widget vinculado a automação, verificar se o trigger é funcional
-
-                // Conferir o trigger: expression
-              //   (widget.automation.trigger as LogicalTrigger).expression.contains()
-              //       ? Icon(
-              //           Icons.check_circle,
-              //           color: Colors.green,
-              //         )
-              //       : Icon(
-              //           Icons.error,
-              //           color: Colors.red,
-              //         ),
-
-              //   Icon(
-              //     widget.automation.isFunctional
-              //         ? Icons.check_circle
-              //         : Icons.error,
-              //     color: widget.automation.isFunctional
-              //         ? Colors.green
-              //         : Colors.red,
-              //   ),
+                ((widget.automation.trigger as LogicalTrigger).leftExpression != null &&
+                (widget.automation.trigger as LogicalTrigger).rightExpression != null) 
+                    ? Icon(Icons.check_circle, color: Colors.green)
+                    : Icon(Icons.error, color: Colors.red),
+              ] else ...[
+                Icon(Icons.check_circle, color: Colors.green),
               ],
               // NOME
               Text(widget.automation.name, style: TextStyle(fontSize: 24)),
@@ -82,7 +73,8 @@ class _CardsAutomationsState extends State<CardsAutomations> {
                     '${AppLocalizations.of(context)!.type}: ',
                     style: TextStyle(fontSize: 16),
                   ),
-                  Text(switchTypeMenuItem(context, widget.automation.type),
+                  Text(
+                    switchTypeMenuItem(context, widget.automation.type),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: AppColors.textSecondary,

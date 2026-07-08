@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
@@ -142,7 +143,8 @@ Widget logicalTriggerConfigWidget(
   required ValueChanged<TriggerConfig> onChanged,
 }) {
   final logicalTrigger = trigger as LogicalTrigger;
-  List<CardsDashboard> filtered = cards ?? <CardsDashboard>[];
+  final List<CardsDashboard> filtered = filterCards(cards, logicalTrigger.operator);
+  final configKeyboard = selectKeyboardConfig(filtered, logicalTrigger.leftExpression ?? '');
 
   return Column(
     children: [
@@ -162,8 +164,7 @@ Widget logicalTriggerConfigWidget(
           return DropdownMenuItem<String>(value: key, child: Text(display));
         }).toList(),
         onChanged: (value) {
-          onChanged(logicalTrigger.copyWith(operator: value ?? ''));
-          filterCards(cards, logicalTrigger.operator);
+          onChanged(logicalTrigger.copyWith(operator: value ?? '', leftExpression: ''));
         },
       ),
       SizedBox(height: 10),
@@ -197,15 +198,17 @@ Widget logicalTriggerConfigWidget(
       // ESCOLHE O VALOR PARA A LÓGICA
       TextFormField(
         // initialValue: logicalTrigger.rightExpression,
+        cursorColor: ColorScheme.of(context).secondary,
         decoration: InputDecoration(
           labelText: 'Y',
           labelStyle: Theme.of(context).textTheme.bodyMedium,
           border: OutlineInputBorder(),
         ),
-        keyboardType: TextInputType.number,
+        keyboardType: configKeyboard.keyboardType,
         inputFormatters: [
             // Configura o teclado conforme o tipo de dado de X e o operador 
-            selectTypeKeyboard(filtered, logicalTrigger.leftExpression ?? ''),
+            ...configKeyboard.formatters,
+            LengthLimitingTextInputFormatter(configKeyboard.maxLength ?? 100), // Limita o tamanho do input
           ],
         onChanged: (value) {
           onChanged(logicalTrigger.copyWith(rightExpression: value));

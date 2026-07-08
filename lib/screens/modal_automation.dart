@@ -14,7 +14,11 @@ import 'package:virtual_display/widgets/show_material_banner.dart';
 import 'package:virtual_display/widgets/trigger_automation.dart';
 
 ActionConfig _logError(BuildContext context) {
-  ShowBanner.messengerShow(context, AppLocalizations.of(context)!.actionNotDefined, true);
+  ShowBanner.messengerShow(
+    context,
+    AppLocalizations.of(context)!.actionNotDefined,
+    true,
+  );
   return throw Exception('Action não definido');
 }
 
@@ -70,6 +74,7 @@ Future<void> modalAutomation(
                   SizedBox(height: 16),
                   // ============================ NOME ============================
                   TextFormField(
+                    cursorColor: ColorScheme.of(context).secondary,
                     controller: nameController,
                     decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.name,
@@ -151,7 +156,12 @@ Future<void> modalAutomation(
                       setModalState(() {
                         switch (v) {
                           case Constants.actionPublish:
-                            action = PublishAction(topic: '', payload: '', qos: 0, retain: false);
+                            action = PublishAction(
+                              topic: '',
+                              payload: '',
+                              qos: 0,
+                              retain: false,
+                            );
                             break;
                         }
                       });
