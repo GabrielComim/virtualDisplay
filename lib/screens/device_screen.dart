@@ -17,7 +17,6 @@ class DeviceScreen extends StatefulWidget {
 }
 
 class _DeviceScreenState extends State<DeviceScreen> {
-  
   @override
   void initState() {
     super.initState();
@@ -45,6 +44,15 @@ class _DeviceScreenState extends State<DeviceScreen> {
             Expanded(
               child: Consumer<DevicesViewModel>(
                 builder: (context, viewModel, child) {
+                  // Se não houver dispositivos, informar o que o usuário deve fazer
+                  if (viewModel.devices.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Center(
+                        child: Text(AppLocalizations.of(context)!.noDevicesFound),
+                      ),
+                    );
+                  }
                   return ListView.builder(
                     itemCount: viewModel.devices.length,
                     itemBuilder: (context, index) {

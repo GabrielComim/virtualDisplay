@@ -131,6 +131,12 @@ abstract class AppLocalizations {
   /// **'Adicionar broker'**
   String get labelIconAdd;
 
+  /// No description provided for @noDevicesFound.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhum dispositivo configurado. \nEnvie a configuração para o broker novamente no tópico:\n virtualDisplay/response_config'**
+  String get noDevicesFound;
+
   /// No description provided for @connected.
   ///
   /// In pt, this message translates to:
@@ -568,6 +574,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Preencha o campo da ação'**
   String get actionNotDefined;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In pt, this message translates to:
+  /// **'Preencha o campo obrigatório.'**
+  String get requiredField;
 
   /// No description provided for @date.
   ///

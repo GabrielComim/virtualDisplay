@@ -89,6 +89,12 @@ Widget periodicTriggerConfigWidget(
       // INTERVALO
       DropdownButtonFormField<String>(
         // initialValue: trigger is PeriodicTrigger ? trigger.interval : null,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return AppLocalizations.of(context)!.requiredField;
+          }
+          return null;
+        },
         decoration: InputDecoration(
           labelStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: ColorScheme.of(context).outlineVariant,
@@ -143,12 +149,17 @@ Widget logicalTriggerConfigWidget(
   required ValueChanged<TriggerConfig> onChanged,
 }) {
   final logicalTrigger = trigger as LogicalTrigger;
-  final List<CardsDashboard> filtered = filterCards(cards, logicalTrigger.operator);
-  final configKeyboard = selectKeyboardConfig(filtered, logicalTrigger.leftExpression ?? '');
+  final List<CardsDashboard> filtered = filterCards(
+    cards,
+    logicalTrigger.operator,
+  );
+  final configKeyboard = selectKeyboardConfig(
+    filtered,
+    logicalTrigger.leftExpression ?? '',
+  );
 
   return Column(
     children: [
-      
       // ESCOLHE O OPERADOR LÓGICO
       DropdownButtonFormField<String>(
         // initialValue: logicalTrigger.operator,
@@ -164,11 +175,13 @@ Widget logicalTriggerConfigWidget(
           return DropdownMenuItem<String>(value: key, child: Text(display));
         }).toList(),
         onChanged: (value) {
-          onChanged(logicalTrigger.copyWith(operator: value ?? '', leftExpression: ''));
+          onChanged(
+            logicalTrigger.copyWith(operator: value ?? '', leftExpression: ''),
+          );
         },
       ),
       SizedBox(height: 10),
-      
+
       // ESCOLHE O ITEM PARA A LÓGICA
       DropdownButtonFormField<String>(
         // initialValue: logicalTrigger.leftExpression,
@@ -194,7 +207,7 @@ Widget logicalTriggerConfigWidget(
         },
       ),
       SizedBox(height: 10),
-      
+
       // ESCOLHE O VALOR PARA A LÓGICA
       TextFormField(
         // initialValue: logicalTrigger.rightExpression,
@@ -206,16 +219,18 @@ Widget logicalTriggerConfigWidget(
         ),
         keyboardType: configKeyboard.keyboardType,
         inputFormatters: [
-            // Configura o teclado conforme o tipo de dado de X e o operador 
-            ...configKeyboard.formatters,
-            LengthLimitingTextInputFormatter(configKeyboard.maxLength ?? 100), // Limita o tamanho do input
-          ],
+          // Configura o teclado conforme o tipo de dado de X e o operador
+          ...configKeyboard.formatters,
+          LengthLimitingTextInputFormatter(
+            configKeyboard.maxLength ?? 100,
+          ), // Limita o tamanho do input
+        ],
         onChanged: (value) {
           onChanged(logicalTrigger.copyWith(rightExpression: value));
         },
       ),
       SizedBox(height: 10),
-      
+
       // BOTÃO PARA SELECIONAR DATA
       Card(
         child: ListTile(

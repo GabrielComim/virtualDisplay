@@ -27,6 +27,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get labelIconAdd => 'Adicionar broker';
 
   @override
+  String get noDevicesFound => 'Nenhum dispositivo configurado. \nEnvie a configuração para o broker novamente no tópico:\n virtualDisplay/response_config';
+
+  @override
   String get connected => 'Conectado';
 
   @override
@@ -244,6 +247,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get actionNotDefined => 'Preencha o campo da ação';
+
+  @override
+  String get requiredField => 'Preencha o campo obrigatório.';
 
   @override
   String get date => 'Data';

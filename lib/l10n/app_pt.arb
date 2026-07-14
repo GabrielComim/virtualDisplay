@@ -13,6 +13,7 @@
   "@devices_screen": {"description": "STRINGS USADAS NO devices_screen"},
   "labelIconRefresh": "Atualizar conexões",
   "labelIconAdd": "Adicionar broker",
+  "noDevicesFound": "Nenhum dispositivo configurado. \nEnvie a configuração para o broker novamente no tópico:\n virtualDisplay/response_config",
 
   "@cardDevices": {"description": "STRINGS USADAS NO cardDevices"},
   "connected": "Conectado",
@@ -106,6 +107,7 @@
   "confirmExclude": "Confirma a exclusão?",
   "confirmExcludeAgain": "Deseja realmente excluir isto?",
   "actionNotDefined": "Preencha o campo da ação",
+  "requiredField": "Preencha o campo obrigatório.",
   
   "@trigger_automation": {"description": "STRINGS USADAS NO trigger_automation"},
   "date": "Data",

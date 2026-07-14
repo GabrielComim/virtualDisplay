@@ -10,7 +10,6 @@ import 'package:virtual_display/widgets/delete_slide_tip.dart';
 import 'package:virtual_display/widgets/delete_with_slide_widget.dart';
 // import 'package:virtual_display/utils/constants.dart';
 
-
 // TODO: Checklist das coisas a serem feitas ainda sobre automações:
 // Exibir estado da automação no card de cada uma;
 // Detectar automações inválidas;

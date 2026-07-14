@@ -13,6 +13,12 @@ Widget actionConfigMode(
       children: [
         // TOPIC
         TextFormField(
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return AppLocalizations.of(context)!.requiredField;
+            }
+            return null;
+          },
           cursorColor: ColorScheme.of(context).secondary,
           initialValue: action.topic,
           decoration: InputDecoration(
@@ -28,6 +34,12 @@ Widget actionConfigMode(
         TextFormField(
           cursorColor: ColorScheme.of(context).secondary,
           initialValue: action.payload,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return AppLocalizations.of(context)!.requiredField;
+            }
+            return null;
+          },
           decoration: InputDecoration(
             labelText: 'Payload',
             labelStyle: Theme.of(context).textTheme.bodyMedium,

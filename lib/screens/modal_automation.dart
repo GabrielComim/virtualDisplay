@@ -35,7 +35,8 @@ Future<void> modalAutomation(
   TriggerConfig? trigger;
   ActionConfig? action;
   DateTime? selectedDateTime;
-
+  final formKey = GlobalKey<FormState>();
+  
   if (isEdit) {
     nameController.text = automation.name;
     enable = automation.enable;
@@ -55,218 +56,240 @@ Future<void> modalAutomation(
     builder: (context) {
       return StatefulBuilder(
         builder: (context, setModalState) {
-          return SafeArea(
-            child: SingleChildScrollView(
-              // Campo para alterar a automação
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-                left: 16,
-                right: 16,
-                top: 16,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.automations,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  SizedBox(height: 16),
-                  // ============================ NOME ============================
-                  TextFormField(
-                    cursorColor: ColorScheme.of(context).secondary,
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.name,
-                      labelStyle: Theme.of(context).textTheme.bodyMedium
-                          ?.copyWith(
-                            color: ColorScheme.of(context).outlineVariant,
-                          ),
+          return Form(
+            key: formKey,
+            child: SafeArea(
+              child: SingleChildScrollView(
+                // Campo para alterar a automação
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+                  left: 16,
+                  right: 16,
+                  top: 16,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.automations,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  // ============================ TIPO ============================
-                  DropdownButtonFormField<String>(
-                    initialValue: type,
-                    decoration: InputDecoration(
-                      labelStyle: Theme.of(context).textTheme.bodyMedium
-                          ?.copyWith(
-                            color: ColorScheme.of(context).outlineVariant,
-                          ),
-                      labelText: AppLocalizations.of(context)!.type,
-                      border: OutlineInputBorder(),
-                    ),
-                    items: Constants.typeAutomations.map((key) {
-                      displayType = switchTypeMenuItem(context, key);
-                      return DropdownMenuItem<String>(
-                        value: key,
-                        child: Text(displayType),
-                      );
-                    }).toList(),
-                    onChanged: (v) {
-                      setModalState(() {
-                        type = v!;
-                        switch (type) {
-                          case Constants.automationOneShot:
-                            trigger = OneshotTrigger(dateTime: DateTime.now());
-                            break;
-
-                          case Constants.automationPeriodic:
-                            trigger = PeriodicTrigger(
-                              dateTime: DateTime.now(),
-                              interval: const Duration(hours: 1),
-                            );
-                            break;
-
-                          case Constants.automationLogical:
-                            trigger = LogicalTrigger(
-                              operator: '',
-                              leftExpression: '',
-                              rightExpression: '',
-                              dateTime: DateTime.now(),
-                            );
-                            break;
+                    SizedBox(height: 16),
+                    // ============================ NOME ============================
+                    TextFormField(
+                      cursorColor: ColorScheme.of(context).secondary,
+                      controller: nameController,
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.name,
+                        labelStyle: Theme.of(context).textTheme.bodyMedium
+                            ?.copyWith(
+                              color: ColorScheme.of(context).outlineVariant,
+                            ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.requiredField;
                         }
-                      });
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  // ============================ TIPO DE AÇÃO ============================
-                  DropdownButtonFormField<String>(
-                    initialValue: action?.toJson()['type'],
-                    decoration: InputDecoration(
-                      labelStyle: Theme.of(context).textTheme.bodyMedium
-                          ?.copyWith(
-                            color: ColorScheme.of(context).outlineVariant,
-                          ),
-                      labelText: AppLocalizations.of(context)!.action,
-                      border: OutlineInputBorder(),
+                        return null;
+                      },
                     ),
-                    items: Constants.actionAutomations.map((key) {
-                      final String displayAction = switchActionMenuItem(
-                        context,
-                        key,
-                      );
-                      return DropdownMenuItem<String>(
-                        value: key,
-                        child: Text(displayAction),
-                      );
-                    }).toList(),
-                    onChanged: (v) {
-                      setModalState(() {
-                        switch (v) {
-                          case Constants.actionPublish:
-                            action = PublishAction(
-                              topic: '',
-                              payload: '',
-                              qos: 0,
-                              retain: false,
-                            );
-                            break;
+                    SizedBox(height: 10),
+                    // ============================ TIPO ============================
+                    DropdownButtonFormField<String>(
+                      initialValue: type.isEmpty ? null : type,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.requiredField;
                         }
-                      });
-                    },
-                  ),
-                  SizedBox(height: 20),
-                  // ============================ TOPIC / PAYLOAD / QoS / RETAIN ============================
-                  actionConfigMode(
-                    context,
-                    action,
-                    selectedDateTime: selectedDateTime,
-                    onChanged: (newAction) {
-                      setModalState(() {
-                        action = newAction;
-                      });
-                    },
-                  ),
-                  SizedBox(height: 20),
-                  // ============================ PERIODICIDADE ============================
-                  // Depende do que foi escolhido no tipo de automação
-                  Column(
-                    children: [
-                      Text(
-                        '${AppLocalizations.of(context)!.triggerConfig}: ${switchTypeMenuItem(context, type)}',
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        labelStyle: Theme.of(context).textTheme.bodyMedium
+                            ?.copyWith(
+                              color: ColorScheme.of(context).outlineVariant,
+                            ),
+                        labelText: AppLocalizations.of(context)!.type,
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 6),
-                      // Escolha da data e hora ou periodicidade ou lógica
-                      triggerConfigMode(
-                        context,
-                        type,
-                        cards,
-                        trigger,
-                        selectedDateTime: selectedDateTime,
-                        onChanged: (newTrigger) {
-                          setModalState(() {
-                            trigger = newTrigger;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  // ============================ HABILITADA ============================
-                  Row(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.enable,
-                        style: TextStyle(
-                          color: ColorScheme.of(context).outlineVariant,
-                          fontSize: 13,
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Checkbox(
-                        activeColor: ColorScheme.of(context).secondary,
-                        onChanged: (value) {
-                          setModalState(() {
-                            enable = value!;
-                          });
-                        },
-                        value: enable,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    child: Text(AppLocalizations.of(context)!.ok),
-                    onPressed: () async {
-                      // ============================ Salvar o nova automação ou a edição ============================
-                      final viewModel = context.read<AutomationsViewmodel>();
-                      // TODO: implementar o validator para os campos obrigatórios, sem permitir a criação sme preenchimento
-                      final newAutomation = Automation(
-                        id: isEdit ? automation.id : null,
-                        name: nameController.text.trim(),
-                        type: type,
-                        enable: enable,
-                        action:
-                            action ??
-                            (isEdit
-                                ? automation.action
-                                // : ShowBanner.messengerShow(context, AppLocalizations.of(context)!.actionNotDefined, true);),
-                                : _logError(context)),
-                        trigger:
-                            trigger ??
-                            (isEdit
-                                ? automation.trigger
-                                : throw Exception('Trigger não definido')),
-                      );
-                      if (isEdit) {
-                        await viewModel.updateAutomation(newAutomation);
-                      } else {
-                        await viewModel.addNewAutomation(newAutomation);
-                      }
-                      if (context.mounted) {
-                        Navigator.pop(context, true);
-                        // Mostra mensagem de sucesso
-                        ShowBanner.messengerShow(
-                          context,
-                          AppLocalizations.of(context)!.successAutomation,
-                          false,
+                      items: Constants.typeAutomations.map((key) {
+                        displayType = switchTypeMenuItem(context, key);
+                        return DropdownMenuItem<String>(
+                          value: key,
+                          child: Text(displayType),
                         );
-                      }
-                    },
-                  ),
-                ],
+                      }).toList(),
+                      onChanged: (v) {
+                        setModalState(() {
+                          type = v!;
+                          switch (type) {
+                            case Constants.automationOneShot:
+                              trigger = OneshotTrigger(dateTime: DateTime.now());
+                              break;
+            
+                            case Constants.automationPeriodic:
+                              trigger = PeriodicTrigger(
+                                dateTime: DateTime.now(),
+                                interval: const Duration(hours: 1),
+                              );
+                              break;
+            
+                            case Constants.automationLogical:
+                              trigger = LogicalTrigger(
+                                operator: '',
+                                leftExpression: '',
+                                rightExpression: '',
+                                dateTime: DateTime.now(),
+                              );
+                              break;
+                          }
+                        });
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    // ============================ TIPO DE AÇÃO ============================
+                    DropdownButtonFormField<String>(
+                      initialValue: action?.toJson()['type'],
+                       validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.requiredField;
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        labelStyle: Theme.of(context).textTheme.bodyMedium
+                            ?.copyWith(
+                              color: ColorScheme.of(context).outlineVariant,
+                            ),
+                        labelText: AppLocalizations.of(context)!.action,
+                        border: OutlineInputBorder(),
+                      ),
+                      items: Constants.actionAutomations.map((key) {
+                        final String displayAction = switchActionMenuItem(
+                          context,
+                          key,
+                        );
+                        return DropdownMenuItem<String>(
+                          value: key,
+                          child: Text(displayAction),
+                        );
+                      }).toList(),
+                      onChanged: (v) {
+                        setModalState(() {
+                          switch (v) {
+                            case Constants.actionPublish:
+                              action = PublishAction(
+                                topic: '',
+                                payload: '',
+                                qos: 0,
+                                retain: false,
+                              );
+                              break;
+                          }
+                        });
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    // ============================ TOPIC / PAYLOAD / QoS / RETAIN ============================
+                    actionConfigMode(
+                      context,
+                      action,
+                      selectedDateTime: selectedDateTime,
+                      onChanged: (newAction) {
+                        setModalState(() {
+                          action = newAction;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    // ============================ PERIODICIDADE ============================
+                    // Depende do que foi escolhido no tipo de automação
+                    Column(
+                      children: [
+                        Text(
+                          '${AppLocalizations.of(context)!.triggerConfig}: ${switchTypeMenuItem(context, type)}',
+                        ),
+                        SizedBox(height: 6),
+                        // Escolha da data e hora ou periodicidade ou lógica
+                        triggerConfigMode(
+                          context,
+                          type,
+                          cards,
+                          trigger,
+                          selectedDateTime: selectedDateTime,
+                          onChanged: (newTrigger) {
+                            setModalState(() {
+                              trigger = newTrigger;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    // ============================ HABILITADA ============================
+                    Row(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.enable,
+                          style: TextStyle(
+                            color: ColorScheme.of(context).outlineVariant,
+                            fontSize: 13,
+                          ),
+                        ),
+                        SizedBox(width: 4),
+                        Checkbox(
+                          activeColor: ColorScheme.of(context).secondary,
+                          onChanged: (value) {
+                            setModalState(() {
+                              enable = value!;
+                            });
+                          },
+                          value: enable,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      child: Text(AppLocalizations.of(context)!.ok),
+                      onPressed: () async {
+                        if(!formKey.currentState!.validate()) {
+                          return;
+                        }
+                        // ============================ Salvar o nova automação ou a edição ============================
+                        final viewModel = context.read<AutomationsViewmodel>();
+                        final newAutomation = Automation(
+                          id: isEdit ? automation.id : null,
+                          name: nameController.text.trim(),
+                          type: type,
+                          enable: enable,
+                          action:
+                              action ??
+                              (isEdit
+                                  ? automation.action
+                                  : _logError(context)),
+                          trigger:
+                              trigger ??
+                              (isEdit
+                                  ? automation.trigger
+                                  : throw Exception('Trigger não definido')),
+                        );
+                        if (isEdit) {
+                          await viewModel.updateAutomation(newAutomation);
+                        } else {
+                          await viewModel.addNewAutomation(newAutomation);
+                        }
+                        if (context.mounted) {
+                          Navigator.pop(context, true);
+                          // Mostra mensagem de sucesso
+                          ShowBanner.messengerShow(
+                            context,
+                            AppLocalizations.of(context)!.successAutomation,
+                            false,
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           );
