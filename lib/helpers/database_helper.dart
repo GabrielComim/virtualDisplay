@@ -55,7 +55,9 @@ class DatabaseHelper {
         type TEXT NOT NULL,
         enable INTEGER NOT NULL DEFAULT 1,
         action TEXT NOT NULL,
-        trigger TEXT NOT NULL
+        trigger TEXT NOT NULL,
+        nextExecution TEXT,
+        lastCondition INTEGER NOT NULL DEFAULT 1
       )
     ''');
   }

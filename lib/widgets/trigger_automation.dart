@@ -155,7 +155,7 @@ Widget logicalTriggerConfigWidget(
   );
   final configKeyboard = selectKeyboardConfig(
     filtered,
-    logicalTrigger.leftExpression ?? '',
+    logicalTrigger.leftOperand ?? '',
   );
 
   return Column(
@@ -176,7 +176,7 @@ Widget logicalTriggerConfigWidget(
         }).toList(),
         onChanged: (value) {
           onChanged(
-            logicalTrigger.copyWith(operator: value ?? '', leftExpression: ''),
+            logicalTrigger.copyWith(operator: value ?? '', leftOperand: ''),
           );
         },
       ),
@@ -202,7 +202,7 @@ Widget logicalTriggerConfigWidget(
           final newCondition = value ?? '';
           onChanged(
             // Altera só a condição
-            logicalTrigger.copyWith(leftExpression: newCondition),
+            logicalTrigger.copyWith(leftOperand: newCondition),
           );
         },
       ),
@@ -226,7 +226,7 @@ Widget logicalTriggerConfigWidget(
           ), // Limita o tamanho do input
         ],
         onChanged: (value) {
-          onChanged(logicalTrigger.copyWith(rightExpression: value));
+          onChanged(logicalTrigger.copyWith(rightOperand: value));
         },
       ),
       SizedBox(height: 10),

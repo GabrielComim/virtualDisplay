@@ -12,6 +12,8 @@ class Automation {
   bool enable;
   ActionConfig action;
   TriggerConfig trigger;
+  DateTime? nextExecution;
+  bool lastCondition;
 
   Automation({
     required this.id,
@@ -19,7 +21,9 @@ class Automation {
     required this.type,
     required this.enable,
     required this.action,
-    required this.trigger
+    required this.trigger,
+    this.nextExecution,
+    required this.lastCondition,
   });
 
   Automation copyWith({
@@ -29,6 +33,8 @@ class Automation {
     bool? enable,
     ActionConfig? action,
     TriggerConfig? trigger,
+    DateTime? nextExecution,
+    bool? lastCondition,
   }) {
     return Automation(
       id: id ?? this.id,
@@ -37,6 +43,8 @@ class Automation {
       enable: enable ?? this.enable,
       action: action ?? this.action,
       trigger: trigger ?? this.trigger,
+      nextExecution: nextExecution ?? this.nextExecution,
+      lastCondition: lastCondition ?? this.lastCondition,
     );
   }
 
@@ -48,6 +56,8 @@ class Automation {
       "enable": enable ? 1 : 0,
       "action": jsonEncode(action.toJson()),
       "trigger": jsonEncode(trigger.toJson()),
+      "nextExecution": nextExecution?.toIso8601String(),
+      "lastCondition": lastCondition ? 1 : 0,
     };
   }
 
@@ -82,6 +92,8 @@ class Automation {
       enable: (map['enable'] as int) == 1,
       action: action,
       trigger: trigger,
+      nextExecution: map['nextExecution'] != null ? DateTime.tryParse(map['nextExecution']) : null,
+      lastCondition: (map['lastCondition'] as int) == 1,
     );
   }
 }

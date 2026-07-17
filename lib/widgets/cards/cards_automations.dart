@@ -55,8 +55,8 @@ class _CardsAutomationsState extends State<CardsAutomations> {
               // INDICATIVO SE ESTÁ FUNCIONAL - QUANDO FOR DO TIPO LOGICAL
               if (widget.automation.type == Constants.automationLogical) ...[
                 // Conforme o tipo do widget vinculado a automação, verificar se o trigger é funcional
-                ((widget.automation.trigger as LogicalTrigger).leftExpression != null &&
-                (widget.automation.trigger as LogicalTrigger).rightExpression != null) 
+                ((widget.automation.trigger as LogicalTrigger).leftOperand != null &&
+                (widget.automation.trigger as LogicalTrigger).rightOperand != null) 
                     ? Icon(Icons.check_circle, color: Colors.green)
                     : Icon(Icons.error, color: Colors.red),
               ] else ...[

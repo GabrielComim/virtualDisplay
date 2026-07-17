@@ -36,7 +36,7 @@ Future<void> modalAutomation(
   ActionConfig? action;
   DateTime? selectedDateTime;
   final formKey = GlobalKey<FormState>();
-  
+
   if (isEdit) {
     nameController.text = automation.name;
     enable = automation.enable;
@@ -123,21 +123,23 @@ Future<void> modalAutomation(
                           type = v!;
                           switch (type) {
                             case Constants.automationOneShot:
-                              trigger = OneshotTrigger(dateTime: DateTime.now());
+                              trigger = OneshotTrigger(
+                                dateTime: DateTime.now(),
+                              );
                               break;
-            
+
                             case Constants.automationPeriodic:
                               trigger = PeriodicTrigger(
                                 dateTime: DateTime.now(),
                                 interval: const Duration(hours: 1),
                               );
                               break;
-            
+
                             case Constants.automationLogical:
                               trigger = LogicalTrigger(
                                 operator: '',
-                                leftExpression: '',
-                                rightExpression: '',
+                                leftOperand: '',
+                                rightOperand: '',
                                 dateTime: DateTime.now(),
                               );
                               break;
@@ -149,7 +151,7 @@ Future<void> modalAutomation(
                     // ============================ TIPO DE AÇÃO ============================
                     DropdownButtonFormField<String>(
                       initialValue: action?.toJson()['type'],
-                       validator: (value) {
+                      validator: (value) {
                         if (value == null || value.isEmpty) {
                           return AppLocalizations.of(context)!.requiredField;
                         }
@@ -251,7 +253,7 @@ Future<void> modalAutomation(
                     ElevatedButton(
                       child: Text(AppLocalizations.of(context)!.ok),
                       onPressed: () async {
-                        if(!formKey.currentState!.validate()) {
+                        if (!formKey.currentState!.validate()) {
                           return;
                         }
                         // ============================ Salvar o nova automação ou a edição ============================
@@ -263,14 +265,22 @@ Future<void> modalAutomation(
                           enable: enable,
                           action:
                               action ??
-                              (isEdit
-                                  ? automation.action
-                                  : _logError(context)),
+                              (isEdit ? automation.action : _logError(context)),
                           trigger:
                               trigger ??
                               (isEdit
                                   ? automation.trigger
                                   : throw Exception('Trigger não definido')),
+                          lastCondition: isEdit
+                              ? automation.lastCondition
+                              : false,
+                          nextExecution: isEdit
+                              ? automation.nextExecution
+                              : switch (trigger!) {
+                                  OneshotTrigger t => t.dateTime,
+                                  PeriodicTrigger t => t.dateTime,
+                                  LogicalTrigger() => null,
+                                },
                         );
                         if (isEdit) {
                           await viewModel.updateAutomation(newAutomation);

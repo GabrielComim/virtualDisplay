@@ -20,4 +20,9 @@ class MqttPublishVm extends ChangeNotifier{
   void sendButton(String topic, bool value) {
     MqttServices().publish(('${Constants.mqttTopicButton}$topic'), jsonEncode({'button': value}));
   }
+
+  // Envia valor de automações
+  void sendAutomation(String topic, String automation) {
+    MqttServices().publish(topic, automation);
+  }
 }
