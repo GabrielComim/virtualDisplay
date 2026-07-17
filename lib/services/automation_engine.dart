@@ -5,55 +5,72 @@
 
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:virtual_display/models/action/action_publish.dart';
+import 'package:virtual_display/models/automation.dart';
+import 'package:virtual_display/viewModel/automations_viewmodel.dart';
+import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
 
-class AutomationEngine extends StatefulWidget {
-  final Widget child;
+class AutomationEngine {
+  final AutomationsViewmodel automationsVm;
+  final DashboardViewmodel dashboardVm;
+  final MqttPublishVm mqttPublishVm;
 
-  // Construtor
-  const AutomationEngine({super.key, required this.child});
+  Timer? _timer;
 
-  @override
-  State<AutomationEngine> createState() => _AutomationEngineState();
-}
+  AutomationEngine({
+    required this.automationsVm,
+    required this.dashboardVm,
+    required this.mqttPublishVm,
+  });
 
-class _AutomationEngineState extends State<AutomationEngine> {
-  static Timer? _timer;
+  void start() {
+    stop();
 
-  @override 
-  void initState() {
-    super.initState();
-    startEngine();
-    executeAutomation();
+    // Verifica imediatamente
+    checkAutomations();
+
+    // Depois verifica periodicamente
+    _timer = Timer.periodic(Duration(seconds: 1), (_) => checkAutomations());
   }
 
-  void _shouldFireAutomation() {
-    
+  void stop() {
+    _timer?.cancel();
+    _timer = null;
   }
 
-  void startEngine() {
-    // Iniciar o timer que acorda a Engine e verifica se tem alguma automação para ser executada.
-        _timer = Timer(Duration(minutes: 1), () {
-          // verifica se deve disparar alguma automação
-          _shouldFireAutomation(); 
-        });
+  Future<void> checkAutomations() async {
+    final now = DateTime.now();
 
+    for (final automation in automationsVm.automations) {
+      if (!automation.enable) {
+        continue;
+      }
+
+      final shouldFire = automation.trigger.shouldFire(
+        automation,
+        now,
+        dashboardVm.cards,
+      );
+
+      if (!shouldFire) {
+        continue;
+      }
+
+      await executeAutomation(automation);
+
+      automation.nextExecution = automation.trigger.onExecuted(automation);
+      final automations = List<Automation>.from(automationsVm.automations);
+      for (final automation in automations) {
+        await automationsVm.updateAutomation(automation);
+      }
+    }
   }
 
-  void loadAutomations() {
-    // Lê as automações, verifica horários e lógica para então fazer o envio via MQTT.
-  }
-
-  void executeAutomation() {
-    // Executa a automação, enviando via MQTT.
-    final MqttPublishVm mqttPublish = context.read<MqttPublishVm>();
-    mqttPublish.sendAutomation();
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
+  Future<void> executeAutomation(Automation automation) async {
+    mqttPublishVm.sendAutomation(
+      (automation.action as PublishAction).topic,
+      (automation.action as PublishAction).payload,
+    );
   }
 }
