@@ -109,6 +109,16 @@ class _CardsAutomationsState extends State<CardsAutomations> {
                 '${widget.automation.trigger}',
                 style: TextStyle(color: AppColors.textSecondary),
               ),
+              SizedBox(height: 5),
+              Text(
+                '${AppLocalizations.of(context)!.nextExecution}: ',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 5),
+              Text(
+                '${widget.automation.nextExecution ?? AppLocalizations.of(context)!.withoutExecution}',
+                style: TextStyle(color: AppColors.textSecondary),
+              ),
             ],
           ),
         ),

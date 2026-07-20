@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:intl/intl.dart';
 import 'package:virtual_display/models/automation.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
@@ -159,10 +161,11 @@ class LogicalTrigger extends TriggerConfig {
     final rightValue = _resolveOperand(rightOperand, cards);
     bool currentCondition;
 
+    log("LEFT: $leftValue - RIGHT: $rightValue - OPERATOR: $operator");
     switch (operator) {
       case Constants.logicalConditionAnd:
-        currentCondition =
-            leftValue is bool && rightValue is bool && leftValue && rightValue;
+        currentCondition = (leftValue.toString() == rightValue.toString());
+            // log("CURRENT CONDITION: $currentCondition");
         break;
       case Constants.logicalConditionOr:
         currentCondition =
@@ -201,12 +204,11 @@ class LogicalTrigger extends TriggerConfig {
       default:
         throw UnsupportedError('Operador $operator não suportado');
     }
-
     // Verifica se houve borda de disparo
     final shouldFire = !automation.lastCondition && currentCondition;
     // Atualiza variável
     automation.lastCondition = currentCondition;
-
+    log("should fire logical: $shouldFire");
     return shouldFire;
   }
 
@@ -253,15 +255,15 @@ class LogicalTrigger extends TriggerConfig {
     }
 
     CardsDashboard? card;
-    // Procura um car com o título
+    // Procura um card com o título
     for (final c in cards) {
       if (c.title == operand) {
         card = c;
-        break;
       }
     }
 
     if (card != null) {
+      log('RETORNANDO VALUE: ${card.value}');
       return card.value;
     }
 
@@ -272,11 +274,11 @@ class LogicalTrigger extends TriggerConfig {
 
     final lower = operand.toLowerCase();
 
-    if (lower == 'true') {
+    if (lower == 'true' || lower == '1') {
       return true;
     }
 
-    if (lower == 'false') {
+    if (lower == 'false' || lower == '0') {
       return false;
     }
 

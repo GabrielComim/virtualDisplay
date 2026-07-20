@@ -191,6 +191,18 @@ abstract class AppLocalizations {
   /// **'Configuração do gatilho'**
   String get triggerConfig;
 
+  /// No description provided for @nextExecution.
+  ///
+  /// In pt, this message translates to:
+  /// **'Próx. execução'**
+  String get nextExecution;
+
+  /// No description provided for @withoutExecution.
+  ///
+  /// In pt, this message translates to:
+  /// **'Sem novas execuções'**
+  String get withoutExecution;
+
   /// No description provided for @speed.
   ///
   /// In pt, this message translates to:

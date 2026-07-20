@@ -226,6 +226,17 @@ Widget logicalTriggerConfigWidget(
           ), // Limita o tamanho do input
         ],
         onChanged: (value) {
+          if(
+            logicalTrigger.operator == Constants.logicalConditionAnd 
+            || logicalTrigger.operator == Constants.logicalConditionOr
+            || logicalTrigger.operator == Constants.logicalConditionNot
+          ) {
+            if(value == '0'){
+              value = 'false';
+            } else {
+              value = 'true';
+            }
+          }
           onChanged(logicalTrigger.copyWith(rightOperand: value));
         },
       ),

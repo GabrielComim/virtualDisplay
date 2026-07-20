@@ -39,6 +39,14 @@ class MqttMessageProcessor {
         log('Data recebido');
         _processData(json);
       } 
+
+      // recebe dados do botão
+      else if(topic.contains(Constants.topicButton)) {
+        // TODO: ainda não está funcionando o recebimento de dados de um botão. 
+        // Preciso disto para testar o funcionamento da automação com trigger por lógica. 
+        log('Button recebido');
+        _processData(json);
+      }
       
       else {
         log('MENSAGEM AINDA NÃO IMPLEMENTADA: $payload');

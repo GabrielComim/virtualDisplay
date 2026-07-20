@@ -31,6 +31,8 @@
   "enable": "Habilitado",
   "action": "Ação",
   "triggerConfig": "Configuração do gatilho",
+  "nextExecution": "Próx. execução",
+  "withoutExecution": "Sem novas execuções",
 
   "@cardDashboardNumeric": {"description": "STRINGS USADAS NO cardDashboardNumeric"},
   "speed": "Velocidade",

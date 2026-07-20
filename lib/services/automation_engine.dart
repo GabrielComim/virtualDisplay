@@ -4,7 +4,7 @@
 // Criar um timer que acorda a Engine e verifica se tem alguma automação para ser executada.
 
 import 'dart:async';
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:virtual_display/models/action/action_publish.dart';
 import 'package:virtual_display/models/automation.dart';
@@ -59,13 +59,13 @@ class AutomationEngine {
         dashboardVm.cards,
       );
       // MOSTRAR PARA DEBUG: AUTOMAÇÕES ATIVAS E PRÓXIMA EXECUÇÃO
-      log('AUTOMAÇÃO: ${automation.name}: NextExecution: ${automation.nextExecution}');
-      log('SHOULD FIRE: $shouldFire');
+      // log('AUTOMAÇÃO: ${automation.name}: NextExecution: ${automation.nextExecution}');
+      // log('SHOULD FIRE: $shouldFire');
 
       if (!shouldFire) {
         continue;
       }
-      log('EXECUTE AUTOMATION');
+      // log('EXECUTE AUTOMATION');
       await executeAutomation(automation);
       // Executa a automação
       automation.nextExecution = automation.trigger.onExecuted(automation);
@@ -78,5 +78,10 @@ class AutomationEngine {
       (automation.action as PublishAction).topic,
       (automation.action as PublishAction).payload,
     );
+  }
+
+  Future<void> onCardChanged() async {
+    // Se alterar o valor de um card para o logicalTrigger faz a alteração para detectar borda
+
   }
 }

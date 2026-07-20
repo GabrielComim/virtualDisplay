@@ -264,7 +264,7 @@ Future<void> modalAutomation(
                         final viewModel = context.read<AutomationsViewmodel>();
 
                         // Verifica se precisa atualizar nexExecution quando em edição
-                        DateTime? nextExecution = automation!.nextExecution;
+                        DateTime? nextExecution;
                         if (isEdit) {
                           switch (automation.trigger) {
                             case OneshotTrigger oldTrigger:

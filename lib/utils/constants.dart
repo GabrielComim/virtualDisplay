@@ -81,6 +81,7 @@ class Constants {
 
   // Usado para lógica de comparação
   static const String topicData = '/data';
+  static const String topicButton = 'virtualDisplay/button';
   static const String topicRequestConfig = '/request_config';
   static const String topicConfigAck = '/config_ack';
   static const String topicRequestDevice = '/request_device';
@@ -155,4 +156,7 @@ class Constants {
     logicalConditionMajor,
     logicalConditionMajorEqual,
   ];
+
+  static const String left = 'left';
+  static const String right = 'right';
 }

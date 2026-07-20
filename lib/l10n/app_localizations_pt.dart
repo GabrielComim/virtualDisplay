@@ -57,6 +57,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get triggerConfig => 'Configuração do gatilho';
 
   @override
+  String get nextExecution => 'Próx. execução';
+
+  @override
+  String get withoutExecution => 'Sem novas execuções';
+
+  @override
   String get speed => 'Velocidade';
 
   @override
