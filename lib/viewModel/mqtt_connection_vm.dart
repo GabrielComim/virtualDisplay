@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
+import 'package:virtual_display/services/automation_engine.dart';
 import 'package:virtual_display/services/mqtt/mqtt_message_processor.dart';
 import 'package:virtual_display/services/mqtt/topic_manager.dart';
 import 'package:virtual_display/services/mqtt_services.dart';
+import 'package:virtual_display/viewModel/automations_viewmodel.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/devices_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
@@ -23,18 +25,27 @@ class MqttConnectionVm extends ChangeNotifier {
     final MqttPublishVm mqttPublishViewModel = context.read<MqttPublishVm>();
     final DashboardViewmodel dashboardViewmodel = context
         .read<DashboardViewmodel>();
+    final AutomationsViewmodel automationVm = context.read<AutomationsViewmodel>();
+
     // Cria a instância para processar as mensagens que chegarem
     MqttServices().onMessageReceived = MqttMessageProcessor(
       devicesViewModel,
       mqttPublishViewModel,
       dashboardViewmodel,
     ).process;
+    
     // Tenta se conectar ao ligar o aplicativo
     final isConnected = await mqttConnection(context, broker);
+    
     if (isConnected) {
       // Increve-se nos tópicos necessários
       topicsInitialization(MqttServices());
-
+      // Inicia as automações
+      AutomationEngine(
+        automationsVm: automationVm, 
+        dashboardVm: dashboardViewmodel, 
+        mqttPublishVm: mqttPublishViewModel
+      ).startAutomation();
       // Indica que conectou-se com sucesso
       if (context.mounted) {
         ShowBanner.messengerShow(
@@ -43,6 +54,7 @@ class MqttConnectionVm extends ChangeNotifier {
           false,
         );
       }
+      // Falhou na conexão
     } else {
       if (context.mounted) {
         ShowBanner.messengerShow(

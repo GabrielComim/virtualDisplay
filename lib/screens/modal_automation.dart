@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
@@ -95,7 +97,9 @@ Future<void> modalAutomation(
                     ),
                     SizedBox(height: 10),
                     // ============================ TIPO ============================
-                    DropdownButtonFormField<String>(
+                    isEdit 
+                    ? SizedBox(height: 1)
+                    : DropdownButtonFormField<String>(
                       initialValue: type.isEmpty ? null : type,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -258,6 +262,31 @@ Future<void> modalAutomation(
                         }
                         // ============================ Salvar o nova automação ou a edição ============================
                         final viewModel = context.read<AutomationsViewmodel>();
+
+                        // Verifica se precisa atualizar nexExecution quando em edição
+                        DateTime? nextExecution = automation!.nextExecution;
+                        if (isEdit) {
+                          switch (automation.trigger) {
+                            case OneshotTrigger oldTrigger:
+                              if (oldTrigger.dateTime != (trigger as OneshotTrigger).dateTime) {
+                                nextExecution = (trigger as OneshotTrigger).dateTime;
+                              }
+                              break;
+
+                            case PeriodicTrigger oldTrigger:
+                              if (oldTrigger.dateTime != (trigger as PeriodicTrigger).dateTime) {
+                                nextExecution = (trigger as PeriodicTrigger).dateTime;
+                              }
+                              break;
+
+                            case LogicalTrigger():
+                              nextExecution = null;
+                              break;
+                          }
+                        }
+                        
+                        log('NextExecution: $nextExecution');
+                        
                         final newAutomation = Automation(
                           id: isEdit ? automation.id : null,
                           name: nameController.text.trim(),
@@ -275,7 +304,7 @@ Future<void> modalAutomation(
                               ? automation.lastCondition
                               : false,
                           nextExecution: isEdit
-                              ? automation.nextExecution
+                              ? nextExecution
                               : switch (trigger!) {
                                   OneshotTrigger t => t.dateTime,
                                   PeriodicTrigger t => t.dateTime,

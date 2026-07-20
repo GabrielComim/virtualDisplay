@@ -4,6 +4,7 @@
 // Criar um timer que acorda a Engine e verifica se tem alguma automação para ser executada.
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:virtual_display/models/action/action_publish.dart';
 import 'package:virtual_display/models/automation.dart';
@@ -16,6 +17,7 @@ class AutomationEngine {
   final DashboardViewmodel dashboardVm;
   final MqttPublishVm mqttPublishVm;
 
+  bool _running = false;
   Timer? _timer;
 
   AutomationEngine({
@@ -24,19 +26,23 @@ class AutomationEngine {
     required this.mqttPublishVm,
   });
 
-  void start() {
-    stop();
-
+  void startAutomation() {
+    
+    if(_running) return;
+    _running = true;
+    // Garante que não ficará 2 timers rodando juntos para a mesma coisa
+    stopAutomation();
     // Verifica imediatamente
     checkAutomations();
 
     // Depois verifica periodicamente
-    _timer = Timer.periodic(Duration(seconds: 1), (_) => checkAutomations());
+    _timer = Timer.periodic(Duration(seconds: 10), (_) => checkAutomations());
   }
 
-  void stop() {
+  void stopAutomation() {
     _timer?.cancel();
     _timer = null;
+    _running = false;
   }
 
   Future<void> checkAutomations() async {
@@ -52,18 +58,18 @@ class AutomationEngine {
         now,
         dashboardVm.cards,
       );
+      // MOSTRAR PARA DEBUG: AUTOMAÇÕES ATIVAS E PRÓXIMA EXECUÇÃO
+      log('AUTOMAÇÃO: ${automation.name}: NextExecution: ${automation.nextExecution}');
+      log('SHOULD FIRE: $shouldFire');
 
       if (!shouldFire) {
         continue;
       }
-
+      log('EXECUTE AUTOMATION');
       await executeAutomation(automation);
-
+      // Executa a automação
       automation.nextExecution = automation.trigger.onExecuted(automation);
-      final automations = List<Automation>.from(automationsVm.automations);
-      for (final automation in automations) {
-        await automationsVm.updateAutomation(automation);
-      }
+      await automationsVm.updateAutomation(automation);
     }
   }
 
