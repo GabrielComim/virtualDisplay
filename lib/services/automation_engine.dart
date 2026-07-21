@@ -84,4 +84,8 @@ class AutomationEngine {
     // Se alterar o valor de um card para o logicalTrigger faz a alteração para detectar borda
 
   }
+
+  void updateCard() {
+    
+  }
 }

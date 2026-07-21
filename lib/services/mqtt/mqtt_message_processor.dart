@@ -41,11 +41,14 @@ class MqttMessageProcessor {
       } 
 
       // recebe dados do botão
-      else if(topic.contains(Constants.topicButton)) {
-        // TODO: ainda não está funcionando o recebimento de dados de um botão. 
-        // Preciso disto para testar o funcionamento da automação com trigger por lógica. 
+      else if(topic.contains(Constants.mqttTopicButton)) {
         log('Button recebido');
-        _processData(json);
+        // Pega qual card alterou valor
+        final cardTitle = topic.split('/').last;
+        // Processa o valor recebido de um botão
+        final value = _processButton(json);
+        // Atualiza os cards do dashboard
+        dashboardViewmodel.updateButtonCard(cardTitle, value);
       }
       
       else {
@@ -91,5 +94,9 @@ class MqttMessageProcessor {
     // });
 
     dashboardViewmodel.updateValues(values);
+  }
+
+  bool _processButton(Map<String, dynamic> json) {
+      return json['button'] as bool;
   }
 }

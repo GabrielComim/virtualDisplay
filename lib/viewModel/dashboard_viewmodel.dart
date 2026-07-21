@@ -25,6 +25,14 @@ class DashboardViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateButtonCard(String cardTitle, bool value) {
+    final card = cards.firstWhere(
+      (c) => c.title == cardTitle,
+    );
+    card.value = value.toString();
+    notifyListeners();
+  }
+
   void moveCard(int origem, int destino) {
     final item = cards.removeAt(origem);
     cards.insert(destino, item);
