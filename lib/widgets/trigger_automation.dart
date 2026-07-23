@@ -228,7 +228,6 @@ Widget logicalTriggerConfigWidget(
         onChanged: (value) {
           if(
             logicalTrigger.operator == Constants.logicalConditionAnd 
-            || logicalTrigger.operator == Constants.logicalConditionOr
             || logicalTrigger.operator == Constants.logicalConditionNot
           ) {
             if(value == '0'){

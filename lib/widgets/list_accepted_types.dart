@@ -3,22 +3,31 @@ import 'package:virtual_display/utils/constants.dart';
 List<String> acceptedTypes(String expression) {
   switch(expression) {
     case Constants.logicalConditionMinor:
+      return [
+        Constants.cardTypeNumber,
+      ];
     case Constants.logicalConditionMinorEqual:
+      return [
+        Constants.cardTypeNumber,
+      ];
     case Constants.logicalConditionMajor:
+      return [
+        Constants.cardTypeNumber,
+      ];
     case Constants.logicalConditionMajorEqual:
       return [
         Constants.cardTypeNumber,
       ];
-
     case Constants.logicalConditionEqual:
-    case Constants.logicalConditionNot:
       return [
         Constants.cardTypeNumber,
-        Constants.cardTypeBool,
         Constants.cardTypeString,
       ];
+    case Constants.logicalConditionNot:
+      return [
+        Constants.cardTypeBool,
+      ];
     case Constants.logicalConditionAnd:
-    case Constants.logicalConditionOr:
       return [
         Constants.cardTypeBool,
       ];

@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:virtual_display/models/action/action_publish.dart';
 import 'package:virtual_display/models/trigger/trigger_config.dart';
 import 'package:virtual_display/utils/constants.dart';
@@ -73,8 +71,7 @@ class Automation {
         action = PublishAction.fromJson(actionMap);
         break;
       case Constants.automationPeriodic:
-      // TODO: As automações só estão iniciando após entrar na tela de automações. Corrigir isto para que iniciem sozinhas.
-        log('Periodic trigger map: $triggerMap');
+        // log('Periodic trigger map: $triggerMap');
         trigger = PeriodicTrigger.fromJson(triggerMap);
         action = PublishAction.fromJson(actionMap);
         break;

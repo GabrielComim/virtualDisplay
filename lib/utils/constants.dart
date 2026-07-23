@@ -138,7 +138,6 @@ class Constants {
   ];
 
   static const String logicalConditionAnd = '&';
-  static const String logicalConditionOr = '|';
   static const String logicalConditionNot = '!';
   static const String logicalConditionEqual = '=';
   static const String logicalConditionMinor = '<';
@@ -148,7 +147,6 @@ class Constants {
   
   static const List<String> logicalConditions = [
     logicalConditionAnd,
-    logicalConditionOr,
     logicalConditionNot,
     logicalConditionEqual,
     logicalConditionMinor,

@@ -94,8 +94,6 @@ String switchLogicalMenuItem(BuildContext context, String key) {
   switch (key) {
     case Constants.logicalConditionAnd:
       return 'x ${Constants.logicalConditionAnd} y';
-    case Constants.logicalConditionOr:
-      return 'x ${Constants.logicalConditionOr} y';
     case Constants.logicalConditionNot:
       return 'x ${Constants.logicalConditionNot} y';
     case Constants.logicalConditionEqual:

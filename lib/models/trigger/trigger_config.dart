@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:virtual_display/models/automation.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/utils/constants.dart';
@@ -8,11 +9,7 @@ import 'package:virtual_display/utils/constants.dart';
 sealed class TriggerConfig {
   Map<String, dynamic> toJson();
 
-  bool shouldFire(
-    Automation automation,
-    DateTime now,
-    bool? currentCondition,
-  );
+  bool shouldFire(Automation automation, DateTime now, bool? currentCondition);
 
   DateTime? onExecuted(Automation automation);
 }
@@ -28,11 +25,7 @@ class OneshotTrigger extends TriggerConfig {
   }
 
   @override
-  bool shouldFire(
-    Automation automation,
-    DateTime now,
-    bool? currentCondition,
-  ) {
+  bool shouldFire(Automation automation, DateTime now, bool? currentCondition) {
     return automation.nextExecution != null &&
         ((now.isAfter(automation.nextExecution!) ||
             now.isAtSameMomentAs(automation.nextExecution!)));
@@ -77,11 +70,7 @@ class PeriodicTrigger extends TriggerConfig {
   }
 
   @override
-  bool shouldFire(
-    Automation automation,
-    DateTime now,
-    bool? currentCondition,
-  ) {
+  bool shouldFire(Automation automation, DateTime now, bool? currentCondition) {
     return automation.nextExecution != null &&
         ((now.isAfter(automation.nextExecution!) ||
             now.isAtSameMomentAs(automation.nextExecution!)));
@@ -93,10 +82,10 @@ class PeriodicTrigger extends TriggerConfig {
     // Atualiza a próxima execução
     do {
       next = next.add(interval);
-    }while (!next.isAfter(DateTime.now()));
-    
+    } while (!next.isAfter(DateTime.now()));
+
     log('NEXT EXECUTION: ${automation.nextExecution}');
-    
+
     return next;
   }
 
@@ -158,62 +147,65 @@ class LogicalTrigger extends TriggerConfig {
   }
 
   dynamic _normalizeBool(dynamic value) {
-    if(value is int) {
-      if(value == 0) return false;
-      if(value == 1) return true;
+    if (value is int) {
+      if (value == 0) return false;
+      if (value == 1) return true;
     }
     return value;
   }
 
   bool evaluate(List<CardsDashboard> cards) {
-
     final leftValue = _resolveOperand(leftOperand, cards);
     final rightValue = _resolveOperand(rightOperand, cards);
     final rightValueNormalized = _normalizeBool(rightValue);
     bool currentCondition;
 
-    log("LEFT: $leftValue - RIGHT: $rightValueNormalized - OPERATOR: $operator");
-    
+    log(
+      "LEFT: $leftValue - RIGHT: $rightValueNormalized - OPERATOR: $operator",
+    );
+
     switch (operator) {
       case Constants.logicalConditionAnd:
-        currentCondition = 
-          leftValue is bool &&
-          rightValueNormalized is bool &&
-          leftValue &&
-          rightValueNormalized;
-        break;
-      case Constants.logicalConditionOr:
         currentCondition =
             leftValue is bool &&
             rightValueNormalized is bool &&
-            (leftValue || rightValueNormalized);
+            (leftValue && rightValueNormalized);
         break;
       case Constants.logicalConditionNot:
         currentCondition = leftValue != rightValueNormalized;
         break;
 
       case Constants.logicalConditionEqual:
-        currentCondition = (leftValue.toString() == rightValueNormalized.toString());
+        currentCondition =
+            (leftValue.toString() == rightValueNormalized.toString());
         break;
 
       case Constants.logicalConditionMinor:
         currentCondition =
-            leftValue is num && rightValueNormalized is num && leftValue < rightValueNormalized;
+            leftValue is num &&
+            rightValueNormalized is num &&
+            leftValue < rightValueNormalized;
         break;
 
       case Constants.logicalConditionMinorEqual:
         currentCondition =
-            leftValue is num && rightValueNormalized is num && leftValue <= rightValueNormalized;
+            leftValue is num &&
+            rightValueNormalized is num &&
+            leftValue <= rightValueNormalized;
         break;
 
       case Constants.logicalConditionMajor:
         currentCondition =
-            leftValue is num && rightValueNormalized is num && leftValue > rightValueNormalized;
+            leftValue is num &&
+            rightValueNormalized is num &&
+            leftValue > rightValueNormalized;
         break;
 
       case Constants.logicalConditionMajorEqual:
         currentCondition =
-            leftValue is num && rightValueNormalized is num && leftValue >= rightValueNormalized;
+            leftValue is num &&
+            rightValueNormalized is num &&
+            leftValue >= rightValueNormalized;
         break;
 
       default:
@@ -232,7 +224,9 @@ class LogicalTrigger extends TriggerConfig {
   ) {
     // Verifica se houve borda de disparo
     final shouldFire = !automation.lastCondition && (currentCondition ?? false);
-    log("current: $currentCondition   last: ${automation.lastCondition}  should fire logical: $shouldFire");
+    log(
+      "current: $currentCondition   last: ${automation.lastCondition}  should fire logical: $shouldFire",
+    );
     // Atualiza variável
     automation.lastCondition = (currentCondition ?? false);
     return shouldFire;
@@ -289,7 +283,12 @@ class LogicalTrigger extends TriggerConfig {
     }
 
     if (card != null) {
-      log('RETORNANDO VALUE: ${card.value}');
+      if(card.type == Constants.cardTypeBool) {
+        return  card.value.toString().toLowerCase() == 'true';
+      }
+      if(card.type == Constants.cardTypeNumber) {
+        return num.tryParse(card.value.toString());
+      }
       return card.value;
     }
 

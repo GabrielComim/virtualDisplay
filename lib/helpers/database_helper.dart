@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:virtual_display/models/automation.dart';
@@ -111,19 +109,21 @@ class DatabaseHelper {
   // UPDATE
   Future<void> updateAutomation(Automation automation) async {
     final db = await database;
-    final rows = await db.update(
+    // final rows = await db.update(
+    await db.update(
       'automation',
       automation.toMap(),
       where: 'id = ?',
       whereArgs: [automation.id],
     );
-    log('Rows updated: $rows');
+    // log('Rows updated: $rows');
   }
   
   // DELETE
   Future<void> deleteAutomation(int id) async {
     final db = await database;
-    final rows = await db.delete('automation', where: 'id = ?', whereArgs: [id]);
-    log('Rows updated: $rows');
+    // final rows = await db.delete('automation', where: 'id = ?', whereArgs: [id]);
+    await db.delete('automation', where: 'id = ?', whereArgs: [id]);
+    // log('Rows updated: $rows');
   }
 }
