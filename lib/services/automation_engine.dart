@@ -6,8 +6,11 @@
 import 'dart:async';
 // import 'dart:developer';
 
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:virtual_display/models/action/action_publish.dart';
 import 'package:virtual_display/models/automation.dart';
+import 'package:virtual_display/models/trigger/trigger_config.dart';
 import 'package:virtual_display/viewModel/automations_viewmodel.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
@@ -26,12 +29,15 @@ class AutomationEngine {
     required this.mqttPublishVm,
   });
 
-  void startAutomation() {
-    
-    if(_running) return;
+  void startAutomation(BuildContext context) {
+    if (_running) return;
     _running = true;
     // Garante que não ficará 2 timers rodando juntos para a mesma coisa
     stopAutomation();
+    
+    final provider = Provider.of<AutomationsViewmodel>(context, listen: false);
+    provider.loadAutomations();
+    
     // Verifica imediatamente
     checkAutomations();
 
@@ -47,17 +53,33 @@ class AutomationEngine {
 
   Future<void> checkAutomations() async {
     final now = DateTime.now();
-
+    bool shouldFire = false;
     for (final automation in automationsVm.automations) {
       if (!automation.enable) {
         continue;
       }
 
-      final shouldFire = automation.trigger.shouldFire(
-        automation,
-        now,
-        dashboardVm.cards,
-      );
+      if (automation.trigger is LogicalTrigger) {
+        // Avalia se mudou o valor da condição de borda para salvar o automation
+        final currentCondition = (automation.trigger as LogicalTrigger)
+            .evaluate(dashboardVm.cards);
+
+        // Verifica se deve disparar a automação - TRIGGER LÓGICO
+        shouldFire = automation.trigger.shouldFire(
+          automation,
+          now,
+          currentCondition,
+        );
+        await automationsVm.updateAutomation(automation);
+      } else {
+        // TRIGGER ONE SHOT OU PERIÓDICO
+        shouldFire = automation.trigger.shouldFire(
+          automation,
+          now,
+          null
+        );
+      }
+
       // MOSTRAR PARA DEBUG: AUTOMAÇÕES ATIVAS E PRÓXIMA EXECUÇÃO
       // log('AUTOMAÇÃO: ${automation.name}: NextExecution: ${automation.nextExecution}');
       // log('SHOULD FIRE: $shouldFire');
@@ -82,10 +104,7 @@ class AutomationEngine {
 
   Future<void> onCardChanged() async {
     // Se alterar o valor de um card para o logicalTrigger faz a alteração para detectar borda
-
   }
 
-  void updateCard() {
-    
-  }
+  void updateCard() {}
 }

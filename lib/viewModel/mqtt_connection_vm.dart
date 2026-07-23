@@ -25,7 +25,8 @@ class MqttConnectionVm extends ChangeNotifier {
     final MqttPublishVm mqttPublishViewModel = context.read<MqttPublishVm>();
     final DashboardViewmodel dashboardViewmodel = context
         .read<DashboardViewmodel>();
-    final AutomationsViewmodel automationVm = context.read<AutomationsViewmodel>();
+    final AutomationsViewmodel automationVm = context
+        .read<AutomationsViewmodel>();
 
     // Cria a instância para processar as mensagens que chegarem
     MqttServices().onMessageReceived = MqttMessageProcessor(
@@ -33,19 +34,22 @@ class MqttConnectionVm extends ChangeNotifier {
       mqttPublishViewModel,
       dashboardViewmodel,
     ).process;
-    
+
     // Tenta se conectar ao ligar o aplicativo
     final isConnected = await mqttConnection(context, broker);
-    
+
     if (isConnected) {
       // Increve-se nos tópicos necessários
       topicsInitialization(MqttServices());
       // Inicia as automações
-      AutomationEngine(
-        automationsVm: automationVm, 
-        dashboardVm: dashboardViewmodel, 
-        mqttPublishVm: mqttPublishViewModel
-      ).startAutomation();
+      if (context.mounted) {
+        AutomationEngine(
+          automationsVm: automationVm,
+          dashboardVm: dashboardViewmodel,
+          mqttPublishVm: mqttPublishViewModel,
+        ).startAutomation(context);
+      }
+      log('DEVERIA INICIAR AS AUTOMAÇÕES NESTE PONTO');
       // Indica que conectou-se com sucesso
       if (context.mounted) {
         ShowBanner.messengerShow(

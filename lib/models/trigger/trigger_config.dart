@@ -11,7 +11,7 @@ sealed class TriggerConfig {
   bool shouldFire(
     Automation automation,
     DateTime now,
-    List<CardsDashboard> cards,
+    bool? currentCondition,
   );
 
   DateTime? onExecuted(Automation automation);
@@ -31,7 +31,7 @@ class OneshotTrigger extends TriggerConfig {
   bool shouldFire(
     Automation automation,
     DateTime now,
-    List<CardsDashboard> cards,
+    bool? currentCondition,
   ) {
     return automation.nextExecution != null &&
         ((now.isAfter(automation.nextExecution!) ||
@@ -40,7 +40,6 @@ class OneshotTrigger extends TriggerConfig {
 
   @override
   DateTime? onExecuted(Automation automation) {
-    // Lógica a ser executada quando a automação for disparada
     return null;
   }
 
@@ -81,7 +80,7 @@ class PeriodicTrigger extends TriggerConfig {
   bool shouldFire(
     Automation automation,
     DateTime now,
-    List<CardsDashboard> cards,
+    bool? currentCondition,
   ) {
     return automation.nextExecution != null &&
         ((now.isAfter(automation.nextExecution!) ||
@@ -90,8 +89,15 @@ class PeriodicTrigger extends TriggerConfig {
 
   @override
   DateTime? onExecuted(Automation automation) {
-    // Lógica a ser executada quando a automação for disparada
-    return automation.nextExecution!.add(interval);
+    DateTime next = automation.nextExecution!;
+    // Atualiza a próxima execução
+    do {
+      next = next.add(interval);
+    }while (!next.isAfter(DateTime.now()));
+    
+    log('NEXT EXECUTION: ${automation.nextExecution}');
+    
+    return next;
   }
 
   @override
@@ -151,64 +157,84 @@ class LogicalTrigger extends TriggerConfig {
     );
   }
 
-  @override
-  bool shouldFire(
-    Automation automation,
-    DateTime now,
-    List<CardsDashboard> cards,
-  ) {
+  dynamic _normalizeBool(dynamic value) {
+    if(value is int) {
+      if(value == 0) return false;
+      if(value == 1) return true;
+    }
+    return value;
+  }
+
+  bool evaluate(List<CardsDashboard> cards) {
+
     final leftValue = _resolveOperand(leftOperand, cards);
     final rightValue = _resolveOperand(rightOperand, cards);
+    final rightValueNormalized = _normalizeBool(rightValue);
     bool currentCondition;
 
-    log("LEFT: $leftValue - RIGHT: $rightValue - OPERATOR: $operator");
+    log("LEFT: $leftValue - RIGHT: $rightValueNormalized - OPERATOR: $operator");
+    
     switch (operator) {
       case Constants.logicalConditionAnd:
-        currentCondition = (leftValue.toString() == rightValue.toString());
-            // log("CURRENT CONDITION: $currentCondition");
+        currentCondition = 
+          leftValue is bool &&
+          rightValueNormalized is bool &&
+          leftValue &&
+          rightValueNormalized;
         break;
       case Constants.logicalConditionOr:
         currentCondition =
             leftValue is bool &&
-            rightValue is bool &&
-            (leftValue || rightValue);
+            rightValueNormalized is bool &&
+            (leftValue || rightValueNormalized);
         break;
       case Constants.logicalConditionNot:
-        currentCondition = leftValue != rightValue;
+        currentCondition = leftValue != rightValueNormalized;
         break;
 
       case Constants.logicalConditionEqual:
-        currentCondition = leftValue == rightValue;
+        currentCondition = (leftValue.toString() == rightValueNormalized.toString());
         break;
 
       case Constants.logicalConditionMinor:
         currentCondition =
-            leftValue is num && rightValue is num && leftValue < rightValue;
+            leftValue is num && rightValueNormalized is num && leftValue < rightValueNormalized;
         break;
 
       case Constants.logicalConditionMinorEqual:
         currentCondition =
-            leftValue is num && rightValue is num && leftValue <= rightValue;
+            leftValue is num && rightValueNormalized is num && leftValue <= rightValueNormalized;
         break;
 
       case Constants.logicalConditionMajor:
         currentCondition =
-            leftValue is num && rightValue is num && leftValue > rightValue;
+            leftValue is num && rightValueNormalized is num && leftValue > rightValueNormalized;
         break;
 
       case Constants.logicalConditionMajorEqual:
         currentCondition =
-            leftValue is num && rightValue is num && leftValue >= rightValue;
+            leftValue is num && rightValueNormalized is num && leftValue >= rightValueNormalized;
         break;
 
       default:
         throw UnsupportedError('Operador $operator não suportado');
     }
+    log('EVALUATE - CURRENT CONDITION: $currentCondition');
+    return currentCondition;
+  }
+
+  @override
+  bool shouldFire(
+    // Está enviando todas as vezes, não está funcionando a lógica do shouldFire
+    Automation automation,
+    DateTime now,
+    bool? currentCondition,
+  ) {
     // Verifica se houve borda de disparo
-    final shouldFire = !automation.lastCondition && currentCondition;
+    final shouldFire = !automation.lastCondition && (currentCondition ?? false);
+    log("current: $currentCondition   last: ${automation.lastCondition}  should fire logical: $shouldFire");
     // Atualiza variável
-    automation.lastCondition = currentCondition;
-    log("should fire logical: $shouldFire");
+    automation.lastCondition = (currentCondition ?? false);
     return shouldFire;
   }
 
