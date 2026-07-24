@@ -25,10 +25,6 @@ import 'package:virtual_display/screens/broker_screen.dart';
 // ========================= Para atualizar os arquivos de strings: =========================================================
 // flutter gen-l10n --arb-dir=lib/l10n --template-arb-file=app_pt.arb --output-localization-file=app_localizations.dart
 
-// TODO: testar todos os itens de lógicas na automação
-// TODO: testar todos os itens de tempo na automação periódica
-// TODO: testar a automação lógica funcionando por um valor de item não booleano.
-
 void main() {
   runApp(
     MultiProvider(

@@ -151,7 +151,7 @@ class _MainScreenState extends State<MainScreen> {
               final processedSamples = samples.map((s) {
                 if(card.type == Constants.cardTypeBool) {
                   log('value: ${s.value}');
-                  return ChartSample(timestamp: s.timestamp, value: s.value == 1.0? 1.0: 0.0,);
+                  return ChartSample(timestamp: s.timestamp, value: s.value);
                 }
                 return s;
               }).toList();

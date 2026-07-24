@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:intl/intl.dart';
-import 'package:path/path.dart';
 import 'package:virtual_display/models/automation.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/utils/constants.dart';

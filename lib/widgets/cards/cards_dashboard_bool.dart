@@ -30,6 +30,7 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
   void _onButtonBool() {  
     valueButton = !valueButton;
     final MqttPublishVm mqttPublish = context.read<MqttPublishVm>();
+    // Publica o valor do botão
     mqttPublish.sendButton(widget.title, valueButton);
   }
 
@@ -52,6 +53,8 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
 
   @override
   Widget build(BuildContext context) {
+    valueButton = widget.value;
+    
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

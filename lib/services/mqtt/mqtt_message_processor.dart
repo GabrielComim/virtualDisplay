@@ -77,7 +77,7 @@ class MqttMessageProcessor {
     // for (final widget in widgets) {
     //   log('Card: ${widget.title}');
     // }
-    // Cria os cards conforme o que recebeu via MQTT
+    // Atualiza os cards conforme o que recebeu via MQTT
     dashboardViewmodel.updateCards(widgets);
   }
 
