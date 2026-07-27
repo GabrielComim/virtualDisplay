@@ -1,4 +1,4 @@
-package com.virtual_display
+package com.virtualDisplay
 
 import io.flutter.embedding.android.FlutterActivity
 
