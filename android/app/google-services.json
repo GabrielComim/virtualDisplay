@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "166979321802",
+    "firebase_url": "https://testesegunranca.firebaseio.com",
+    "project_id": "testesegunranca",
+    "storage_bucket": "testesegunranca.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166979321802:android:0bef6ef8315a6ce068d933",
+        "android_client_info": {
+          "package_name": "com.virtualDisplay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3rqR5GmB42STeU8xgbrwJGGtunCbsT6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

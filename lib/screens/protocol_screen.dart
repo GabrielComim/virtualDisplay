@@ -92,7 +92,7 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
                     "type":"number",
                     "title":"Sensor temp",
                     "decimal":"1",
-                    "unit":"celsius",
+                    "unit":"°C",
                     "min":"-55.0",
                     "max":"200",
                     "history":"true",

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-import 'package:virtual_display/utils/constants.dart';
 
 // Protocolo MQTT funcionando com o broker HIVEMQ
 class MqttServices {
@@ -32,12 +31,12 @@ class MqttServices {
     client.keepAlivePeriod = 20;
     client.logging(on: true);
     try {
-      client.connectionMessage = MqttConnectMessage()
-          .authenticateAs(
-            credentialName ?? Constants.mqttCredentialsName,
-            credentialPassword ?? Constants.mqttCredentialsPassword,
-          )
-          .startClean();
+      final message = MqttConnectMessage().startClean();
+      if((credentialName?.isNotEmpty ?? false)) {
+        message.authenticateAs(credentialName, credentialPassword ?? '');
+      }
+      client.connectionMessage = message;
+
       await client.connect();
 
       // Registra o listener para receber dados publicados

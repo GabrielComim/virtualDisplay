@@ -22,6 +22,10 @@
   "@broker_screen": {"description": "STRINGS USADAS NO broker_screen"},
   "selected": "selecionado(s)",
   "edit": "Editar",
+  "feedback": "Feedback",
+  "helpInitial": "Ajuda inicial",
+  "questionFeedback": "O que esperava encontrar no app e não encontrou?",
+  "send": "Enviar",
 
   "@cardsBroker": {"description": "STRINGS USADAS NO cardsBroker"},
   "delete": "Excluir",

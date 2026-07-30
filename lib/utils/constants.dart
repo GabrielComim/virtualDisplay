@@ -7,6 +7,7 @@ class Constants {
   static const String screenModalConnection = '/modal_connection';
   static const String screenExportCSV = '/export_CSV';
   static const String screenAutomations = '/automation';
+  static const String screenHelpInitial = '/help';
 
   // Tipos de cards 
   static const String cardTypeNumber = 'number';
@@ -67,10 +68,6 @@ class Constants {
   static const String bodyText4 =     'text11';
   static const String bodyText5 =     'text12';
   static const String bodyText6 =     'text13';
-
-  // Credenciais para conexão MQTT
-  static const String mqttCredentialsName = "virtual_display";
-  static const String mqttCredentialsPassword = "Virtual_display0@";
 
   // Tópicos MQTT
   static const String mqttTopicData =           'virtualDisplay/data';

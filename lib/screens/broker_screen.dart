@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/screens/modal_config_broker.dart';
+import 'package:virtual_display/services/feedback_for_improvement.dart';
+import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/viewModel/credential_viewmodel.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
@@ -43,6 +45,7 @@ class _BrokerScreenState extends State<BrokerScreen> {
             : SizedBox.shrink(),
         SizedBox(width: 20),
         FloatingActionButton.extended(
+          heroTag: "broker",
           backgroundColor: ColorScheme.of(context).secondary,
           onPressed: () async {
             final viewModel = context.read<CredentialViewmodel>();
@@ -120,50 +123,75 @@ class _BrokerScreenState extends State<BrokerScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: _selectionMode ? _buttonsFloating() : null,
-        body: Column(
-          children: [
-            // Botão para nova conexão
-            ElevatedButton.icon(
-              icon: Icon(Icons.add),
-              label: Text(AppLocalizations.of(context)!.labelIconAdd),
-              onPressed: () async {
-                await modalConfigBroker(context);
-              },
-            ),
-            // Cria os cards conforme detecta dispositivos conectados
-            Expanded(
-              child: Consumer<CredentialViewmodel>(
-                builder: (context, viewModel, child) {
-                  log('TOTAL BROKERS: ${viewModel.credentials.length}');
-                  return ListView.builder(
-                    itemCount: viewModel.credentials.length,
-                    itemBuilder: (context, index) {
-                      final broker = viewModel.credentials[index];
-                      return Column(
-                        children: [
-                          CardsBroker(
-                            credentials: broker,
-                            selectionMode: _selectionMode,
-                            selected: _selectedBrokers.contains(broker.id),
-                            onSelected: (value) {
-                              _toggleBrokerSelection(
-                                broker.id!,
-                                value ?? false,
-                              );
-                            },
-                            onLongPress: () async {
-                              await _enterSelectionMode(broker.id!);
-                            },
-                          ),
-                          SizedBox(height: 20),
-                        ],
-                      );
-                    },
-                  );
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Botão para nova conexão
+              ElevatedButton.icon(
+                icon: Icon(Icons.add),
+                label: Text(AppLocalizations.of(context)!.labelIconAdd),
+                onPressed: () async {
+                  await modalConfigBroker(context);
                 },
               ),
-            ),
-          ],
+              // Cria os cards conforme detecta dispositivos conectados
+              Expanded(
+                child: Consumer<CredentialViewmodel>(
+                  builder: (context, viewModel, child) {
+                    log('TOTAL BROKERS: ${viewModel.credentials.length}');
+                    return ListView.builder(
+                      itemCount: viewModel.credentials.length,
+                      itemBuilder: (context, index) {
+                        final broker = viewModel.credentials[index];
+                        return Column(
+                          children: [
+                            CardsBroker(
+                              credentials: broker,
+                              selectionMode: _selectionMode,
+                              selected: _selectedBrokers.contains(broker.id),
+                              onSelected: (value) {
+                                _toggleBrokerSelection(
+                                  broker.id!,
+                                  value ?? false,
+                                );
+                              },
+                              onLongPress: () async {
+                                await _enterSelectionMode(broker.id!);
+                              },
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+              SizedBox(height: 10),
+              // BOTÃO TUTORIAL
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    label: Text(AppLocalizations.of(context)!.helpInitial),
+                    icon: Icon(Icons.help_outline_sharp),
+                    onPressed: () {
+                      Navigator.pushNamed(context, Constants.screenHelpInitial);
+                    },
+                  ),
+                  SizedBox(width: 10),
+                  // BOTÃO DE FEEDBACK
+                  ElevatedButton.icon(
+                    label: Text(AppLocalizations.of(context)!.feedback),
+                    icon: Icon(Icons.feedback),
+                    onPressed: () async {
+                      feedbackForImprovement(context);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

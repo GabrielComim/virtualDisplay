@@ -161,6 +161,30 @@ abstract class AppLocalizations {
   /// **'Editar'**
   String get edit;
 
+  /// No description provided for @feedback.
+  ///
+  /// In pt, this message translates to:
+  /// **'Feedback'**
+  String get feedback;
+
+  /// No description provided for @helpInitial.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ajuda inicial'**
+  String get helpInitial;
+
+  /// No description provided for @questionFeedback.
+  ///
+  /// In pt, this message translates to:
+  /// **'O que esperava encontrar no app e não encontrou?'**
+  String get questionFeedback;
+
+  /// No description provided for @send.
+  ///
+  /// In pt, this message translates to:
+  /// **'Enviar'**
+  String get send;
+
   /// No description provided for @delete.
   ///
   /// In pt, this message translates to:

@@ -42,6 +42,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get edit => 'Editar';
 
   @override
+  String get feedback => 'Feedback';
+
+  @override
+  String get helpInitial => 'Ajuda inicial';
+
+  @override
+  String get questionFeedback => 'O que esperava encontrar no app e não encontrou?';
+
+  @override
+  String get send => 'Enviar';
+
+  @override
   String get delete => 'Excluir';
 
   @override

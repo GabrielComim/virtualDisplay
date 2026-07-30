@@ -43,6 +43,11 @@ dependencies:
   share_plus: ^13.2.0
   path_provider: ^2.1.6
   flutter_launcher_icons: ^0.14.4
+  firebase_core: ^4.12.1
+  firebase_crashlytics: ^5.2.6
+  firebase_analytics: ^12.4.5
+  firebase_messaging: ^16.4.3
+  cloud_firestore: ^6.7.1
 
   flutter_localizations:
     sdk: flutter

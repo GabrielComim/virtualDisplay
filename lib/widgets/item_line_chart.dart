@@ -25,6 +25,15 @@ class ItemLineChart extends StatelessWidget {
     }).toList();
   }
 
+  // String _convertUnitToGraphic(String chartUnit) {
+  //   switch(chartUnit) {
+  //     case :
+  //       return;
+  //     case :
+  //       return;
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     if (chartData.samples.isEmpty) {
@@ -32,6 +41,9 @@ class ItemLineChart extends StatelessWidget {
     }
 
     final spots = _buildSpots(chartData.samples);
+
+    // Converte a unidade para forma correta de apresentar no gráfico
+    // final unit = _convertUnitToGraphic(chartData.unit);
 
     return Column(
       children: [
