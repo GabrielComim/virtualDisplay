@@ -8,8 +8,9 @@ class Constants {
   static const String screenExportCSV = '/export_CSV';
   static const String screenAutomations = '/automation';
   static const String screenHelpInitial = '/help';
+  static const String screenDemonstration = '/demonstration';
 
-  // Tipos de cards 
+  // Tipos de cards
   static const String cardTypeNumber = 'number';
   static const String cardTypeBool = 'bool';
   static const String cardTypeString = 'string';
@@ -55,26 +56,27 @@ class Constants {
   static const String iconOff = 'assets/icons/icon_off.png';
 
   // Tipos de textos
-  static const String titleText1 =    'text1';
-  static const String titleText2 =    'text2';
-  static const String titleText3 =    'text3';
-  static const String titleText4 =    'text4';
+  static const String titleText1 = 'text1';
+  static const String titleText2 = 'text2';
+  static const String titleText3 = 'text3';
+  static const String titleText4 = 'text4';
   static const String subtitleText1 = 'text5';
   static const String subtitleText2 = 'text6';
   static const String subtitleText3 = 'text7';
-  static const String bodyText1 =     'text8';
-  static const String bodyText2 =     'text9';
-  static const String bodyText3 =     'text10';
-  static const String bodyText4 =     'text11';
-  static const String bodyText5 =     'text12';
-  static const String bodyText6 =     'text13';
+  static const String bodyText1 = 'text8';
+  static const String bodyText2 = 'text9';
+  static const String bodyText3 = 'text10';
+  static const String bodyText4 = 'text11';
+  static const String bodyText5 = 'text12';
+  static const String bodyText6 = 'text13';
 
   // Tópicos MQTT
-  static const String mqttTopicData =           'virtualDisplay/data';
-  static const String mqttTopicRequestConfig =  'virtualDisplay/request_config';
-  static const String mqttTopicResponseConfig = 'virtualDisplay/response_config';
-  static const String mqttTopicConfigAck =      'virtualDisplay/config_ack';
-  static const String mqttTopicButton =         'virtualDisplay/button/';
+  static const String mqttTopicData = 'virtualDisplay/data';
+  static const String mqttTopicRequestConfig = 'virtualDisplay/request_config';
+  static const String mqttTopicResponseConfig =
+      'virtualDisplay/response_config';
+  static const String mqttTopicConfigAck = 'virtualDisplay/config_ack';
+  static const String mqttTopicButton = 'virtualDisplay/button/';
 
   // Usado para lógica de comparação
   static const String topicData = '/data';
@@ -84,7 +86,6 @@ class Constants {
   static const String topicRequestDevice = '/request_device';
   static const String topicResponseDevice = '/response_device';
   static const String topicResponseConfig = '/response_config';
-
 
   static const String automationOneShot = 'oneShot';
   static const String automationPeriodic = 'periodic';
@@ -98,11 +99,8 @@ class Constants {
   ];
 
   static const String actionPublish = 'publish';
-   // Tipos de ação
-  static const List<String> actionAutomations = [
-    '',
-    actionPublish,
-  ];
+  // Tipos de ação
+  static const List<String> actionAutomations = ['', actionPublish];
 
   static const String automationInterval1Minute = '1 minute';
   static const String automationInterval5Minutes = '5 minutes';
@@ -141,7 +139,7 @@ class Constants {
   static const String logicalConditionMinorEqual = '<=';
   static const String logicalConditionMajor = '>';
   static const String logicalConditionMajorEqual = '>=';
-  
+
   static const List<String> logicalConditions = [
     logicalConditionAnd,
     logicalConditionNot,
@@ -154,4 +152,63 @@ class Constants {
 
   static const String left = 'left';
   static const String right = 'right';
+
+  static const String jsonConfigTest = '''
+{
+  "device": "ESP32",
+  "widgets": [
+    {
+      "id": "temperature",
+      "type": "number",
+      "title": "Sensor temp.",
+      "decimal": "2",
+      "unit": "°C",
+      "min": "-55.0",
+      "max": "200",
+      "history": "true",
+      "value": "10"
+    },
+    {
+      "id": "speed",
+      "type": "number",
+      "title": "Veloc.",
+      "decimal": "1",
+      "unit": "RPM",
+      "min": "0",
+      "max": "200",
+      "history": "true",
+      "value": "95"
+    },
+    {
+      "id": "led",
+      "type": "bool",
+      "title": "Lamp. 1",
+      "value": "true"
+    },
+    {
+      "id": "gps",
+      "type": "bool",
+      "title": "Lamp. 2",
+      "value": "false"
+    },
+    {
+      "id": "message",
+      "type": "string",
+      "title": "Alertas",
+      "value": "Erro na comunicação"
+    }
+  ]
+}
+''';
+
+static const String jsonDataTest = '''
+{
+  "values": {
+    "Sensor temp.": "60.45",
+    "Lamp. 2": true,
+    "Veloc.":"91",
+   "Alertas":"Erro não identificado"
+  }
+}
+''';
 }

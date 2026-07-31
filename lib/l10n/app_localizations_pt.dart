@@ -54,6 +54,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get send => 'Enviar';
 
   @override
+  String get demontration => 'Demonstração';
+
+  @override
   String get delete => 'Excluir';
 
   @override
@@ -325,6 +328,30 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get retain => 'Retain';
+
+  @override
+  String get helpFirstSteps => 'Primeiros passos';
+
+  @override
+  String get helpTextOne => 'Para adicionar um broker, primeiro você precisa ter um broker MQTT, ele que fará o intercâmbio das mensagens entre seu dispositivo e os demais.';
+
+  @override
+  String get helpTextTwo => 'Procure e crie um broker em seu computador, você precisa pelo menos o HOST aquele código principal que surge ao criar o broker.';
+
+  @override
+  String get helpTextThree => 'Independente do broker, os dois tópicos que você deve utilizar para configurar e atualizar os dados serão os mesmos';
+
+  @override
+  String get helpTopics => 'Tópicos: \n Para configuração: \n * virtualDisplay/response_config \n Para dados: \n * virtualDisplay/data';
+
+  @override
+  String get helpTextFour => 'O formato da mensagem para configuração, siga como está o exemplo na tela do protocolo, a qual você encontra clicando nos três pontos na barra superior.';
+
+  @override
+  String get helpTextFive => 'Também nesta tela possui o link para o github com um exemplo de uso.';
+
+  @override
+  String get helpTextSix => 'Em caso de algum problema envie um feedback no botão feedback.';
 
   @override
   String get noData => 'Sem dados';

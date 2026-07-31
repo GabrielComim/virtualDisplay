@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
 import 'package:virtual_display/screens/automations_screen.dart';
+import 'package:virtual_display/screens/demontration_screen.dart';
 import 'package:virtual_display/screens/device_screen.dart';
 import 'package:virtual_display/screens/help_screen.dart';
 import 'package:virtual_display/screens/protocol_screen.dart';
@@ -133,8 +134,12 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(
             builder: (context) => const AutomationsScreen(),
           );
+          // TELA DE AJUDA
         } else if (settings.name == Constants.screenHelpInitial) {
           return MaterialPageRoute(builder: (context) => const HelpScreen());
+          // TELA DE DEMONSTRAÇÂO
+        } else if(settings.name == Constants.screenDemonstration) {
+          return MaterialPageRoute(builder: (context) => const DemonstrationScreen());
         }
         return null; // Retorna null para rotas não definidas, o que resultará em uma tela de erro padrão.
       },

@@ -185,6 +185,12 @@ abstract class AppLocalizations {
   /// **'Enviar'**
   String get send;
 
+  /// No description provided for @demontration.
+  ///
+  /// In pt, this message translates to:
+  /// **'Demonstração'**
+  String get demontration;
+
   /// No description provided for @delete.
   ///
   /// In pt, this message translates to:
@@ -730,6 +736,54 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Retain'**
   String get retain;
+
+  /// No description provided for @helpFirstSteps.
+  ///
+  /// In pt, this message translates to:
+  /// **'Primeiros passos'**
+  String get helpFirstSteps;
+
+  /// No description provided for @helpTextOne.
+  ///
+  /// In pt, this message translates to:
+  /// **'Para adicionar um broker, primeiro você precisa ter um broker MQTT, ele que fará o intercâmbio das mensagens entre seu dispositivo e os demais.'**
+  String get helpTextOne;
+
+  /// No description provided for @helpTextTwo.
+  ///
+  /// In pt, this message translates to:
+  /// **'Procure e crie um broker em seu computador, você precisa pelo menos o HOST aquele código principal que surge ao criar o broker.'**
+  String get helpTextTwo;
+
+  /// No description provided for @helpTextThree.
+  ///
+  /// In pt, this message translates to:
+  /// **'Independente do broker, os dois tópicos que você deve utilizar para configurar e atualizar os dados serão os mesmos'**
+  String get helpTextThree;
+
+  /// No description provided for @helpTopics.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tópicos: \n Para configuração: \n * virtualDisplay/response_config \n Para dados: \n * virtualDisplay/data'**
+  String get helpTopics;
+
+  /// No description provided for @helpTextFour.
+  ///
+  /// In pt, this message translates to:
+  /// **'O formato da mensagem para configuração, siga como está o exemplo na tela do protocolo, a qual você encontra clicando nos três pontos na barra superior.'**
+  String get helpTextFour;
+
+  /// No description provided for @helpTextFive.
+  ///
+  /// In pt, this message translates to:
+  /// **'Também nesta tela possui o link para o github com um exemplo de uso.'**
+  String get helpTextFive;
+
+  /// No description provided for @helpTextSix.
+  ///
+  /// In pt, this message translates to:
+  /// **'Em caso de algum problema envie um feedback no botão feedback.'**
+  String get helpTextSix;
 
   /// No description provided for @noData.
   ///

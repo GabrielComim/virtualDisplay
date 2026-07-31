@@ -167,28 +167,32 @@ class _BrokerScreenState extends State<BrokerScreen> {
                   },
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               // BOTÃO TUTORIAL
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton.icon(
-                    label: Text(AppLocalizations.of(context)!.helpInitial),
-                    icon: Icon(Icons.help_outline_sharp),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Constants.screenHelpInitial);
-                    },
-                  ),
-                  SizedBox(width: 10),
-                  // BOTÃO DE FEEDBACK
-                  ElevatedButton.icon(
-                    label: Text(AppLocalizations.of(context)!.feedback),
-                    icon: Icon(Icons.feedback),
-                    onPressed: () async {
-                      feedbackForImprovement(context);
-                    },
-                  ),
-                ],
+              ElevatedButton.icon(
+                label: Text(AppLocalizations.of(context)!.helpInitial),
+                icon: Icon(Icons.help_outline_sharp),
+                onPressed: () {
+                  Navigator.pushNamed(context, Constants.screenHelpInitial);
+                },
+              ),
+              SizedBox(height: 20),
+              // BOTÃO DE FEEDBACK
+              ElevatedButton.icon(
+                label: Text(AppLocalizations.of(context)!.feedback),
+                icon: Icon(Icons.feedback),
+                onPressed: () async {
+                  feedbackForImprovement(context);
+                },
+              ),
+              SizedBox(height: 20),
+              // BOTÃO DE DEMONSTRAÇÃO
+              ElevatedButton.icon(
+                label: Text(AppLocalizations.of(context)!.demontration),
+                icon: Icon(Icons.dashboard_customize_rounded),
+                onPressed: () async {
+                  Navigator.pushNamed(context, Constants.screenDemonstration);
+                },
               ),
             ],
           ),
