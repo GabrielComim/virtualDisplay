@@ -35,7 +35,6 @@ class OneshotTrigger extends TriggerConfig {
     return null;
   }
 
-  @override
   factory OneshotTrigger.fromJson(Map<String, dynamic> json) {
     return OneshotTrigger(dateTime: DateTime.parse(json['dateTime'] as String));
   }
@@ -88,7 +87,6 @@ class PeriodicTrigger extends TriggerConfig {
     return next;
   }
 
-  @override
   factory PeriodicTrigger.fromJson(Map<String, dynamic> json) {
     // log(json['dateTime'].toString());
     // log(json['intervalSeconds'].toString());
@@ -237,7 +235,6 @@ class LogicalTrigger extends TriggerConfig {
     return null;
   }
 
-  @override
   factory LogicalTrigger.fromJson(Map<String, dynamic> json) {
     return LogicalTrigger(
       titleLogical: json['titleLogical'] as String?,

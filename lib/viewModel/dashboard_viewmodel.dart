@@ -17,36 +17,77 @@ List<CardsDashboard> filterCards(List<CardsDashboard>? cards, String operator) {
 }
 
 class DashboardViewmodel extends ChangeNotifier {
-  List<CardsDashboard> cards = [];
+  
+  List<CardsDashboard> _cards = [];
+
+  List<CardsDashboard> get cards => List.unmodifiable(_cards);
+
+  List<CardsDashboard> getCards(
+    int brokerId,
+    String deviceName,
+  ) {
+    return _cards.where((card) => card.brokerId == brokerId && card.deviceName == deviceName).toList();
+  }
+
   final Map<String, ItemHistory> history = {};
   
+  Map<String, ItemHistory> getHistory(int brokerId, String deviceName) {
+    final prefix = '$brokerId|$deviceName|';
+    return Map.fromEntries(
+      history.entries.where((entry) => entry.key.startsWith(prefix)),
+    );
+  }
+  
+  String historyKey(int brokerId, String deviceName, String cardTitle) {
+    return '$brokerId|$deviceName|$cardTitle';
+  }
+  
   void updateCards(List<CardsDashboard> newCards) {
-    cards = newCards;
+    if(newCards.isEmpty) return;
+
+    final brokerId = newCards.first.brokerId;
+    final deviceName = newCards.first.deviceName;
+
+    _cards.removeWhere((card) => 
+      card.brokerId == brokerId && 
+      card.deviceName == deviceName
+    );
+    
+    _cards.addAll(newCards);
     notifyListeners();
   }
 
-  void updateButtonCard(String cardTitle, bool value) {
+  void updateButtonCard(int brokerId, String deviceName, String cardTitle, bool value) {
     final card = cards.firstWhere(
-      (c) => c.title == cardTitle,
+      (c) => 
+        c.brokerId == brokerId && 
+        c.deviceName == deviceName &&
+        c.title == cardTitle, 
     );
     card.value = value.toString();
     notifyListeners();
   }
 
   void moveCard(int origem, int destino) {
-    final item = cards.removeAt(origem);
-    cards.insert(destino, item);
+    final item = _cards.removeAt(origem);
+    _cards.insert(destino, item);
     notifyListeners();
   }
 
-  void updateValues(Map<String, dynamic> json) {
+  void updateValues(int brokerId, String deviceName, Map<String, dynamic> json) {
     // Pega a data e hora atual que recebi o dado
     final now = DateTime.now();
     double value; 
 
-    for(final card in cards) {
+    // Filtra os cards que pertencem ao broker e ao device específico
+    final deviceCards = _cards.where((c) => 
+      c.brokerId == brokerId &&  
+      c.deviceName == deviceName
+    );
+
+    for(final card in deviceCards) {
       if(json.containsKey(card.title)) {
-        final key = card.title;
+        final key = historyKey(brokerId, deviceName, card.title);
         final rawValue = json[card.title];
         card.value = rawValue.toString();
         log('${card.title}: ${card.value}');
@@ -67,7 +108,6 @@ class DashboardViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<CardsDashboard> get availableVariables => cards;
 
   CardsDashboard? getCardByType(String type) {
     try {

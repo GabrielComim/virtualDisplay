@@ -11,8 +11,6 @@ Widget buttonMoreOptions(BuildContext context) {
         // Tela que explica o protocolo de comunicação
         case Constants.screenProtocol:
           Navigator.pushNamed(context, Constants.screenProtocol);
-        case Constants.screenAutomations:
-          Navigator.pushNamed(context, Constants.screenAutomations);
       }
     },
     itemBuilder: (BuildContext context) => [
@@ -20,27 +18,33 @@ Widget buttonMoreOptions(BuildContext context) {
         value: Constants.screenProtocol,
         child: Text(AppLocalizations.of(context)!.comProtocol),
       ),
-      PopupMenuItem<String>(
-        value: Constants.screenAutomations,
-        child: Text(AppLocalizations.of(context)!.automations),
-      ),
     ],
   );
 }
 
-Widget buttonMoreOptionsMainScreen(BuildContext context, ChartData chartData) {
+Widget buttonMoreOptionsMainScreen(BuildContext context, ChartData chartData,  int brokerId, String deviceName) {
   return PopupMenuButton<String>(
     onSelected: (String value) async {
       switch (value) {
         // Tela para exportar os gráficos
         case Constants.screenExportCSV:
           await CsvExport().exportChart(chartData: chartData);
+        // Tela para automações
+        case Constants.screenAutomations:
+          Navigator.pushNamed(context, Constants.screenAutomations, arguments: {
+            'brokerId': brokerId,
+            'deviceName': deviceName,
+          });
       }
     },
     itemBuilder: (BuildContext context) => [
       PopupMenuItem<String>(
         value: Constants.screenExportCSV,
         child: Text(AppLocalizations.of(context)!.exportCSV),
+      ),
+      PopupMenuItem<String>(
+        value: Constants.screenAutomations,
+        child: Text(AppLocalizations.of(context)!.automations),
       ),
     ],
   );

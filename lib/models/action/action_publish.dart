@@ -31,7 +31,6 @@ class PublishAction extends ActionConfig {
     );
   }
 
-  @override
   factory PublishAction.fromJson(Map<String, dynamic> json) {
     return PublishAction(
       topic: json['topic'] as String,

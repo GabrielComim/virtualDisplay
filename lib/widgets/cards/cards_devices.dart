@@ -60,6 +60,11 @@ class _CardsDevicesState extends State<CardsDevices> {
                 context,
                 Constants.screenMain,
                 arguments: {
+                  'brokerId': widget.credential.id,
+                  'deviceName': widget.deviceName,
+                  'deviceStatus': (widget.deviceStatus)
+                      ? AppLocalizations.of(context)!.connected
+                      : AppLocalizations.of(context)!.disconnected,
                   'typeCard': tests.typeCard,
                   'idCard': tests.idCard,
                   'minValue': tests.minValue,
@@ -86,6 +91,7 @@ class _CardsDevicesState extends State<CardsDevices> {
             context,
             Constants.screenMain,
             arguments: {
+              'brokerId': widget.credential.id,
               'deviceName': widget.deviceName,
               'deviceStatus': (widget.deviceStatus)
                   ? AppLocalizations.of(context)!.connected

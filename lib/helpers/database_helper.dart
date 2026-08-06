@@ -32,6 +32,8 @@ class DatabaseHelper {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     // Acrescentar cada alteração conforme evoluir as versões
+    if(oldVersion < 2) {
+    }
   }
 
   Future<void> _onCreate(Database db, int version) async {

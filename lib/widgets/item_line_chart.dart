@@ -7,9 +7,11 @@ import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 
 class ItemLineChart extends StatelessWidget {
   final ChartData chartData;
+  final int brokerId;
+  final String deviceName;
 
   // Construtor
-  const ItemLineChart({super.key, required this.chartData});
+  const ItemLineChart({super.key, required this.chartData, required this.brokerId, required this.deviceName});
 
   List<FlSpot> _buildSpots(List<ChartSample> samples) {
     final baseTime = samples.first.timestamp;
@@ -53,7 +55,7 @@ class ItemLineChart extends StatelessWidget {
           children: [
             Text(chartData.title),
             SizedBox(width: 10),
-            buttonMoreOptionsMainScreen(context, chartData),
+            buttonMoreOptionsMainScreen(context, chartData, brokerId, deviceName),
             // ElevatedButton(
             //   style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),

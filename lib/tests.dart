@@ -77,7 +77,8 @@ class Tests {
 
 // JSON para teste
 /**
- * {
+******************* TESTE 1 *******************
+ {
   "device":"ESP32",
   "widgets": [
     {
@@ -120,7 +121,20 @@ class Tests {
       "title": "Alertas",
       "value":"Erro na comunicação"
     }
-  ],
+  ]
+}
+
+{
+  "values": {
+    "Sensor temp.": "60.45",
+    "Lamp. 2": true,
+    "Veloc.":"91",
+   "Alertas":"Erro não identificado"
+  }
+}
+
+******************* TESTE 2 *******************
+{
  "device":"STM32",
   "widgets": [
     {
@@ -132,40 +146,39 @@ class Tests {
       "min": "-55.0",
       "max": "200",
       "history": "true",
-      "value":"10"
+      "value":"35"
     },
     {
       "id": "speed",
       "type": "number",
-      "title": "Veloc.",
+      "title": "RPM",
       "decimal": "1",
       "unit": "RPM",
       "min": "0",
       "max": "200",
       "history": "true",
-      "value":"95"
+      "value":"54"
     },
     {
       "id": "led",
       "type": "bool",
-      "title": "Lamp. 1",
+      "title": "Room Light",
       "value":"true"
     },
     {
       "id": "gps",
       "type": "bool",
-      "title": "Lamp. 2",
+      "title": "Localization 1",
       "value":"false"
     },
     {
       "id": "message",
       "type": "string",
       "title": "Alertas",
-      "value":"Erro na comunicação"
+      "value":"Falha desconhecida"
     }
   ]
 }
-
 
 {
   "values": {

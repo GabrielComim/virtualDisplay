@@ -149,6 +149,12 @@ abstract class AppLocalizations {
   /// **'Desconectado'**
   String get disconnected;
 
+  /// No description provided for @modeDemonstration.
+  ///
+  /// In pt, this message translates to:
+  /// **'Modo de demonstração, sem interação'**
+  String get modeDemonstration;
+
   /// No description provided for @selected.
   ///
   /// In pt, this message translates to:

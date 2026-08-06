@@ -111,14 +111,14 @@ class MyApp extends StatelessWidget {
         // TELA PRINCIPAL
         else if (settings.name == Constants.screenMain) {
           final args = settings.arguments as Map<String, dynamic>?;
-
+          final brokerId = (args?['brokerId'] as int? ?? 0);
           final deviceName = (args?['deviceName'] as String? ?? 'Dis');
           final deviceStatus =
               (args?['deviceStatus'] as String? ?? 'Conectado');
 
           return PageRouteBuilder(
             pageBuilder: (_, _, _) =>
-                MainScreen(deviceName: deviceName, deviceStatus: deviceStatus),
+                MainScreen(brokerId: brokerId, deviceName: deviceName, deviceStatus: deviceStatus),
             transitionsBuilder: (_, animation, _, child) {
               return FadeTransition(opacity: animation, child: child);
             },
@@ -131,8 +131,12 @@ class MyApp extends StatelessWidget {
           );
           // TELA DAS AUTOMAÇÕES
         } else if (settings.name == Constants.screenAutomations) {
+          final args = settings.arguments as Map<String, dynamic>?;
+          final brokerId = (args?['brokerId'] as int? ?? 0);
+          final deviceName = (args?['deviceName'] as String? ?? 'Dispositivo');
+          
           return MaterialPageRoute(
-            builder: (context) => const AutomationsScreen(),
+            builder: (context) => AutomationsScreen(brokerId: brokerId, deviceName: deviceName),
           );
           // TELA DE AJUDA
         } else if (settings.name == Constants.screenHelpInitial) {

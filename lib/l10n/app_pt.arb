@@ -19,6 +19,9 @@
   "connected": "Conectado",
   "disconnected": "Desconectado",
  
+  "@demonstration_screen": {"description": "STRINGS USADAS NO demonstration_screen"},
+  "modeDemonstration": "Modo de demonstração, sem interação",
+
   "@broker_screen": {"description": "STRINGS USADAS NO broker_screen"},
   "selected": "selecionado(s)",
   "edit": "Editar",

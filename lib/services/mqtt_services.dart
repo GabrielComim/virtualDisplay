@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:mqtt_client/mqtt_client.dart';
@@ -12,9 +13,12 @@ class MqttServices {
   }
   MqttServices._internal();
 
-  late MqttServerClient client;
+  MqttServerClient? client;
 
   Function(String topic, String payload)? onMessageReceived;
+
+  // Guardar o subscription para conseguir cancelar o listener quando desconectado.
+  StreamSubscription? _subscription;
 
   Future<bool> connect({
     required String broker,
@@ -24,42 +28,64 @@ class MqttServices {
     String? credentialName,
     String? credentialPassword,
   }) async {
-    client = MqttServerClient(broker, clientId);
-    client.port = port;
-    // client.setProtocolV311();
-    client.secure = tls;
-    client.keepAlivePeriod = 20;
-    client.logging(on: true);
+    // Desconecta o cliente mqtt anterior antes de criar um novo
+    await disconnect();
+
+    final mqttClient = MqttServerClient(broker, clientId);
+    mqttClient.port = port;
+    mqttClient.secure = tls;
+    mqttClient.keepAlivePeriod = 20;
+    mqttClient.logging(on: true);
+
+    client = mqttClient;
     try {
       final message = MqttConnectMessage().startClean();
-      if((credentialName?.isNotEmpty ?? false)) {
+      if ((credentialName?.isNotEmpty ?? false)) {
         message.authenticateAs(credentialName, credentialPassword ?? '');
       }
-      client.connectionMessage = message;
+      client!.connectionMessage = message;
 
-      await client.connect();
+      // Tenta conectar-se ao broker
+      await client!.connect();
+      // Confere se conectou com sucesso
+      if(client!.connectionStatus?.state != MqttConnectionState.connected) {
+        return false;
+      }
 
       // Registra o listener para receber dados publicados
-      client.updates?.listen(_onMessage);
+      if(client!.updates != null) {
+        _subscription = client!.updates?.listen(_onMessage);
+        log('Listener mqtt registrado');
+      } else {
+        log('ERRO: updates mqtt é null');
+      }
 
-      log(client.connectionStatus?.state.toString() ?? 'No connection status');
       return true;
     } catch (_) {
-      client.disconnect();
+      client!.disconnect();
       return false;
     }
   }
 
   // Método para publicar uma mensagem em um tópico MQTT
   void publish(String topic, String message) {
+    // Verifica se está conectado antes de publicar
+    if (client!.connectionStatus?.state != MqttConnectionState.connected) {
+      log('CLIENTE DESCONECTADO. NÃO PODE PUBLICAR MENSAGEM');
+      return;
+    }
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
-    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
+    client!.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
   }
-  
+
   // Método para se inscrever em um tópico MQTT
   Future<void> subscribe(String topic) async {
-    client.subscribe(topic, MqttQos.atLeastOnce);
+    if (client!.connectionStatus?.state != MqttConnectionState.connected) {
+      log('Não inscrito. Mqtt desconectado');
+      return;
+    }
+    client!.subscribe(topic, MqttQos.atLeastOnce);
   }
 
   // Callback para recebimento das mensagens MQTT
@@ -75,4 +101,21 @@ class MqttServices {
     onMessageReceived?.call(topic, payload);
   }
 
+  Future<void> disconnect() async {
+    try {
+      // Cancela sempre o listener existente
+      await _subscription?.cancel();
+      _subscription = null;
+
+      // Só tenta desconectar se realmente existe uma conexão ativa
+      if (client != null &&
+          client!.connectionStatus?.state == MqttConnectionState.connected) {
+        client!.disconnect();
+        log('MQTT desconectado com sucesso');
+      }
+      client = null;
+    } catch (e) {
+      log('Erro ao desconectar MQTT: $e');
+    }
+  }
 }

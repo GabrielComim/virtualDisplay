@@ -44,8 +44,11 @@ class _DeviceScreenState extends State<DeviceScreen> {
             Expanded(
               child: Consumer<DevicesViewModel>(
                 builder: (context, viewModel, child) {
+                  // Busca os dispositivos associados ao broker selecionado
+                  final devices = viewModel.getDevices(widget.credential.id!);
+
                   // Se não houver dispositivos, informar o que o usuário deve fazer
-                  if (viewModel.devices.isEmpty) {
+                  if (devices.isEmpty) {
                     return Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Center(
@@ -54,9 +57,9 @@ class _DeviceScreenState extends State<DeviceScreen> {
                     );
                   }
                   return ListView.builder(
-                    itemCount: viewModel.devices.length,
+                    itemCount: devices.length,
                     itemBuilder: (context, index) {
-                      final deviceInfo = viewModel.devices[index];
+                      final deviceInfo = devices[index];
                       return Column(
                         children: [
                           CardsDevices(

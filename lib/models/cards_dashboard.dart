@@ -1,5 +1,7 @@
 class CardsDashboard {
   final String id;
+  final int brokerId;  // ID do broker ao qual o card pertence
+  final String deviceName;  // Nome do dispositivo ao qual o card pertence
   final String type;  // Tipo do card (numérico, booleano, string)
   final String title;     // Título do card
   final String? decimal;   // Quantos valores considerar depois da vírgula
@@ -11,6 +13,8 @@ class CardsDashboard {
 
   CardsDashboard({
     required this.id,
+    required this.brokerId,
+    required this.deviceName,
     required this.type,
     required this.title,
     this.decimal,
@@ -23,9 +27,13 @@ class CardsDashboard {
 
   factory CardsDashboard.fromJson(
     Map<String, dynamic> json,
+    int brokerId,
+    String deviceName,
   ) {
     return CardsDashboard(
       id: json['id'] ?? '',
+      brokerId: brokerId,
+      deviceName: deviceName,
       type: json['type'] ?? '',
       title: json['title'] ?? '',
       decimal: json['decimal'] ?? '',

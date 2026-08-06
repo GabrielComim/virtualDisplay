@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get disconnected => 'Desconectado';
 
   @override
+  String get modeDemonstration => 'Modo de demonstração, sem interação';
+
+  @override
   String get selected => 'selecionado(s)';
 
   @override

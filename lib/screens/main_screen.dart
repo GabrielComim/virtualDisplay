@@ -20,12 +20,14 @@ import 'package:virtual_display/widgets/cards/cards_dashboard_string.dart.dart';
 import 'package:virtual_display/widgets/item_line_chart.dart';
 
 class MainScreen extends StatefulWidget {
+  final int brokerId; // ID do broker
   final String deviceName; // Nome do dispositivo
   final String deviceStatus; // Indica se o dispositivo está conectado ou não
 
   // Construtor
   const MainScreen({
     super.key,
+    required this.brokerId,
     required this.deviceName,
     required this.deviceStatus,
   });
@@ -35,7 +37,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -112,7 +113,9 @@ class _MainScreenState extends State<MainScreen> {
             crossAxisCount: 2,
             mainAxisSpacing: 8,
             crossAxisSpacing: 8,
-            children: _buildCards(vm.cards),
+            children: _buildCards(
+              vm.getCards(widget.brokerId, widget.deviceName),
+            ),
           );
         },
       ),
@@ -123,7 +126,10 @@ class _MainScreenState extends State<MainScreen> {
     return SingleChildScrollView(
       child: Consumer<DashboardViewmodel>(
         builder: (context, vm, child) {
-          final entries = vm.history.entries.toList();
+          final entries = vm
+              .getHistory(widget.brokerId, widget.deviceName)
+              .entries
+              .toList();
           return GridView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -137,19 +143,27 @@ class _MainScreenState extends State<MainScreen> {
             itemBuilder: (context, index) {
               final entry = entries[index];
               final key = entry.key;
-              final samples = entry.value.samples; 
+              final samples = entry.value.samples;
+              final title = entry.key.split('|').last;
               final card = vm.cards.firstWhere(
                 (c) => c.title == key,
-                orElse: () => CardsDashboard(id: '', type: '', title: key, value: ''),
+                orElse: () => CardsDashboard(
+                  brokerId: widget.brokerId,
+                  deviceName: widget.deviceName,
+                  id: '',
+                  type: '',
+                  title: title,
+                  value: '',
+                ),
               );
               // Este tipo não tem gráfico
-              if(card.type == Constants.cardTypeString) {
+              if (card.type == Constants.cardTypeString) {
                 return const SizedBox.shrink();
               }
 
               // Tipo booleano vira 0 e 1
               final processedSamples = samples.map((s) {
-                if(card.type == Constants.cardTypeBool) {
+                if (card.type == Constants.cardTypeBool) {
                   log('value: ${s.value}');
                   return ChartSample(timestamp: s.timestamp, value: s.value);
                 }
@@ -158,10 +172,12 @@ class _MainScreenState extends State<MainScreen> {
 
               return ItemLineChart(
                 chartData: ChartData(
-                  title: key,
+                  title: title,
                   unit: card.unit ?? '',
                   samples: processedSamples,
                 ),
+                brokerId: widget.brokerId,
+                deviceName: widget.deviceName,
               );
             },
           );
@@ -185,6 +201,7 @@ class _MainScreenState extends State<MainScreen> {
 
     if (card.type == Constants.cardTypeBool) {
       return CardsDashboardBool(
+        deviceName: widget.deviceName,
         title: card.title,
         id: card.id,
         value: card.value == 'true',
@@ -202,7 +219,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _buildCards(List<dynamic> cards) {
     return cards.map((card) {
       return StaggeredGridTile.fit(
-        key: ValueKey(card.title),
+        key: ValueKey('${card.brokerId}_${card.deviceName}_${card.title}'),
         crossAxisCellCount: card.type == Constants.cardTypeString ? 2 : 1,
         child: _buildDragTarget(card),
       );

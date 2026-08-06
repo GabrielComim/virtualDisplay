@@ -11,7 +11,14 @@ import 'package:virtual_display/widgets/delete_with_slide_widget.dart';
 // import 'package:virtual_display/utils/constants.dart';
 
 class AutomationsScreen extends StatefulWidget {
-  const AutomationsScreen({super.key});
+  final int brokerId;
+  final String deviceName;
+
+  const AutomationsScreen({
+    super.key,
+    required this.brokerId,
+    required this.deviceName,
+  });
 
   @override
   State<AutomationsScreen> createState() => _AutomationsScreenState();
@@ -27,9 +34,13 @@ class _AutomationsScreenState extends State<AutomationsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Filtra as variáveis do dispositivo selecionado com base no brokerId e deviceName
     final providerDashboard = context.watch<DashboardViewmodel>();
-    final variables = providerDashboard.availableVariables;
-    
+    final variables = providerDashboard.getCards(
+      widget.brokerId,
+      widget.deviceName,
+    );
+
     return Container(
       decoration: decorationInitScreen(),
       child: Scaffold(
@@ -69,7 +80,11 @@ class _AutomationsScreenState extends State<AutomationsScreen> {
                           },
                           child: Column(
                             children: [
-                              CardsAutomations(automation: automation),
+                              CardsAutomations(
+                                brokerId: widget.brokerId,
+                                deviceName: widget.deviceName,
+                                automation: automation,
+                              ),
                               SizedBox(height: 20),
                             ],
                           ),

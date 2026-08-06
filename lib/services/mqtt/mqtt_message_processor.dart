@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:math' as math;
 import 'dart:developer' as developer;
 
@@ -15,6 +16,7 @@ class MqttMessageProcessor {
   final DevicesViewModel devicesViewModel;
   final MqttPublishVm mqttPublishViewModel;
   final DashboardViewmodel dashboardViewmodel;
+  final int? credentialBroker;
 
   // String? _currentDevice;
   final math.Random _random = math.Random();
@@ -25,24 +27,29 @@ class MqttMessageProcessor {
     this.devicesViewModel,
     this.mqttPublishViewModel,
     this.dashboardViewmodel,
+    this.credentialBroker,
   );
 
   void process(String topic, String payload) {
     try {
       final Map<String, dynamic> json = jsonDecode(payload);
 
-      // Recebe as configurações
+      //  RECEBE CONFIGURAÇÕES INICIAIS DO DISPOSITIVO
       if (topic.endsWith(Constants.topicResponseConfig)) {
+        developer.log('Config recebido');
         _processConfig(json);
         // Confirma recebimento das configurações iniciais
         mqttPublishViewModel.configAck();
       }
-      // recebe o valor de cada item
+      // RECEBE DADOS DO DISPOSITIVO
       else if (topic.endsWith(Constants.topicData)) {
         developer.log('Data recebido');
-        _processData(json);
+
+        // Procura o nome do dispositivo no tópico MQTT
+        final deviceNameFromTopic = topic.split('/')[1];
+        _processData(json, deviceNameFromTopic);
       }
-      // recebe dados do botão
+      // RECEBE OS VALORES DOS BOTÕES
       else if (topic.contains(Constants.mqttTopicButton)) {
         developer.log('Button recebido');
         // Pega qual card alterou valor
@@ -50,7 +57,14 @@ class MqttMessageProcessor {
         // Processa o valor recebido de um botão
         final value = _processButton(json);
         // Atualiza os cards do dashboard
-        dashboardViewmodel.updateButtonCard(cardTitle, value);
+        dashboardViewmodel.updateButtonCard(
+          credentialBroker ?? 0,
+          json['device'] ?? '',
+          cardTitle,
+          value,
+        );
+
+        // MENSAGEM DESCONHECIDA
       } else {
         developer.log('MENSAGEM AINDA NÃO IMPLEMENTADA: $payload');
       }
@@ -61,27 +75,31 @@ class MqttMessageProcessor {
 
   // Processa a mensagem com as configurações iniciais
   void _processConfig(Map<String, dynamic> json) {
-    List<CardsDashboard> widgets = (json['widgets'] as List)
-        .map((item) => CardsDashboard.fromJson(item))
-        .toList();
-
     final String deviceName = json['device'] ?? '';
 
-    // Atualiza a variável
-    // _currentDevice = deviceName;
+    List<CardsDashboard> widgets = (json['widgets'] as List)
+        .map(
+          (item) =>
+              CardsDashboard.fromJson(item, credentialBroker ?? 0, deviceName),
+        )
+        .toList();
 
-    devicesViewModel.addDevice(DeviceInfo(device: deviceName, online: true));
+    devicesViewModel.addDevice(
+      DeviceInfo(
+        brokerId: credentialBroker ?? 0,
+        device: deviceName,
+        online: true,
+      ),
+    );
 
-    // for (final widget in widgets) {
-    //   developer.log('Card: ${widget.title}');
-    // }
     // Atualiza os cards conforme o que recebeu via MQTT
     dashboardViewmodel.updateCards(widgets);
   }
 
-  void _processData(Map<String, dynamic> json) {
+  void _processData(Map<String, dynamic> json, String deviceName) {
     final values = json['values'] as Map<String, dynamic>;
-    dashboardViewmodel.updateValues(values);
+    dashboardViewmodel.updateValues(credentialBroker ?? 0, deviceName, values);
+    log('Valores atualizados para o dispositivo $deviceName: $values');
   }
 
   bool _processButton(Map<String, dynamic> json) {
@@ -89,10 +107,11 @@ class MqttMessageProcessor {
   }
 
   // *********************** MODO DEMONSTRAÇÃO ***********************
-  
+
   // Gera dados acom valores aleatórios para atualizar e gerar um gráfico
   Map<String, dynamic> _generateDemoData() {
     return {
+      "device": Constants.jsonConfigTestDeviceName,
       "values": {
         "Sensor temp.": (_random.nextDouble() * 20).toStringAsFixed(2),
         "Veloc.": _random.nextInt(201).toString(),
@@ -116,12 +135,11 @@ class MqttMessageProcessor {
       // Configura os widgets de demonstração
       final Map<String, dynamic> jsonConfig = jsonDecode(payloadConfig);
       _processConfig(jsonConfig);
-
+  
       // Enviar dados a cada 3 segundos.
-      _timer = Timer.periodic(
-        Duration(seconds: 3),
-        (_) => _processData(_generateDemoData()),
-      );
+      _timer = Timer.periodic(Duration(seconds: 3), (_) {
+        _processData(_generateDemoData(), Constants.jsonConfigTestDeviceName);
+      });
     } catch (e) {
       developer.log('Erro ao decodificar o JSON: $e');
     }

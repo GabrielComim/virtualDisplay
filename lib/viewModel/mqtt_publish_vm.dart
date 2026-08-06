@@ -9,17 +9,17 @@ import 'package:virtual_display/utils/constants.dart';
 class MqttPublishVm extends ChangeNotifier{
   // Solicita a configuração inicial ao dispositivo
   void requestConfig() {
-    MqttServices().publish(Constants.mqttTopicRequestConfig, jsonEncode({'command': 'getConfig'}));
+    MqttServices().publish('${Constants.baseTopic}${Constants.mqttTopicRequestConfig}', jsonEncode({'command': 'getConfig'}));
   }
 
   // Confirma que recebeu a configuração inicial
   void configAck() {
-    MqttServices().publish(Constants.mqttTopicConfigAck, jsonEncode({'received': 'true'}));
+    MqttServices().publish('${Constants.baseTopic}${Constants.mqttTopicConfigAck}', jsonEncode({'received': 'true'}));
   }
 
   // Envia valor do botão no tópico terminado com o nome do título do item
   void sendButton(String topic, bool value) {
-    MqttServices().publish(('${Constants.mqttTopicButton}$topic'), jsonEncode({'button': value}));
+    MqttServices().publish(topic, jsonEncode({'button': value}));
   }
 
   // Envia valor de automações

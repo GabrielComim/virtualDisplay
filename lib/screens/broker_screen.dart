@@ -30,6 +30,7 @@ class _BrokerScreenState extends State<BrokerScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _selectedBrokers.length == 1
+            // BOTÃO PARA EDITAR O BROKER 
             ? FloatingActionButton.extended(
                 backgroundColor: ColorScheme.of(context).secondary,
                 onPressed: () async {
@@ -44,6 +45,7 @@ class _BrokerScreenState extends State<BrokerScreen> {
               )
             : SizedBox.shrink(),
         SizedBox(width: 20),
+        // BOTÃO PARA EXCLUIR O BROKER
         FloatingActionButton.extended(
           heroTag: "broker",
           backgroundColor: ColorScheme.of(context).secondary,
@@ -126,7 +128,7 @@ class _BrokerScreenState extends State<BrokerScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              // Botão para nova conexão
+              // Botão para adicionar nova conexão
               ElevatedButton.icon(
                 icon: Icon(Icons.add),
                 label: Text(AppLocalizations.of(context)!.labelIconAdd),
@@ -149,12 +151,14 @@ class _BrokerScreenState extends State<BrokerScreen> {
                               credentials: broker,
                               selectionMode: _selectionMode,
                               selected: _selectedBrokers.contains(broker.id),
+                              // Clique para conectar com o broker
                               onSelected: (value) {
                                 _toggleBrokerSelection(
                                   broker.id!,
                                   value ?? false,
                                 );
                               },
+                              // Clique longo para selecionar o broker - edição ou exclusão
                               onLongPress: () async {
                                 await _enterSelectionMode(broker.id!);
                               },

@@ -6,6 +6,7 @@ import 'package:virtual_display/widgets/buttons/button_dashboard.dart';
 import 'package:virtual_display/widgets/circle_status.dart';
 
 class CardsDashboardBool extends StatefulWidget {
+  final String deviceName;
   final String title;
   final String id;
   final bool value;
@@ -14,6 +15,7 @@ class CardsDashboardBool extends StatefulWidget {
   // Construtor
   const CardsDashboardBool({
     super.key,
+    required this.deviceName,
     required this.title,
     required this.id,
     required this.value,
@@ -30,8 +32,10 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
   void _onButtonBool() {  
     valueButton = !valueButton;
     final MqttPublishVm mqttPublish = context.read<MqttPublishVm>();
+    // Monta o tópico conforme o dispositivo e o card, e publica o valor do botão
+    String topic = '${Constants.baseTopic}/${widget.deviceName}/${Constants.mqttTopicButton}${widget.title}';
     // Publica o valor do botão
-    mqttPublish.sendButton(widget.title, valueButton);
+    mqttPublish.sendButton(topic, valueButton);
   }
 
   Widget _typeCardDashboardBool(BuildContext context, String id) {

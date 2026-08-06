@@ -11,10 +11,11 @@ import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/widgets/icon_on_off.dart';
 
 class CardsAutomations extends StatefulWidget {
+  final int brokerId;
+  final String deviceName;
   final Automation automation;
-
   // Construtor
-  const CardsAutomations({super.key, required this.automation});
+  const CardsAutomations({super.key, required this.brokerId, required this.deviceName, required this.automation});
 
   @override
   State<CardsAutomations> createState() => _CardsAutomationsState();
@@ -29,7 +30,7 @@ class _CardsAutomationsState extends State<CardsAutomations> {
   @override
   Widget build(BuildContext context) {
     final providerDashboard = context.watch<DashboardViewmodel>();
-    final variables = providerDashboard.availableVariables;
+    final variables = providerDashboard.getCards(widget.brokerId, widget.deviceName);
 
     return InkWell(
       // Abre para EDIÇÃO

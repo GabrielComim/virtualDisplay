@@ -71,12 +71,12 @@ class Constants {
   static const String bodyText6 = 'text13';
 
   // Tópicos MQTT
-  static const String mqttTopicData = 'virtualDisplay/data';
-  static const String mqttTopicRequestConfig = 'virtualDisplay/request_config';
-  static const String mqttTopicResponseConfig =
-      'virtualDisplay/response_config';
-  static const String mqttTopicConfigAck = 'virtualDisplay/config_ack';
-  static const String mqttTopicButton = 'virtualDisplay/button/';
+  static const String baseTopic = 'virtualDisplay';
+  static const String mqttTopicData = '/data';
+  static const String mqttTopicRequestConfig = '/request_config';
+  static const String mqttTopicResponseConfig = '/response_config';
+  static const String mqttTopicConfigAck = '/config_ack';
+  static const String mqttTopicButton = '/button/';
 
   // Usado para lógica de comparação
   static const String topicData = '/data';
@@ -153,9 +153,10 @@ class Constants {
   static const String left = 'left';
   static const String right = 'right';
 
+  static const String jsonConfigTestDeviceName = 'ESP32 DEMO';
   static const String jsonConfigTest = '''
 {
-  "device": "ESP32",
+  "device": "$jsonConfigTestDeviceName",
   "widgets": [
     {
       "id": "temperature",

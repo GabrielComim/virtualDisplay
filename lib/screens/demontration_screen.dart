@@ -29,9 +29,10 @@ class DemonstrationScreen extends StatefulWidget {
 }
 
 class _DemonstrationScreenState extends State<DemonstrationScreen> {
-  final String deviceName = 'ESP32'; // Nome do dispositivo
-  final String deviceStatus = 'Conectado'; // Indica se o dispositivo está conectado ou não
-  late final MqttMessageProcessor _demoProcessor; // Cria a instância que será usada para iniciar e parar a aplicação de demonstração
+  final int brokerId = 99;                                              // ID do broker fictício para demonstração
+  final String deviceName = Constants.jsonConfigTestDeviceName;         // Nome do dispositivo
+  final String deviceStatus = 'Conectado';                              // Indica se o dispositivo está conectado ou não
+  late final MqttMessageProcessor _demoProcessor;                       // Cria a instância que será usada para iniciar e parar a aplicação de demonstração
 
   @override
   void initState() {
@@ -47,8 +48,12 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
       devicesViewModel,
       mqttPublishViewModel,
       dashboardViewmodel,
+      brokerId,
     );
-    _demoProcessor.initDemonstrationMode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      _demoProcessor.initDemonstrationMode();
+    });
   }
 
   @override
@@ -66,7 +71,7 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
         child: Scaffold(
           appBar: AppBar(
             title: AppBarTitleCustom(
-              textScreen: AppLocalizations.of(context)!.appTitle,
+              textScreen: "${AppLocalizations.of(context)!.appTitle} - ${AppLocalizations.of(context)!.modeDemonstration}",
             ),
           ),
           body: SafeArea(
@@ -125,7 +130,9 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
             crossAxisCount: 2,
             mainAxisSpacing: 8,
             crossAxisSpacing: 8,
-            children: _buildCards(vm.cards),
+            children: _buildCards(
+              vm.getCards(brokerId, deviceName),
+            ),
           );
         },
       ),
@@ -154,7 +161,7 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
               final card = vm.cards.firstWhere(
                 (c) => c.title == key,
                 orElse: () =>
-                    CardsDashboard(id: '', type: '', title: key, value: ''),
+                    CardsDashboard(id: '', brokerId: brokerId, deviceName: deviceName, type: '', title: key, value: ''),
               );
               // Este tipo não tem gráfico
               if (card.type == Constants.cardTypeString) {
@@ -176,6 +183,8 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
                   unit: card.unit ?? '',
                   samples: processedSamples,
                 ),
+                brokerId: brokerId,
+                deviceName: deviceName,
               );
             },
           );
@@ -200,6 +209,7 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
 
     if (card.type == Constants.cardTypeBool) {
       return CardsDashboardBool(
+        deviceName: deviceName,
         title: card.title,
         id: card.id,
         value: card.value == 'true',
@@ -217,7 +227,7 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
   List<Widget> _buildCards(List<dynamic> cards) {
     return cards.map((card) {
       return StaggeredGridTile.fit(
-        key: ValueKey(card.title),
+        key: ValueKey('${card.brokerId}_${card.deviceName}_${card.title}'),
         crossAxisCellCount: card.type == Constants.cardTypeString ? 2 : 1,
         child: _buildDragTarget(card),
       );
