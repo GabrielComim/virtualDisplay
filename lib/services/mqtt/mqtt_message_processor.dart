@@ -50,7 +50,7 @@ class MqttMessageProcessor {
         _processData(json, deviceNameFromTopic);
       }
       // RECEBE OS VALORES DOS BOTÕES
-      else if (topic.contains(Constants.mqttTopicButton)) {
+      else if (topic.contains(Constants.mqttTopicButtonAck)) {
         developer.log('Button recebido');
         // Pega qual card alterou valor
         final cardTitle = topic.split('/').last;

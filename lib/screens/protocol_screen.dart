@@ -160,7 +160,7 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
               context: context,
               text: 
               '''${AppLocalizations.of(context)!.bodyPageFiveHowToSendProtocol}
-              * virtualDisplay/data
+              * virtualDisplay/DEVICE_NAME/data
              
               ${AppLocalizations.of(context)!.bodyPageFiveHowToSendProtocolTwo}
               ${AppLocalizations.of(context)!.example}
@@ -188,9 +188,9 @@ class _ProtocolScreenState extends State<ProtocolScreen> {
               text: 
               '''${AppLocalizations.of(context)!.bodyPageSixHowToSendProtocol}
               
-              virtualDisplay/button1/TITLE_ITEM
-              virtualDisplay/button2/TITLE_ITEM
-              virtualDisplay/button3/TITLE_ITEM
+              virtualDisplay/DEVICE_NAME/button/TITLE_ITEM
+              virtualDisplay/DEVICE_NAME/button/TITLE_ITEM
+              virtualDisplay/DEVICE_NAME/button/TITLE_ITEM
               
               ${AppLocalizations.of(context)!.bodyPageSixHowToSendProtocolTwo}
               ''',

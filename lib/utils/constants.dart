@@ -77,6 +77,7 @@ class Constants {
   static const String mqttTopicResponseConfig = '/response_config';
   static const String mqttTopicConfigAck = '/config_ack';
   static const String mqttTopicButton = '/button/';
+  static const String mqttTopicButtonAck = '/button_ack/';
 
   // Usado para lógica de comparação
   static const String topicData = '/data';

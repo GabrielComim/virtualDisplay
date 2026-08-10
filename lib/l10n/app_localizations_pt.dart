@@ -225,7 +225,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get bodyPageSixHowToSendProtocol => 'Inscreva-se nos tópicos:\n  * virtualDisplay/request_config\n * virtualDisplay/config_ack\n\nNo primeiro tópico se você receber getConfig quer dizer que o app não possui configurações válidas. No segundo tópico indica que recebeu as configurações.';
 
   @override
-  String get bodyPageSixHowToSendProtocolTwo => 'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"true\" ou \"false\".\n\n Para mais informações e um exemplo completo de um firmware usando ESP32, acesse o link: ';
+  String get bodyPageSixHowToSendProtocolTwo => 'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"true\" ou \"false\".\nEm seu dispositivo ao receber algo nestes tópicos confirme para que o app altere o estado, para isto retorne o estado no tópico: \n\nvirtualDisplay/DEVICE_NAME/button_ack/TITLE_ITEM \n\n Para mais informações e um exemplo completo de um firmware usando ESP32, acesse o link: ';
 
   @override
   String get linkGithubExample => 'https://github.com/GabrielComim/virtualDisplayDevice.git';
@@ -345,10 +345,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get helpTextThree => 'Independente do broker, os dois tópicos que você deve utilizar para configurar e atualizar os dados serão os mesmos';
 
   @override
-  String get helpTopics => 'Tópicos: \n Para configuração: \n * virtualDisplay/response_config \n Para dados: \n * virtualDisplay/data';
+  String get helpTopics => 'Tópicos: \n Para configuração: \n * virtualDisplay/response_config \n Para dados: \n * virtualDisplay/DEVICE_NAME/data';
 
   @override
-  String get helpTextFour => 'O formato da mensagem para configuração, siga como está o exemplo na tela do protocolo, a qual você encontra clicando nos três pontos na barra superior.';
+  String get helpTextFour => 'O formato da mensagem para configuração, siga como está o exemplo na tela do protocolo, a qual você encontra clicando nos três pontos na barra superior quando está na tela da lista de brokers.';
 
   @override
   String get helpTextFive => 'Também nesta tela possui o link para o github com um exemplo de uso.';

@@ -530,7 +530,7 @@ abstract class AppLocalizations {
   /// No description provided for @bodyPageSixHowToSendProtocolTwo.
   ///
   /// In pt, this message translates to:
-  /// **'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"true\" ou \"false\".\n\n Para mais informações e um exemplo completo de um firmware usando ESP32, acesse o link: '**
+  /// **'Nestes tópicos é possível ler a alteração de estado de botões. Lê-se \"true\" ou \"false\".\nEm seu dispositivo ao receber algo nestes tópicos confirme para que o app altere o estado, para isto retorne o estado no tópico: \n\nvirtualDisplay/DEVICE_NAME/button_ack/TITLE_ITEM \n\n Para mais informações e um exemplo completo de um firmware usando ESP32, acesse o link: '**
   String get bodyPageSixHowToSendProtocolTwo;
 
   /// No description provided for @linkGithubExample.
@@ -770,13 +770,13 @@ abstract class AppLocalizations {
   /// No description provided for @helpTopics.
   ///
   /// In pt, this message translates to:
-  /// **'Tópicos: \n Para configuração: \n * virtualDisplay/response_config \n Para dados: \n * virtualDisplay/data'**
+  /// **'Tópicos: \n Para configuração: \n * virtualDisplay/response_config \n Para dados: \n * virtualDisplay/DEVICE_NAME/data'**
   String get helpTopics;
 
   /// No description provided for @helpTextFour.
   ///
   /// In pt, this message translates to:
-  /// **'O formato da mensagem para configuração, siga como está o exemplo na tela do protocolo, a qual você encontra clicando nos três pontos na barra superior.'**
+  /// **'O formato da mensagem para configuração, siga como está o exemplo na tela do protocolo, a qual você encontra clicando nos três pontos na barra superior quando está na tela da lista de brokers.'**
   String get helpTextFour;
 
   /// No description provided for @helpTextFive.

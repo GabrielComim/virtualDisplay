@@ -33,7 +33,7 @@ class _CardsDashboardBoolState extends State<CardsDashboardBool> {
     valueButton = !valueButton;
     final MqttPublishVm mqttPublish = context.read<MqttPublishVm>();
     // Monta o tópico conforme o dispositivo e o card, e publica o valor do botão
-    String topic = '${Constants.baseTopic}/${widget.deviceName}/${Constants.mqttTopicButton}${widget.title}';
+    String topic = '${Constants.baseTopic}/${widget.deviceName}${Constants.mqttTopicButton}${widget.title}';
     // Publica o valor do botão
     mqttPublish.sendButton(topic, valueButton);
   }
