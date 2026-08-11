@@ -341,6 +341,18 @@ abstract class AppLocalizations {
   /// **'Gráficos'**
   String get tabGraphics;
 
+  /// No description provided for @tabMessages.
+  ///
+  /// In pt, this message translates to:
+  /// **'Mensagens'**
+  String get tabMessages;
+
+  /// No description provided for @noMessages.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhuma mensagem recebida'**
+  String get noMessages;
+
   /// No description provided for @configAdvanced.
   ///
   /// In pt, this message translates to:
@@ -412,6 +424,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Exportar gráficos como CSV'**
   String get exportCSV;
+
+  /// No description provided for @exportCSVLog.
+  ///
+  /// In pt, this message translates to:
+  /// **'Exportar log'**
+  String get exportCSVLog;
 
   /// No description provided for @automations.
   ///

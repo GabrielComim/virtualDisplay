@@ -62,6 +62,8 @@
   "@main_screen": {"description": "STRINGS USADAS NO main_screen"},
   "tabDashboard": "Dashboard",
   "tabGraphics": "Gráficos",
+  "tabMessages": "Mensagens",
+  "noMessages": "Nenhuma mensagem recebida",
 
   "@button_more_options": {"description": "STRINGS USADAS NO button_more_options"},
   "configAdvanced": "Configurações de conexão avançadas",
@@ -76,6 +78,7 @@
   "ok": "OK",
   "save": "Salvar",
   "exportCSV": "Exportar gráficos como CSV",
+  "exportCSVLog": "Exportar log",
   "automations": "Automações",
 
   "@protocol_screen": {"description": "STRINGS USADAS NO protocol_screen"},

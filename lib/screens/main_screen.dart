@@ -12,6 +12,7 @@ import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/utils/constants.dart';
+import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 import 'package:virtual_display/widgets/cards/cards_conection_device.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_bool.dart';
@@ -50,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
     return Container(
       decoration: decorationInitScreen(),
       child: DefaultTabController(
-        length: 2,
+        length: Constants.QUANT_TABS_MAIN_SCREEN, // Número de abas
         child: Scaffold(
           appBar: AppBar(
             title: AppBarTitleCustom(
@@ -72,8 +73,10 @@ class _MainScreenState extends State<MainScreen> {
                       // CARDS DE DASHBOARD
                       // Cria um grid que se auto ajusta conforme o tamanho de cada card, neste caso conforme o tipo do card.
                       _dashboardView(),
-                      // Aba com os gráficos, que ainda não foi implementada, mas já está estruturada para receber os gráficos futuramente.
+                      // GRÁFICOS
                       _graphicsView(),
+                      // LOG PARA OS WIDGETS DE MENSAGENS
+                      _messagesView(),
                     ],
                   ),
                 ),
@@ -95,6 +98,10 @@ class _MainScreenState extends State<MainScreen> {
                   Tab(
                     icon: Icon(Icons.show_chart),
                     text: AppLocalizations.of(context)!.tabGraphics,
+                  ),
+                  Tab(
+                    icon: Icon(Icons.message),
+                    text: AppLocalizations.of(context)!.tabMessages,
                   ),
                 ],
               ),
@@ -185,6 +192,53 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+  
+  Widget _messagesView() {
+    return Consumer<DashboardViewmodel>(
+      builder: (context, vm, child) {
+        final messages = vm.getMessageHistory(
+          widget.brokerId,
+          widget.deviceName,
+        );
+        if (messages.isEmpty) {
+          return Center(
+            child: Text(
+              AppLocalizations.of(context)!.noMessages,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // Botão para exportar mensagens CSV
+            buttonExportCsvMessages(
+              context,
+              widget.brokerId,
+              widget.deviceName,
+              messages,
+            ),
+            // Lista de mensagens
+            Expanded(
+              child: ListView.builder(
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  final message = messages[index];
+                  return ListTile(
+                    title: Text(message.title),
+                    subtitle: Text(message.value),
+                    trailing: Text(
+                      '${message.time.hour.toString().padLeft(2, '0')}:${message.time.minute.toString().padLeft(2, '0')}:${message.time.second.toString().padLeft(2, '0')}',
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget _buildCardContent(CardsDashboard card) {
     if (card.type == Constants.cardTypeNumber) {
@@ -254,7 +308,6 @@ class _MainScreenState extends State<MainScreen> {
 
           child: LongPressDraggable<CardsDashboard>(
             data: card,
-
             feedback: Material(
               elevation: 8,
               child: SizedBox(width: 200, child: _buildCardContent(card)),

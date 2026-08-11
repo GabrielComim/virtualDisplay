@@ -75,6 +75,9 @@ class Constants {
   static const String bodyText5 = 'text12';
   static const String bodyText6 = 'text13';
 
+  // Quantidade de abas na tela principal
+  static const int QUANT_TABS_MAIN_SCREEN = 3;
+
   // Tópicos MQTT
   static const String baseTopic = 'virtualDisplay';
   static const String mqttTopicData = '/data';

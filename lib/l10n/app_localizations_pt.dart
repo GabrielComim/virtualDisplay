@@ -132,6 +132,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get tabGraphics => 'Gráficos';
 
   @override
+  String get tabMessages => 'Mensagens';
+
+  @override
+  String get noMessages => 'Nenhuma mensagem recebida';
+
+  @override
   String get configAdvanced => 'Configurações de conexão avançadas';
 
   @override
@@ -166,6 +172,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get exportCSV => 'Exportar gráficos como CSV';
+
+  @override
+  String get exportCSVLog => 'Exportar log';
 
   @override
   String get automations => 'Automações';
