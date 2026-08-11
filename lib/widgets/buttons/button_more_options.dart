@@ -25,16 +25,12 @@ Widget buttonMoreOptions(BuildContext context) {
 
 Widget buttonMoreOptionsMainScreen(
   BuildContext context,
-  ChartData chartData,
   int brokerId,
   String deviceName,
 ) {
   return PopupMenuButton<String>(
     onSelected: (String value) async {
       switch (value) {
-        // Tela para exportar os gráficos
-        case Constants.screenExportCSV:
-          await CsvExport().exportChart(chartData: chartData);
         // Tela para automações
         case Constants.screenAutomations:
           Navigator.pushNamed(
@@ -46,10 +42,6 @@ Widget buttonMoreOptionsMainScreen(
     },
     itemBuilder: (BuildContext context) => [
       PopupMenuItem<String>(
-        value: Constants.screenExportCSV,
-        child: Text(AppLocalizations.of(context)!.exportCSV),
-      ),
-      PopupMenuItem<String>(
         value: Constants.screenAutomations,
         child: Text(AppLocalizations.of(context)!.automations),
       ),
@@ -57,8 +49,36 @@ Widget buttonMoreOptionsMainScreen(
   );
 }
 
-Widget buttonExportCsvMessages(BuildContext context, int brokerId, String deviceName, List<MessageSample> messages) {
+Widget buttonExportCsvChart(
+  BuildContext context,
+  ChartData chartData,
+) {
   return PopupMenuButton<String>(
+    icon: Icon(Icons.view_list),
+    onSelected: (String value) async {
+      switch (value) {
+        // Tela para exportar os gráficos
+        case Constants.screenExportCSV:
+          await CsvExport().exportChart(chartData: chartData);
+      }
+    },
+    itemBuilder: (BuildContext context) => [
+      PopupMenuItem<String>(
+        value: Constants.screenExportCSV,
+        child: Text(AppLocalizations.of(context)!.exportCSV),
+      ),
+    ],
+  );
+}
+
+Widget buttonExportCsvMessages(
+  BuildContext context,
+  int brokerId,
+  String deviceName,
+  List<MessageSample> messages,
+) {
+  return PopupMenuButton<String>(
+    icon: Icon(Icons.view_list),
     onSelected: (String value) async {
       switch (value) {
         // Tela para exportar mensagens CSV

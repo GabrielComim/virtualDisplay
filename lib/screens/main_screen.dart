@@ -57,6 +57,13 @@ class _MainScreenState extends State<MainScreen> {
             title: AppBarTitleCustom(
               textScreen: AppLocalizations.of(context)!.appTitle,
             ),
+            actions: [
+              buttonMoreOptionsMainScreen(
+              context,
+              widget.brokerId,
+              widget.deviceName,
+            ),
+            ],
           ),
           body: SafeArea(
             child: Column(

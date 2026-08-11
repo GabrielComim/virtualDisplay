@@ -54,12 +54,7 @@ class ItemLineChart extends StatelessWidget {
           children: [
             Text(chartData.title),
             SizedBox(width: 10),
-            buttonMoreOptionsMainScreen(
-              context,
-              chartData,
-              brokerId,
-              deviceName,
-            ),
+            buttonExportCsvChart(context, chartData),
             // ElevatedButton(
             //   style: ElevatedButton.styleFrom(
             //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
