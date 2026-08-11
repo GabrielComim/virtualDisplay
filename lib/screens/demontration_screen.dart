@@ -14,6 +14,7 @@ import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/utils/constants.dart';
+import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 import 'package:virtual_display/widgets/cards/cards_conection_device.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/widgets/cards/cards_dashboard_bool.dart';
@@ -29,10 +30,13 @@ class DemonstrationScreen extends StatefulWidget {
 }
 
 class _DemonstrationScreenState extends State<DemonstrationScreen> {
-  final int brokerId = 99;                                              // ID do broker fictício para demonstração
-  final String deviceName = Constants.jsonConfigTestDeviceName;         // Nome do dispositivo
-  final String deviceStatus = 'Conectado';                              // Indica se o dispositivo está conectado ou não
-  late final MqttMessageProcessor _demoProcessor;                       // Cria a instância que será usada para iniciar e parar a aplicação de demonstração
+  final int brokerId = 99; // ID do broker fictício para demonstração
+  final String deviceName =
+      Constants.jsonConfigTestDeviceName; // Nome do dispositivo
+  final String deviceStatus =
+      'Conectado'; // Indica se o dispositivo está conectado ou não
+  late final MqttMessageProcessor
+  _demoProcessor; // Cria a instância que será usada para iniciar e parar a aplicação de demonstração
 
   @override
   void initState() {
@@ -51,14 +55,13 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
       brokerId,
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
       _demoProcessor.initDemonstrationMode();
     });
   }
 
   @override
   void dispose() {
-   _demoProcessor.stopDemonstrationMode();
+    _demoProcessor.stopDemonstrationMode();
     super.dispose();
   }
 
@@ -67,11 +70,12 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
     return Container(
       decoration: decorationInitScreen(),
       child: DefaultTabController(
-        length: 2,
+        length: Constants.QUANT_TABS_MAIN_SCREEN,
         child: Scaffold(
           appBar: AppBar(
             title: AppBarTitleCustom(
-              textScreen: "${AppLocalizations.of(context)!.appTitle} - ${AppLocalizations.of(context)!.modeDemonstration}",
+              textScreen:
+                  "${AppLocalizations.of(context)!.appTitle} - ${AppLocalizations.of(context)!.modeDemonstration}",
             ),
           ),
           body: SafeArea(
@@ -87,10 +91,11 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
                   child: TabBarView(
                     children: [
                       // CARDS DE DASHBOARD
-                      // Cria um grid que se auto ajusta conforme o tamanho de cada card, neste caso conforme o tipo do card.
                       _dashboardView(),
-                      // Aba com os gráficos, que ainda não foi implementada, mas já está estruturada para receber os gráficos futuramente.
+                      // GRÁFICOS
                       _graphicsView(),
+                      // LOG DE MENSAGENS
+                      _messagesView(),
                     ],
                   ),
                 ),
@@ -113,6 +118,10 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
                     icon: Icon(Icons.show_chart),
                     text: AppLocalizations.of(context)!.tabGraphics,
                   ),
+                  Tab(
+                    icon: Icon(Icons.message),
+                    text: AppLocalizations.of(context)!.tabMessages,
+                  ),
                 ],
               ),
             ),
@@ -130,9 +139,7 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
             crossAxisCount: 2,
             mainAxisSpacing: 8,
             crossAxisSpacing: 8,
-            children: _buildCards(
-              vm.getCards(brokerId, deviceName),
-            ),
+            children: _buildCards(vm.getCards(brokerId, deviceName)),
           );
         },
       ),
@@ -160,8 +167,14 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
               final samples = entry.value.samples;
               final card = vm.cards.firstWhere(
                 (c) => c.title == key,
-                orElse: () =>
-                    CardsDashboard(id: '', brokerId: brokerId, deviceName: deviceName, type: '', title: key, value: ''),
+                orElse: () => CardsDashboard(
+                  id: '',
+                  brokerId: brokerId,
+                  deviceName: deviceName,
+                  type: '',
+                  title: key,
+                  value: '',
+                ),
               );
               // Este tipo não tem gráfico
               if (card.type == Constants.cardTypeString) {
@@ -190,6 +203,53 @@ class _DemonstrationScreenState extends State<DemonstrationScreen> {
           );
         },
       ),
+    );
+  }
+
+  Widget _messagesView() {
+    return Consumer<DashboardViewmodel>(
+      builder: (context, vm, child) {
+        final messages = vm.getMessageHistory(
+          brokerId,
+          deviceName,
+        );
+        if (messages.isEmpty) {
+          return Center(
+            child: Text(
+              AppLocalizations.of(context)!.noMessages,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            // Botão para exportar mensagens CSV
+            buttonExportCsvMessages(
+              context,
+              brokerId,
+              deviceName,
+              messages,
+            ),
+            // Lista de mensagens
+            Expanded(
+              child: ListView.builder(
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  final message = messages[index];
+                  return ListTile(
+                    title: Text(message.title),
+                    subtitle: Text(message.value),
+                    trailing: Text(
+                      '${message.time.hour.toString().padLeft(2, '0')}:${message.time.minute.toString().padLeft(2, '0')}:${message.time.second.toString().padLeft(2, '0')}',
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

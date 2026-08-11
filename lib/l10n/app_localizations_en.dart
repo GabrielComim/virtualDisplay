@@ -370,4 +370,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noData => 'Sem dados';
+
+  @override
+  String get sendSuccess => 'Enviado com sucesso';
+
+  @override
+  String get sendFail => 'Falha ao enviar o feedback';
+
+  @override
+  String get errorConection => 'Verifique sua conexão com a internet.';
 }

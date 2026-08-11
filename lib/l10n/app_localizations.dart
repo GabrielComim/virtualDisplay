@@ -820,6 +820,24 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Sem dados'**
   String get noData;
+
+  /// No description provided for @sendSuccess.
+  ///
+  /// In pt, this message translates to:
+  /// **'Enviado com sucesso'**
+  String get sendSuccess;
+
+  /// No description provided for @sendFail.
+  ///
+  /// In pt, this message translates to:
+  /// **'Falha ao enviar o feedback'**
+  String get sendFail;
+
+  /// No description provided for @errorConection.
+  ///
+  /// In pt, this message translates to:
+  /// **'Verifique sua conexão com a internet.'**
+  String get errorConection;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -159,5 +159,9 @@
   "helpTextSix": "Em caso de algum problema envie um feedback no botão feedback.",
 
   "@item_line_chart": {"description": "STRINGS USADAS NO item_line_chart"},
-  "noData": "Sem dados"
+  "noData": "Sem dados",
+
+  "sendSuccess": "Enviado com sucesso",
+  "sendFail": "Falha ao enviar o feedback",
+  "errorConection": "Verifique sua conexão com a internet."
 }
