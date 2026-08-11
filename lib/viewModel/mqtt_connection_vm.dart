@@ -55,24 +55,8 @@ class MqttConnectionVm extends ChangeNotifier {
         ).startAutomation(context);
       }
       log('DEVERIA INICIAR AS AUTOMAÇÕES NESTE PONTO');
-      // Indica que conectou-se com sucesso
-      if (context.mounted) {
-        ShowBanner.messengerShow(
-          context,
-          AppLocalizations.of(context)!.successConnection,
-          false,
-        );
-      }
       // Falhou na conexão
-    } else {
-      if (context.mounted) {
-        ShowBanner.messengerShow(
-          context,
-          AppLocalizations.of(context)!.failConnectionMqtt,
-          false,
-        );
-      }
-    }
+    } 
     return isConnected;
   }
 

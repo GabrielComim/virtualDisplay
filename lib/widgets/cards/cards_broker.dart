@@ -3,6 +3,7 @@ import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/viewModel/mqtt_connection_vm.dart';
+import 'package:virtual_display/widgets/show_material_banner.dart';
 
 class CardsBroker extends StatefulWidget {
   final CredentialsBroker credentials;
@@ -48,14 +49,34 @@ class _CardsBrokerState extends State<CardsBroker> {
         }
         // Tenta se conectar ao broker
         bool isConnected = await _connectMqtt(widget.credentials);
+        // Aguarda uns segundos para dar tempo de mostrar a mensagem de conexão com sucesso ou falha
         setState(() {
           _brokerStatus = isConnected;
         });
-        if (context.mounted) {
-          Navigator.pushNamed(
+
+        if (isConnected) {
+          ShowBanner.messengerShow(
             context,
-            Constants.screenDevices,
-            arguments: {'credentialBroker': widget.credentials},
+            AppLocalizations.of(context)!.successConnection,
+            false,
+          );
+          // Pequeno delay por causa da mensagem de sucesso ou falha
+          if (context.mounted) {
+            await Future.delayed(Duration(seconds: 3));
+          }
+          // Como conectou, navega para a tela de dispositivos
+          if (context.mounted) {
+            Navigator.pushNamed(
+              context,
+              Constants.screenDevices,
+              arguments: {'credentialBroker': widget.credentials},
+            );
+          }
+        } else {
+          ShowBanner.messengerShow(
+            context,
+            AppLocalizations.of(context)!.failConnectionMqtt,
+            true,
           );
         }
       },

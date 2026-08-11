@@ -45,15 +45,6 @@ class _CardsDevicesState extends State<CardsDevices> {
             widget.credential,
           );
           if (connected) {
-            // Informa o usuário que se conectou
-            if (context.mounted) {
-              ShowBanner.messengerShow(
-                context,
-                AppLocalizations.of(context)!.successConnection,
-                false,
-              );
-            }
-
             // Se a conexão for bem-sucedida, navega para a tela principal
             if (context.mounted) {
               Navigator.pushNamed(
