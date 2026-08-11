@@ -55,6 +55,11 @@ class Constants {
   static const String iconOn = 'assets/icons/icon_on.png';
   static const String iconOff = 'assets/icons/icon_off.png';
 
+  // Imagens da tela de ajuda
+  static const String imageHelpCreateBroker = 'assets/helpOne.png';
+  static const String imageHelpTwo = 'assets/helpTwo.png';
+  static const String imageHelpThree = 'assets/helpThree.png';
+
   // Tipos de textos
   static const String titleText1 = 'text1';
   static const String titleText2 = 'text2';
@@ -150,6 +155,10 @@ class Constants {
     logicalConditionMajor,
     logicalConditionMajorEqual,
   ];
+
+  // Para os gráficos
+  static const timeWindow = Duration(seconds: 60);
+  static const edgeMarginChart = 3.0; // Margem para não cortar os valores nas extremidades do gráfico
 
   static const String left = 'left';
   static const String right = 'right';

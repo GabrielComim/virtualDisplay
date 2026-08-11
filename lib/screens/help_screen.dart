@@ -22,7 +22,6 @@ class _HelpScreenState extends State<HelpScreen> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // TODO: colocar uma imagem
             styleText(
               context: context,
               text: AppLocalizations.of(context)!.helpTextOne,
@@ -38,6 +37,12 @@ class _HelpScreenState extends State<HelpScreen> {
               context: context,
               text: AppLocalizations.of(context)!.helpTextTwo,
               type: Constants.bodyText3,
+            ),
+            SizedBox(height: 20),
+            Image.asset(
+              Constants.imageHelpCreateBroker,
+              width: 350,
+              height: 350,
             ),
           ],
         );
@@ -56,6 +61,18 @@ class _HelpScreenState extends State<HelpScreen> {
               text: AppLocalizations.of(context)!.helpTopics,
               type: Constants.bodyText4,
             ),
+            SizedBox(height: 10),
+            styleText(
+              context: context,
+              text: AppLocalizations.of(context)!.helpTextThreeSecondPart,
+              type: Constants.bodyText4,
+            ),
+            SizedBox(height: 20),
+            Image.asset(
+              Constants.imageHelpTwo,
+              width: 350,
+              height: 450,
+            ),
           ],
         );
       case 4:
@@ -66,6 +83,12 @@ class _HelpScreenState extends State<HelpScreen> {
               context: context,
               text: AppLocalizations.of(context)!.helpTextFour,
               type: Constants.bodyText3,
+            ),
+            SizedBox(height: 20),
+            Image.asset(
+              Constants.imageHelpThree,
+              width: 350,
+              height: 350,
             ),
             SizedBox(height: 20),
             styleText(

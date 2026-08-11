@@ -758,13 +758,13 @@ abstract class AppLocalizations {
   /// No description provided for @helpTextTwo.
   ///
   /// In pt, this message translates to:
-  /// **'Procure e crie um broker em seu computador, você precisa pelo menos o HOST aquele código principal que surge ao criar o broker.'**
+  /// **'Procure e crie um broker em seu computador, você precisa pelo menos o HOST/URL aquele código principal que surge ao criar o broker. Exemplo acima mostra a URL criada no Hivemq cloud.'**
   String get helpTextTwo;
 
   /// No description provided for @helpTextThree.
   ///
   /// In pt, this message translates to:
-  /// **'Independente do broker, os dois tópicos que você deve utilizar para configurar e atualizar os dados serão os mesmos'**
+  /// **'Independente do broker, os dois tópicos que você deve utilizar para configurar e atualizar os dados serão os seguintes:'**
   String get helpTextThree;
 
   /// No description provided for @helpTopics.
@@ -773,16 +773,22 @@ abstract class AppLocalizations {
   /// **'Tópicos: \n Para configuração: \n * virtualDisplay/response_config \n Para dados: \n * virtualDisplay/DEVICE_NAME/data'**
   String get helpTopics;
 
+  /// No description provided for @helpTextThreeSecondPart.
+  ///
+  /// In pt, this message translates to:
+  /// **'Para testar, pode enviar as configurações pelo próprio broker, como a imagem a seguir:'**
+  String get helpTextThreeSecondPart;
+
   /// No description provided for @helpTextFour.
   ///
   /// In pt, this message translates to:
-  /// **'O formato da mensagem para configuração, siga como está o exemplo na tela do protocolo, a qual você encontra clicando nos três pontos na barra superior quando está na tela da lista de brokers.'**
+  /// **'Para atualizar os dados envie neste formato:'**
   String get helpTextFour;
 
   /// No description provided for @helpTextFive.
   ///
   /// In pt, this message translates to:
-  /// **'Também nesta tela possui o link para o github com um exemplo de uso.'**
+  /// **'Na tela de protocolo (Menu três pontos na tela inicial) existe o link para o github com um exemplo de uso.'**
   String get helpTextFive;
 
   /// No description provided for @helpTextSix.

@@ -339,19 +339,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTextOne => 'Para adicionar um broker, primeiro você precisa ter um broker MQTT, ele que fará o intercâmbio das mensagens entre seu dispositivo e os demais.';
 
   @override
-  String get helpTextTwo => 'Procure e crie um broker em seu computador, você precisa pelo menos o HOST aquele código principal que surge ao criar o broker.';
+  String get helpTextTwo => 'Procure e crie um broker em seu computador, você precisa pelo menos o HOST/URL aquele código principal que surge ao criar o broker. Exemplo acima mostra a URL criada no Hivemq cloud.';
 
   @override
-  String get helpTextThree => 'Independente do broker, os dois tópicos que você deve utilizar para configurar e atualizar os dados serão os mesmos';
+  String get helpTextThree => 'Independente do broker, os dois tópicos que você deve utilizar para configurar e atualizar os dados serão os seguintes:';
 
   @override
   String get helpTopics => 'Tópicos: \n Para configuração: \n * virtualDisplay/response_config \n Para dados: \n * virtualDisplay/DEVICE_NAME/data';
 
   @override
-  String get helpTextFour => 'O formato da mensagem para configuração, siga como está o exemplo na tela do protocolo, a qual você encontra clicando nos três pontos na barra superior quando está na tela da lista de brokers.';
+  String get helpTextThreeSecondPart => 'Para testar, pode enviar as configurações pelo próprio broker, como a imagem a seguir:';
 
   @override
-  String get helpTextFive => 'Também nesta tela possui o link para o github com um exemplo de uso.';
+  String get helpTextFour => 'Para atualizar os dados envie neste formato:';
+
+  @override
+  String get helpTextFive => 'Na tela de protocolo (Menu três pontos na tela inicial) existe o link para o github com um exemplo de uso.';
 
   @override
   String get helpTextSix => 'Em caso de algum problema envie um feedback no botão feedback.';
