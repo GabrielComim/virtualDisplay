@@ -7,6 +7,7 @@ import 'package:virtual_display/models/action/action_publish.dart';
 import 'package:virtual_display/models/automation.dart';
 import 'package:virtual_display/models/cards_dashboard.dart';
 import 'package:virtual_display/models/trigger/trigger_config.dart';
+import 'package:virtual_display/services/firebase_analytics_app.dart';
 import 'package:virtual_display/theme/colors.dart';
 import 'package:virtual_display/utils/constants.dart';
 import 'package:virtual_display/utils/switch_menu_item.dart';
@@ -287,6 +288,9 @@ Future<void> modalAutomation(
                         
                         log('NextExecution: $nextExecution');
                         
+                        // Log de evento de adição de uma automação
+                        await AnalyticsHelper.trackLogUser('add_automation');
+
                         final newAutomation = Automation(
                           id: isEdit ? automation.id : null,
                           name: nameController.text.trim(),

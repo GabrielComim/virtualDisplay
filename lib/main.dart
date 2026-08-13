@@ -12,6 +12,7 @@ import 'package:virtual_display/screens/demontration_screen.dart';
 import 'package:virtual_display/screens/device_screen.dart';
 import 'package:virtual_display/screens/help_screen.dart';
 import 'package:virtual_display/screens/protocol_screen.dart';
+import 'package:virtual_display/services/firebase_analytics_app.dart';
 import 'package:virtual_display/viewModel/automations_viewmodel.dart';
 import 'package:virtual_display/viewModel/credential_viewmodel.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
@@ -97,6 +98,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         // TELA DOS BROKERS
         if (settings.name == Constants.screenBroker) {
+          AnalyticsHelper.trackScreenView('BrokerScreen');
           return MaterialPageRoute(builder: (context) => const BrokerScreen());
         }
         // TELA DISPOSITIVOS
@@ -104,6 +106,7 @@ class MyApp extends StatelessWidget {
           final args = settings.arguments as Map<String, dynamic>?;
           final credential = (args?['credentialBroker'] as CredentialsBroker);
 
+          AnalyticsHelper.trackScreenView('DeviceScreen');
           return MaterialPageRoute(
             builder: (context) => DeviceScreen(credential: credential),
           );
@@ -116,6 +119,7 @@ class MyApp extends StatelessWidget {
           final deviceStatus =
               (args?['deviceStatus'] as String? ?? 'Conectado');
 
+          AnalyticsHelper.trackScreenView('MainScreen');
           return PageRouteBuilder(
             pageBuilder: (_, _, _) =>
                 MainScreen(brokerId: brokerId, deviceName: deviceName, deviceStatus: deviceStatus),
@@ -126,6 +130,7 @@ class MyApp extends StatelessWidget {
           );
           // TELA DO PROTOCOLO
         } else if (settings.name == Constants.screenProtocol) {
+          AnalyticsHelper.trackScreenView('ProtocolScreen');
           return MaterialPageRoute(
             builder: (context) => const ProtocolScreen(),
           );
@@ -135,14 +140,17 @@ class MyApp extends StatelessWidget {
           final brokerId = (args?['brokerId'] as int? ?? 0);
           final deviceName = (args?['deviceName'] as String? ?? 'Dispositivo');
           
+          AnalyticsHelper.trackScreenView('AutomationsScreen');
           return MaterialPageRoute(
             builder: (context) => AutomationsScreen(brokerId: brokerId, deviceName: deviceName),
           );
           // TELA DE AJUDA
         } else if (settings.name == Constants.screenHelpInitial) {
+          AnalyticsHelper.trackScreenView('HelpScreen');
           return MaterialPageRoute(builder: (context) => const HelpScreen());
           // TELA DE DEMONSTRAÇÂO
         } else if(settings.name == Constants.screenDemonstration) {
+          AnalyticsHelper.trackScreenView('DemonstrationScreen');
           return MaterialPageRoute(builder: (context) => const DemonstrationScreen());
         }
         return null; // Retorna null para rotas não definidas, o que resultará em uma tela de erro padrão.
