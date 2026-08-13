@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
-import 'package:virtual_display/models/device_info.dart';
 import 'package:virtual_display/viewModel/devices_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_connection_vm.dart';
 import 'package:virtual_display/tests.dart';
 import 'package:virtual_display/utils/constants.dart';
-import 'package:virtual_display/widgets/confirm_delete.dart';
 import 'package:virtual_display/widgets/show_material_banner.dart';
 
 class CardsDevices extends StatefulWidget {
@@ -42,30 +40,30 @@ class _CardsDevicesState extends State<CardsDevices> {
     final MqttConnectionVm mqttConnectionViewModel = context
         .watch<MqttConnectionVm>();
     return InkWell(
-      // Excluir dispositivo
-      onLongPress: () async {
-        final bool? confirmDelete = await showDialog<bool>(
-          context: context,
-          // Solicita confirmação antes de excluir
-          builder: (context) => confirmDeleteDialog(context),
-        );
-        // Confirmado a exclusão, então faz ela
-        if (confirmDelete == true) {
-          // Remove o dispositivo da lista de dispositivos conhecidos
-          widget.devicesViewModel.removeDevice(
-            DeviceInfo(
-              brokerId: widget.credential.id!,
-              device: widget.deviceName,
-              online: widget.deviceStatus,
-            ),
-          );
-          ShowBanner.messengerShow(
-            context,
-            AppLocalizations.of(context)!.deviceRemoved,
-            false,
-          );
-        }
-      },
+      // // Excluir dispositivo
+      // onLongPress: () async {
+      //   final bool? confirmDelete = await showDialog<bool>(
+      //     context: context,
+      //     // Solicita confirmação antes de excluir
+      //     builder: (context) => confirmDeleteDialog(context),
+      //   );
+      //   // Confirmado a exclusão, então faz ela
+      //   if (confirmDelete == true) {
+      //     // Remove o dispositivo da lista de dispositivos conhecidos
+      //     widget.devicesViewModel.removeDevice(
+      //       DeviceInfo(
+      //         brokerId: widget.credential.id!,
+      //         device: widget.deviceName,
+      //         online: widget.deviceStatus,
+      //       ),
+      //     );
+      //     ShowBanner.messengerShow(
+      //       context,
+      //       AppLocalizations.of(context)!.deviceRemoved,
+      //       false,
+      //     );
+      //   }
+      // },
       onTap: () async {
         // Só tente se conectar se já não estiver conectado
         if (widget.deviceStatus == false) {

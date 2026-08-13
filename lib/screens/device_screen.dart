@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
+import 'package:virtual_display/models/device_info.dart';
 import 'package:virtual_display/theme/widgets/app_bar_title_custom.dart';
 import 'package:virtual_display/theme/widgets/decoration_init_screen.dart';
 import 'package:virtual_display/viewModel/devices_viewmodel.dart';
 import 'package:virtual_display/widgets/buttons/button_more_options.dart';
 import 'package:virtual_display/widgets/cards/cards_devices.dart';
+import 'package:virtual_display/widgets/delete_slide_tip.dart';
+import 'package:virtual_display/widgets/delete_with_slide_widget.dart';
+import 'package:virtual_display/widgets/show_material_banner.dart';
 
 class DeviceScreen extends StatefulWidget {
   final CredentialsBroker credential;
@@ -29,7 +33,10 @@ class _DeviceScreenState extends State<DeviceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final DevicesViewModel devicesViewModel = Provider.of<DevicesViewModel>(context, listen: false);
+    final DevicesViewModel devicesViewModel = Provider.of<DevicesViewModel>(
+      context,
+      listen: false,
+    );
     return Container(
       decoration: decorationInitScreen(),
       child: Scaffold(
@@ -41,6 +48,8 @@ class _DeviceScreenState extends State<DeviceScreen> {
         ),
         body: Column(
           children: [
+            deleteWithSlideTip(context: context),
+            SizedBox(height: 10),
             // Cria os cards conforme detecta dispositivos conectados
             Expanded(
               child: Consumer<DevicesViewModel>(
@@ -53,7 +62,9 @@ class _DeviceScreenState extends State<DeviceScreen> {
                     return Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Center(
-                        child: Text(AppLocalizations.of(context)!.noDevicesFound),
+                        child: Text(
+                          AppLocalizations.of(context)!.noDevicesFound,
+                        ),
                       ),
                     );
                   }
@@ -61,16 +72,36 @@ class _DeviceScreenState extends State<DeviceScreen> {
                     itemCount: devices.length,
                     itemBuilder: (context, index) {
                       final deviceInfo = devices[index];
-                      return Column(
-                        children: [
-                          CardsDevices(
-                            deviceName: deviceInfo.device,
-                            deviceStatus: deviceInfo.online,
-                            credential: widget.credential,
-                            devicesViewModel: devicesViewModel,
-                          ),
-                          SizedBox(height: 20),
-                        ],
+                      // Exclusão por deslizamento lateral
+                      return deleteWithSlideWidget(
+                        context,
+                        id: widget.credential.id!,
+                        onDismissed: () async {
+                          // Remove o dispositivo da lista de dispositivos conhecidos
+                          devicesViewModel.removeDevice(
+                            DeviceInfo(
+                              brokerId: widget.credential.id!,
+                              device: deviceInfo.device,
+                              online: deviceInfo.online,
+                            ),
+                          );
+                          ShowBanner.messengerShow(
+                            context,
+                            AppLocalizations.of(context)!.deviceRemoved,
+                            false,
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            CardsDevices(
+                              deviceName: deviceInfo.device,
+                              deviceStatus: deviceInfo.online,
+                              credential: widget.credential,
+                              devicesViewModel: devicesViewModel,
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
                       );
                     },
                   );
