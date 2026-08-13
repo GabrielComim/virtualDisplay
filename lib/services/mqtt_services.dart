@@ -101,7 +101,7 @@ class MqttServices {
     onMessageReceived?.call(topic, payload);
   }
 
-  Future<void> disconnect() async {
+  Future<bool> disconnect() async {
     try {
       // Cancela sempre o listener existente
       await _subscription?.cancel();
@@ -112,10 +112,13 @@ class MqttServices {
           client!.connectionStatus?.state == MqttConnectionState.connected) {
         client!.disconnect();
         log('MQTT desconectado com sucesso');
+        return true;
       }
       client = null;
+      return false;
     } catch (e) {
       log('Erro ao desconectar MQTT: $e');
+      return false;
     }
   }
 }

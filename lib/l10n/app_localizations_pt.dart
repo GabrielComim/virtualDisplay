@@ -63,6 +63,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get delete => 'Excluir';
 
   @override
+  String get failDisconnectionMqtt => 'Falha ao tentar desconectar. Tente novamente.';
+
+  @override
   String get type => 'Tipo';
 
   @override

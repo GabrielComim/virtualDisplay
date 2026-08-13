@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_display/l10n/app_localizations.dart';
 import 'package:virtual_display/models/credentials_broker.dart';
 import 'package:virtual_display/services/automation_engine.dart';
 import 'package:virtual_display/services/mqtt/mqtt_message_processor.dart';
@@ -12,7 +11,6 @@ import 'package:virtual_display/viewModel/automations_viewmodel.dart';
 import 'package:virtual_display/viewModel/dashboard_viewmodel.dart';
 import 'package:virtual_display/viewModel/devices_viewmodel.dart';
 import 'package:virtual_display/viewModel/mqtt_publish_vm.dart';
-import 'package:virtual_display/widgets/show_material_banner.dart';
 
 class MqttConnectionVm extends ChangeNotifier {
   // ================= CONEXÃO MQTT =================
@@ -58,6 +56,10 @@ class MqttConnectionVm extends ChangeNotifier {
       // Falhou na conexão
     } 
     return isConnected;
+  }
+
+  Future<bool> disconnectMqtt() async {
+    return await MqttServices().disconnect();
   }
 
   void mqttRequestConfig(BuildContext context) {

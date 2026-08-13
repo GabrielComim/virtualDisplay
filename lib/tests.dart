@@ -121,6 +121,49 @@ class Tests {
       "title": "Alertas",
       "value":"Erro na comunicação"
     }
+  ],
+  "device":"STM32",
+  "widgets": [
+    {
+      "id": "temperature",
+      "type": "number",
+      "title": "Sensor temp.",
+      "decimal": "1",
+      "unit": "°C",
+      "min": "-55.0",
+      "max": "200",
+      "history": "true",
+      "value":"35"
+    },
+    {
+      "id": "speed",
+      "type": "number",
+      "title": "RPM",
+      "decimal": "1",
+      "unit": "RPM",
+      "min": "0",
+      "max": "200",
+      "history": "true",
+      "value":"54"
+    },
+    {
+      "id": "led",
+      "type": "bool",
+      "title": "Room Light",
+      "value":"true"
+    },
+    {
+      "id": "gps",
+      "type": "bool",
+      "title": "Localization 1",
+      "value":"false"
+    },
+    {
+      "id": "message",
+      "type": "string",
+      "title": "Alertas",
+      "value":"Falha desconhecida"
+    }
   ]
 }
 

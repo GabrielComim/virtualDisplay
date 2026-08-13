@@ -47,6 +47,30 @@ class _CardsBrokerState extends State<CardsBroker> {
           widget.onSelected(!widget.selected);
           return;
         }
+
+        // Se está conectado, tenta desconectar
+        if (_brokerStatus) {
+          bool isDisconnected = await MqttConnectionVm().disconnectMqtt();
+          if (isDisconnected) {
+            setState(() {
+              _brokerStatus = false;
+            });
+            ShowBanner.messengerShow(
+              context,
+              AppLocalizations.of(context)!.disconnected,
+              false,
+            );
+            return;
+          } else {
+            ShowBanner.messengerShow(
+              context,
+              AppLocalizations.of(context)!.failDisconnectionMqtt,
+              true,
+            );
+            return;
+          }
+        } else {}
+        // Se está desconectado, tenta se conectar
         // Tenta se conectar ao broker
         bool isConnected = await _connectMqtt(widget.credentials);
         // Aguarda uns segundos para dar tempo de mostrar a mensagem de conexão com sucesso ou falha
@@ -62,7 +86,7 @@ class _CardsBrokerState extends State<CardsBroker> {
           );
           // Pequeno delay por causa da mensagem de sucesso ou falha
           if (context.mounted) {
-            await Future.delayed(Duration(seconds: 3));
+            await Future.delayed(Duration(seconds: 2));
           }
           // Como conectou, navega para a tela de dispositivos
           if (context.mounted) {

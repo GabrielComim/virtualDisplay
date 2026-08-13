@@ -203,6 +203,12 @@ abstract class AppLocalizations {
   /// **'Excluir'**
   String get delete;
 
+  /// No description provided for @failDisconnectionMqtt.
+  ///
+  /// In pt, this message translates to:
+  /// **'Falha ao tentar desconectar. Tente novamente.'**
+  String get failDisconnectionMqtt;
+
   /// No description provided for @type.
   ///
   /// In pt, this message translates to:

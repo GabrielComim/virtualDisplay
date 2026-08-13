@@ -33,6 +33,7 @@
 
   "@cardsBroker": {"description": "STRINGS USADAS NO cardsBroker"},
   "delete": "Excluir",
+  "failDisconnectionMqtt": "Falha ao tentar desconectar. Tente novamente.",
   
   "@cardsAutomations": {"description": "STRINGS USADAS NO cardsAutomations"},
   "type": "Tipo",
