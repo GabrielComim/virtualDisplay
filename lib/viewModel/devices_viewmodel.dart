@@ -33,4 +33,17 @@ class DevicesViewModel extends ChangeNotifier{
       notifyListeners();
     }
   }
+
+  // Faz a exclusão de um dispositivo da lista
+  void removeDevice(DeviceInfo device) {
+    log('Removendo dispositivo: ${device.device}');
+    // Filtro que remove o dispositivo da lista, verifica se é do broker correto e o nome do dispositivo é o mesmo
+    _devices.removeWhere(
+      (d) => 
+        d.brokerId == device.brokerId && 
+        d.device == device.device,
+    );
+    log('Total dispositivos: ${_devices.length}');
+    notifyListeners();
+  }
 }

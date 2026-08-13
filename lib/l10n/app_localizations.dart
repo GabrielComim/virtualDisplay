@@ -149,6 +149,12 @@ abstract class AppLocalizations {
   /// **'Desconectado'**
   String get disconnected;
 
+  /// No description provided for @deviceRemoved.
+  ///
+  /// In pt, this message translates to:
+  /// **'Dispositivo excluído'**
+  String get deviceRemoved;
+
   /// No description provided for @modeDemonstration.
   ///
   /// In pt, this message translates to:

@@ -18,6 +18,7 @@
   "@cardDevices": {"description": "STRINGS USADAS NO cardDevices"},
   "connected": "Conectado",
   "disconnected": "Desconectado",
+  "deviceRemoved": "Dispositivo excluído",
  
   "@demonstration_screen": {"description": "STRINGS USADAS NO demonstration_screen"},
   "modeDemonstration": "Modo de demonstração, sem interação",

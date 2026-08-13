@@ -29,6 +29,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final DevicesViewModel devicesViewModel = Provider.of<DevicesViewModel>(context, listen: false);
     return Container(
       decoration: decorationInitScreen(),
       child: Scaffold(
@@ -66,6 +67,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                             deviceName: deviceInfo.device,
                             deviceStatus: deviceInfo.online,
                             credential: widget.credential,
+                            devicesViewModel: devicesViewModel,
                           ),
                           SizedBox(height: 20),
                         ],
